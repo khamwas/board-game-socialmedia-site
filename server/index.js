@@ -96,6 +96,7 @@ app.get('/api/games/', gameController.getAllGames);
 app.get('/api/gamer/:id', gamerController.getGamer);
 app.get('/api/favorites/:id', gameController.getFavs);
 app.get('/api/played/:id', gameController.getPlayed);
+app.get('/api/suggestions', gameController.getSuggestions);
 
 app.listen(port, () => {
 	console.log(`Port ${port} is listening...`);

@@ -12,8 +12,26 @@ class Dashboard extends Component {
 			playedGames: [],
 			suggestedGames: [],
 			currentUser: {},
-			profile: []
+			profile: [],
+			query: ''
 		};
+	}
+
+	updateQuery() {
+		// debugger;
+		var end = '';
+		for (let i = 0; i < this.state.profile.length; i++) {
+			if (i === 0) {
+				end += `?x=${this.state.profile[i]}`;
+			} else {
+				end += `&x=${this.state.profile[i]}`;
+			}
+		}
+		this.setState({ query: end }, () => this.updateSuggested());
+	}
+
+	updateSuggested() {
+		axios.get(`/api/suggestions${this.state.query}`);
 	}
 
 	userMapper() {
@@ -50,10 +68,19 @@ class Dashboard extends Component {
 			.filter((elem, i) => i < 3)
 			.map((elem, i) => <div key={i}>{elem}</div>);
 
-		let favGames = this.state.favGames.map((elem) => <GameCard elem={elem} />);
+		let favGames = this.state.favGames.map((elem, i) => {
+			if (i < 5) {
+				return <GameCard key={elem.game_id} elem={elem} />;
+			}
+		});
 		let playedGames = this.state.playedGames.map((elem, i) => {
 			if (i < 5) {
-				return <GameCard elem={elem} />;
+				return <GameCard key={elem.game_id} elem={elem} />;
+			}
+		});
+		let suggestedGames = this.state.suggestedGames.map((elem, i) => {
+			if (i < 5) {
+				return <GameCard key={elem.game_id} elem={elem} />;
 			}
 		});
 		// let info = [];
@@ -88,7 +115,7 @@ class Dashboard extends Component {
 					{/* <button onClick={() => console.log(this.state)}>CHECKER</button> */}
 					<div className="module">
 						Suggested
-						{favGames}
+						{suggestedGames}
 					</div>
 					<div className="module">
 						Favorites

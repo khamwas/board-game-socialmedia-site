@@ -1,0 +1,52 @@
+.gameScreen {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: space around;
+	flex-wrap: wrap;
+}
+
+.gameCardContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border: black 1px solid;
+	min-width: 300px;
+	width: 30vw;
+	height: 300px;
+	margin: 10px;
+}
+
+.gameScrollImg {
+	max-width: 250px;
+	max-height: 200px;
+}
+
+.selector {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	margin: 10px;
+	background: #9999a1;
+	color: white;
+	width: 100vw;
+	height: 30px;
+	cursor: pointer;
+}
+
+.selected {
+	color: #2b4162;
+}
+
+.searchBar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+}
+
+.onFilter {
+	margin: 10px;
+}

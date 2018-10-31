@@ -12,6 +12,8 @@
 		"express-session": "^1.15.6",
 		"massiv": "0.0.20",
 		"massive": "^5.5.1",
+		"passport": "^0.4.0",
+		"passport-auth0": "^1.1.0",
 		"react": "^16.6.0",
 		"react-dom": "^16.6.0",
 		"react-redux": "^5.1.0",

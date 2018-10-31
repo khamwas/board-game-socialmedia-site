@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { getGames, updateFilter } from '../../redux/reducer';
 import './AllGames.css';
 
 class AllGames extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			games: [],
 			filterArray: [],
@@ -23,16 +25,23 @@ class AllGames extends Component {
 				end += `&x=${this.state.filterArray[i]}`;
 			}
 		}
-		this.setState({ currentHolder: end });
+		this.setState({ currentHolder: end }, () => this.updateGames());
 		console.log(this.state.holder + this.state.currentHolder);
 	}
 
 	updateFilter(str) {
 		// debugger;
 		if (this.state.filterArray.join('').includes(str)) {
-			this.removeFromFilter(str);
+			// this.removeFromFilter(str);
+			let temp = this.state.filterArray.slice();
+			let index = this.state.filterArray.findIndex((elem) => elem === str);
+			temp.splice(index, 1);
+			this.setState({ filterArray: temp }, () => this.updateHolder());
 		} else {
-			this.addToFilter(str);
+			// this.addToFilter(str);
+			let temp = this.state.filterArray.slice();
+			temp.push(str);
+			this.setState({ filterArray: temp }, () => this.updateHolder());
 		}
 	}
 
@@ -64,7 +73,9 @@ class AllGames extends Component {
 
 	componentDidMount() {
 		console.log(this.state.currentHolder);
-		this.updateGames();
+		console.log(this.props);
+		this.props.getGames(this.props.holder, this.props.currentHolder);
+		this.updateGames(this.state.holder, this.state.currentHolder);
 	}
 
 	render() {
@@ -194,11 +205,23 @@ class AllGames extends Component {
 					</div>
 				</div>
 				<div className="searchBar">{selected}</div>
-				<button onClick={() => this.updateGames()}>Update Search</button>
 				<div className="gameScreen">{display}</div>
 			</div>
 		);
 	}
 }
 
-export default AllGames;
+function mapStateToProps(state) {
+	const { games2, filterArray, holder, currentHolder } = state;
+	return {
+		games2,
+		filterArray,
+		holder,
+		currentHolder
+	};
+}
+
+export default connect(
+	mapStateToProps,
+	{ getGames, updateFilter }
+)(AllGames);

@@ -1,51 +1,51 @@
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #2b4162;
-  color: white;
-  width: 100vw;
-  height: 75px;
-  /* box-shadow: 10px 2px 16px 5px #888888; */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  transition: all 0.3s ease;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #2b4162;
+	color: white;
+	width: 100vw;
+	height: 75px;
+	/* box-shadow: 10px 2px 16px 5px #888888; */
+	/* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); */
+	transition: all 0.3s ease;
 }
 
 .logoContainer {
-  display: flex;
-  align-items: center;
-  font-size: 2em;
+	display: flex;
+	align-items: center;
+	font-size: 2em;
 }
 
 .logo {
-  margin-left: 50px;
-  height: 60px;
+	margin-left: 50px;
+	height: 60px;
 }
 .logo:hover {
-  transition: all 0.3s ease;
-  /* color: #9999a1; */
-  transform: scale(1.1);
-  cursor: pointer;
+	transition: all 0.3s ease;
+	/* color: #9999a1; */
+	transform: scale(1.1);
+	cursor: pointer;
 }
 
 .logoText {
 }
 
 .nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 25px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 25px;
 }
 
 .navLink {
-  margin-right: 25px;
-  font-weight: 700;
+	margin-right: 25px;
+	font-weight: 700;
 }
 
 .navLink:hover {
-  transition: all 0.3s ease;
-  /* color: #9999a1; */
-  transform: scale(1.1);
-  cursor: pointer;
+	transition: all 0.3s ease;
+	/* color: #9999a1; */
+	transform: scale(1.1);
+	cursor: pointer;
 }

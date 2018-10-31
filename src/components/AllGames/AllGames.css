@@ -7,15 +7,22 @@
 }
 
 .gameCardContainer {
+	background: white;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	border: black 1px solid;
-	min-width: 300px;
-	width: 30vw;
+	width: 300px;
+	/* width: 30vw; */
 	height: 300px;
 	margin: 10px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.gameCardContainer:hover {
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .gameScrollImg {
@@ -28,9 +35,11 @@
 	flex-direction: row;
 	justify-content: space-around;
 	align-items: center;
-	margin: 10px;
+	/* margin: 5px; */
 	background: #9999a1;
 	color: white;
+	font-weight: 700;
+	font-size: 1.25em;
 	width: 100vw;
 	height: 30px;
 	cursor: pointer;
@@ -38,6 +47,7 @@
 
 .selected {
 	color: #2b4162;
+	border: 1px solid #2b4162;
 }
 
 .searchBar {

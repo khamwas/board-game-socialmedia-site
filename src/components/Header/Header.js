@@ -2,11 +2,17 @@ import React from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
-function Header() {
+function Header(props) {
+	let checker = <button onClick={() => console.log(props)}>Check</button>;
 	let login = (
-		<Link to="/login">
-			<div className="navLink">Login</div>
-		</Link>
+		<div
+			onClick={() =>
+				window.open(`${process.env.REACT_APP_SERVER}/login`, '_self')
+			}
+			className="navLink"
+		>
+			Login
+		</div>
 	);
 	let dashboard = (
 		<Link to="/dashboard">
@@ -34,7 +40,7 @@ function Header() {
 				{/* <div className="logoText">Board as Hell</div> */}
 			</div>
 			<nav className="nav">
-				{games} {fun} {login} {dashboard}
+				{games} {fun} {login} {dashboard} {checker}
 			</nav>
 		</div>
 	);

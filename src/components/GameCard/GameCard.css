@@ -1,0 +1,15 @@
+.gameCardContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	/* border: black 1px solid; */
+	width: 300px;
+	height: 300px;
+	margin: 10px;
+}
+
+.gameScrollImg {
+	max-width: 250px;
+	max-height: 200px;
+}

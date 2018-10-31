@@ -1,5 +1,3 @@
-const massive = require('massive');
-
 module.exports = {
 	getAllGames: (req, res, next) => {
 		let text = `select * from (select count(*) as reviews,game_id,avg(sensory) as sensory,avg(fantasy) as fantasy,avg(narrative) as narrative,avg(challenge) as challenge,avg(fellowship) as fellowship,avg(discovery) as discovery,avg(expression) as expression,avg(abnegation) as abnegation from game_reviews
@@ -38,5 +36,27 @@ module.exports = {
 		// 	.get('db')
 		// 	.then((response) => res.status(200).json(response))
 		// 	.catch((err) => res.status(500).send(err));
+	},
+	getFavs: (req, res, next) => {
+		req.app
+			.get('db')
+			.query(
+				`select * from favorite_game
+		join board_games on favorite_game.game_id=board_games.game_id
+		where gamer_id =${req.params.id}`
+			)
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
+	},
+	getPlayed: (req, res, next) => {
+		req.app
+			.get('db')
+			.query(
+				`select * from played_games
+			join board_games on played_games.game_id=board_games.game_id
+			where gamer_id =${req.params.id}`
+			)
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
 	}
 };

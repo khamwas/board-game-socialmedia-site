@@ -1,8 +1,8 @@
 .gameCardContainer {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	justify-content: space-between;
+	align-items: flex-end;
 	/* border: black 1px solid; */
 	width: 300px;
 	height: 300px;
@@ -14,18 +14,19 @@
 	max-height: 200px;
 }
 
-/* .line {
-	background: #2b4162;
+.line {
+	background: white;
 	width: 250px;
-	height: 5px;
-	margin: 5px;
-} */
+	height: 1px;
+	margin: 0px;
+}
 
 .cardBottom {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
+	align-self: flex-end;
 	background: #2b4162;
 	color: white;
 	width: 100%;

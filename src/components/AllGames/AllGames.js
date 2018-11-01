@@ -201,6 +201,11 @@ class AllGames extends Component {
 								: null
 						}
 					>
+						<img
+							className="icon"
+							src="https://s3.us-east-2.amazonaws.com/boardashell/abnegation.svg"
+							alt="abnegation"
+						/>
 						Abnegation
 					</div>
 				</div>

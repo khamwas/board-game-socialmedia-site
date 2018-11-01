@@ -1,3 +1,7 @@
+.icon {
+	width: 30px;
+}
+
 .gameScreen {
 	display: flex;
 	flex-direction: row;
@@ -7,6 +11,7 @@
 }
 
 .gameCardContainer {
+	color: #2b4162;
 	background: white;
 	display: flex;
 	flex-direction: column;

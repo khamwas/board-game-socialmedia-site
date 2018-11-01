@@ -27,11 +27,14 @@ class Dashboard extends Component {
 				end += `&x=${this.state.profile[i]}`;
 			}
 		}
+		console.log(end);
 		this.setState({ query: end }, () => this.updateSuggested());
 	}
 
 	updateSuggested() {
-		axios.get(`/api/suggestions${this.state.query}`);
+		axios
+			.get(`/api/suggestions${this.state.query}`)
+			.then((result) => this.setState({ suggestedGames: result.data }));
 	}
 
 	userMapper() {
@@ -44,22 +47,22 @@ class Dashboard extends Component {
 				}
 			}
 		}
-		this.setState({ profile: arr });
+		this.setState({ profile: arr }, () => this.updateQuery());
 	}
 
 	componentDidMount() {
 		axios
-			.get('/api/gamer/1')
+			.get('/api/gamer/2')
 			.then((response) =>
 				this.setState({ currentUser: response.data[0] }, () =>
 					this.userMapper()
 				)
 			);
 		axios
-			.get('/api/favorites/1')
+			.get('/api/favorites/2')
 			.then((response) => this.setState({ favGames: response.data }));
 		axios
-			.get('/api/played/1')
+			.get('/api/played/2')
 			.then((response) => this.setState({ playedGames: response.data }));
 	}
 	render() {
@@ -69,17 +72,17 @@ class Dashboard extends Component {
 			.map((elem, i) => <div key={i}>{elem}</div>);
 
 		let favGames = this.state.favGames.map((elem, i) => {
-			if (i < 5) {
+			if (i < 1) {
 				return <GameCard key={elem.game_id} elem={elem} />;
 			}
 		});
 		let playedGames = this.state.playedGames.map((elem, i) => {
-			if (i < 5) {
+			if (i < 1) {
 				return <GameCard key={elem.game_id} elem={elem} />;
 			}
 		});
 		let suggestedGames = this.state.suggestedGames.map((elem, i) => {
-			if (i < 5) {
+			if (i < 1) {
 				return <GameCard key={elem.game_id} elem={elem} />;
 			}
 		});
@@ -101,17 +104,16 @@ class Dashboard extends Component {
 			<div>
 				{/* <div>Dashboard</div> */}
 				<div className="dash">
-					<div className="info">
+					{/* <div className="info">
 						<h1>{this.state.currentUser.handle}</h1>
 						<h2>
 							lvl: {this.state.currentUser.lvl}
 							<br />
 							ROLE: {this.state.currentUser.role}
 						</h2>
-						{/* <h2></h2> */}
 						<h4>Profile</h4>
 						<div className="profile">{profile}</div>
-					</div>
+					</div> */}
 					{/* <button onClick={() => console.log(this.state)}>CHECKER</button> */}
 					<div className="module">
 						Suggested

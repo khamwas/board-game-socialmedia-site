@@ -9,10 +9,13 @@ function GameCard(props) {
 				src={props.elem.img}
 				alt={props.elem.title}
 			/>
-			<div>{props.elem.title.toUpperCase()}</div>
-			<div>
-				{props.elem.reviews} Review
-				{props.elem.reviews > 1 ? 's' : null}
+			<div className="line" />
+			<div className="cardBottom">
+				<div>{props.elem.title.toUpperCase()}</div>
+				<div>
+					{props.elem.reviews ? props.elem.reviews : 0} Review
+					{parseInt(props.elem.reviews) !== 1 ? 's' : null}
+				</div>
 			</div>
 		</div>
 	);

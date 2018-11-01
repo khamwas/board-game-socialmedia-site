@@ -3,7 +3,6 @@ import './Header.css';
 import { Link } from 'react-router-dom';
 
 function Header(props) {
-	let checker = <button onClick={() => console.log(props)}>Check</button>;
 	let login = (
 		<div
 			onClick={() =>
@@ -40,7 +39,7 @@ function Header(props) {
 				{/* <div className="logoText">Board as Hell</div> */}
 			</div>
 			<nav className="nav">
-				{games} {fun} {login} {dashboard} {checker}
+				{games} {fun} {login} {dashboard}
 			</nav>
 		</div>
 	);

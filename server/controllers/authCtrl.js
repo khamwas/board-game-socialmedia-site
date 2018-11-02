@@ -26,5 +26,8 @@ module.exports = {
 	},
 	getUser: (req, res, next) => {
 		res.status(200).json(req.session.user);
+	},
+	printReq: (req, res, next) => {
+		res.status(200).json(req.session);
 	}
 };

@@ -10,6 +10,7 @@ const session = require('express-session');
 // const authController = require('./controllers/authCtrl');
 const gameController = require('./controllers/gameCtrl');
 const gamerController = require('./controllers/gamerCtrl');
+const authController = require('./controllers/authCtrl');
 const port = 3001;
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(
 		resave: false,
 		saveUninitialized: true,
 		secret: process.env.SESSION_SECRET,
+		user: [],
 		cookie: {
 			maxAge: 1000 * 60 * 60 * 24 * 7 * 2 //2 weeks
 		}
@@ -66,7 +68,17 @@ app.get(
 );
 
 app.get('/success', (req, res, next) => {
-	console.log(req.user);
+	req.app
+		.get('db')
+		.gamer.where(`email=$1`, req.user._json.email)
+		.then((result) => {
+			req.session.user = result;
+
+			res.redirect(`${process.env.REACT_APP_FRONTEND}/dashboard`);
+		})
+		.catch((err) => console.log(err));
+
+	// console.log(req.user._json.email);
 
 	//   const db = req.app.get('db');
 	//   db.users.find(req.user.id).then(user=>{
@@ -76,7 +88,8 @@ app.get('/success', (req, res, next) => {
 	//           req.session.user=user
 	//       }
 	//   })
-	res.redirect('/you_are_logged_in');
+	// res.redirect(`${process.env.REACT_APP_FRONTEND}/dashboard`);
+	// res.redirect(`http://localhost:3000/dashboard`);
 });
 
 app.get('/api/isAuthed', (req, res, next) => {
@@ -99,6 +112,14 @@ app.get('/api/favorites/:id', gameController.getFavs);
 app.get('/api/played/:id', gameController.getPlayed);
 app.get('/api/suggestions', gameController.getSuggestions);
 app.get('/api/game/reviews/:id', gameController.getReviews);
+app.get('/api/test', authController.printReq);
+app.get('/api/user', (req, res, next) => {
+	if (req.session.user) {
+		res.status(200).json(req.session.user);
+	} else {
+		res.status(200).json([]);
+	}
+});
 
 app.listen(port, () => {
 	console.log(`Port ${port} is listening...`);

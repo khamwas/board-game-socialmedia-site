@@ -1,27 +1,22 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { setCurrentUser } from '../../redux/reducer';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			user: []
-		};
-	}
 	componentDidMount() {
 		this.getUser();
 	}
 	getUser() {
 		axios
-			.get('/api/gamer/2')
-			.then((response) => this.setState({ user: response.data }));
+			.get('/api/user/')
+			.then((response) => this.props.setCurrentUser(response.data));
 	}
 
 	render() {
-		let user = this.state.user.map((elem) => (
+		let user = this.props.currentUser.map((elem) => (
 			<div className="profile" key={elem.gamer_id}>
 				<div>User: {elem.handle}</div>
 				<div>Level: {elem.lvl}</div>
@@ -62,10 +57,10 @@ class Header extends Component {
 						alt="logo"
 					/>
 					{/* <div className="logoText">Board as Hell</div> */}
-					{user}
+					{this.props.currentUser.length < 1 ? null : user}
 				</div>
 				<nav className="nav">
-					{games} {fun} {login} {dashboard}
+					{games} {fun} {this.props.currentUser.length < 1 ? login : dashboard}
 				</nav>
 			</div>
 		);
@@ -81,4 +76,7 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(Header);
+export default connect(
+	mapStateToProps,
+	{ setCurrentUser }
+)(Header);

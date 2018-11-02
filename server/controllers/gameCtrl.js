@@ -24,7 +24,7 @@ module.exports = {
 					text += `, ${req.query.x[i]} desc`;
 				}
 			}
-			console.log(req.query.x);
+			// console.log(req.query.x);
 			req.app
 				.get('db')
 				.query(text)

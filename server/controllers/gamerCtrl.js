@@ -1,6 +1,6 @@
 module.exports = {
 	getGamer: (req, res, next) => {
-		console.log(req.params.id);
+		// console.log(req.params.id);
 		req.app
 			.get('db')
 			.gamer.where('gamer_id=$1', req.params.id)

@@ -15,7 +15,7 @@ function reducer(state = initialState, action) {
 		case SET_GAMES:
 			return Object.assign({}, state, { games: action.payload });
 		case SET_CURRENT_USER:
-			return Object.assign({}, state, { games: action.payload });
+			return Object.assign({}, state, { currentUser: action.payload });
 		case SET_PROFILE:
 			return Object.assign({}, state, { games: action.payload });
 		default:
@@ -27,6 +27,12 @@ export function setGames(games) {
 	return {
 		type: SET_GAMES,
 		payload: games
+	};
+}
+export function setCurrentUser(user) {
+	return {
+		type: SET_CURRENT_USER,
+		payload: user
 	};
 }
 

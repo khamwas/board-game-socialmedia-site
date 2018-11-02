@@ -30,7 +30,7 @@ class Dashboard extends Component {
 				end += `&x=${this.state.profile[i]}`;
 			}
 		}
-		console.log(end);
+		// console.log(end);
 		this.setState({ query: end }, () => this.updateSuggested());
 	}
 
@@ -63,6 +63,7 @@ class Dashboard extends Component {
 	}
 
 	componentDidMount() {
+		// console.log(this.props);
 		axios
 			.get('/api/gamer/2')
 			.then((response) =>
@@ -113,7 +114,9 @@ class Dashboard extends Component {
 		// }
 		// let view = info.map((elem) => <h1>{elem}</h1>);
 
-		let reviews = this.state.reviews.map((elem) => <GameReview elem={elem} />);
+		let reviews = this.state.reviews.map((elem) => (
+			<GameReview key={elem.review_id} elem={elem} />
+		));
 
 		return (
 			<div>

@@ -28,7 +28,16 @@
 	cursor: pointer;
 }
 
-.logoText {
+.profile {
+	margin-left: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	font-size: 0.55em;
+	font-weight: 500;
+	/* border: solid 1px #2b4162; */
+	/* padding: 10px; */
 }
 
 .nav {
@@ -41,6 +50,7 @@
 .navLink {
 	margin-right: 25px;
 	font-weight: 700;
+	font-size: 1.5em;
 }
 
 .navLink:hover {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { getGames, updateFilter } from '../../redux/reducer';
+import { setGames } from '../../redux/reducer';
 import GameCard from '../GameCard/GameCard';
 import './AllGames.css';
 
@@ -26,7 +26,6 @@ class AllGames extends Component {
 	}
 
 	updateHolder() {
-		// debugger;
 		var end = '';
 		for (let i = 0; i < this.state.filterArray.length; i++) {
 			if (i === 0) {
@@ -39,15 +38,12 @@ class AllGames extends Component {
 	}
 
 	updateFilter(str) {
-		// debugger;
 		if (this.state.filterArray.join('').includes(str)) {
-			// this.removeFromFilter(str);
 			let temp = this.state.filterArray.slice();
 			let index = this.state.filterArray.findIndex((elem) => elem === str);
 			temp.splice(index, 1);
 			this.setState({ filterArray: temp }, () => this.updateHolder());
 		} else {
-			// this.addToFilter(str);
 			let temp = this.state.filterArray.slice();
 			temp.push(str);
 			this.setState({ filterArray: temp }, () => this.updateHolder());
@@ -55,18 +51,24 @@ class AllGames extends Component {
 	}
 
 	updateGames() {
-		// this.updateHolder();
 		this.state.currentHolder
 			? axios
 					.get(this.state.holder + this.state.currentHolder)
-					.then((response) => this.setState({ games: response.data }))
+					.then((response) =>
+						this.setState({ games: response.data }, () =>
+							this.props.setGames(this.state.games)
+						)
+					)
 			: axios
 					.get(this.state.holder)
-					.then((response) => this.setState({ games: response.data }));
+					.then((response) =>
+						this.setState({ games: response.data }, () =>
+							this.props.setGames(this.state.games)
+						)
+					);
 	}
 
 	componentDidMount() {
-		this.props.getGames(this.props.holder, this.props.currentHolder);
 		this.updateGames(this.state.holder, this.state.currentHolder);
 	}
 
@@ -107,9 +109,9 @@ class AllGames extends Component {
 }
 
 function mapStateToProps(state) {
-	const { games2, filterArray, holder, currentHolder } = state;
+	const { games, filterArray, holder, currentHolder } = state;
 	return {
-		games2,
+		games,
 		filterArray,
 		holder,
 		currentHolder
@@ -118,5 +120,5 @@ function mapStateToProps(state) {
 
 export default connect(
 	mapStateToProps,
-	{ getGames, updateFilter }
+	{ setGames }
 )(AllGames);

@@ -1,0 +1,28 @@
+.game {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+.littleInfo {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	/* min-width: 1000px; */
+}
+
+.gameInfo {
+	flex: 1;
+}
+
+.gameReviews {
+	flex: 1;
+	/* height: 100vh; */
+	background: #9999a1;
+}
+
+.gameImg {
+	max-width: 400px;
+	min-width: 200px;
+}

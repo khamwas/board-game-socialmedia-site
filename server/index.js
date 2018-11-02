@@ -61,7 +61,7 @@ app.get(
 	'/login',
 	passport.authenticate('auth0', {
 		successRedirect: '/success',
-		failureRedirect: '/'
+		failureRedirect: '/login'
 	})
 );
 
@@ -93,10 +93,12 @@ app.get('/api/logout', (req, res, next) => {
 });
 
 app.get('/api/games/', gameController.getAllGames);
+app.get('/api/gamer/reviews/:id', gamerController.getReviews);
 app.get('/api/gamer/:id', gamerController.getGamer);
 app.get('/api/favorites/:id', gameController.getFavs);
 app.get('/api/played/:id', gameController.getPlayed);
 app.get('/api/suggestions', gameController.getSuggestions);
+app.get('/api/game/reviews/:id', gameController.getReviews);
 
 app.listen(port, () => {
 	console.log(`Port ${port} is listening...`);

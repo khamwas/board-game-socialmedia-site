@@ -1,3 +1,7 @@
+.cardLike {
+	position: relative;
+}
+
 .gameCardContainer {
 	display: flex;
 	flex-direction: column;
@@ -25,10 +29,54 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
+	font-size: 1em;
 	align-items: center;
 	align-self: flex-end;
 	background: #2b4162;
 	color: white;
 	width: 100%;
 	height: 99px;
+}
+
+.circle {
+	height: 40px;
+	width: 40px;
+	background: #9999a1;
+	border: solid 1px #9999a1;
+	border-radius: 50%;
+	position: absolute;
+	right: 15px;
+	top: 15px;
+}
+.circle:hover {
+	background: #66666e;
+}
+
+.heart {
+	background-color: white;
+	height: 15px;
+	transform: rotate(-45deg);
+	width: 15px;
+	position: absolute;
+	top: 15px;
+	right: 13px;
+}
+.heart:before {
+	top: -8.5px;
+	left: 0;
+}
+.heart:before,
+.heart:after {
+	content: '';
+	background-color: white;
+	border-radius: 50%;
+	height: 15px;
+	position: absolute;
+	width: 15px;
+}
+
+.fav,
+.fav:before,
+.fav:after {
+	background: red;
 }

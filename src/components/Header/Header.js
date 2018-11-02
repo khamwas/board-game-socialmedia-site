@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
@@ -9,10 +11,23 @@ class Header extends Component {
 			user: []
 		};
 	}
-	componentDidMount() {}
-	getUser() {}
+	componentDidMount() {
+		this.getUser();
+	}
+	getUser() {
+		axios
+			.get('/api/gamer/2')
+			.then((response) => this.setState({ user: response.data }));
+	}
 
 	render() {
+		let user = this.state.user.map((elem) => (
+			<div className="profile" key={elem.gamer_id}>
+				<div>User: {elem.handle}</div>
+				<div>Level: {elem.lvl}</div>
+				<div>Role: {elem.role}</div>
+			</div>
+		));
 		let login = (
 			<div
 				onClick={() =>
@@ -47,6 +62,7 @@ class Header extends Component {
 						alt="logo"
 					/>
 					{/* <div className="logoText">Board as Hell</div> */}
+					{user}
 				</div>
 				<nav className="nav">
 					{games} {fun} {login} {dashboard}
@@ -56,4 +72,13 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+// export default Header;
+
+function mapStateToProps(state) {
+	const { currentUser } = state;
+	return {
+		currentUser
+	};
+}
+
+export default connect(mapStateToProps)(Header);

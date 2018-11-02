@@ -1,6 +1,3 @@
-// const users = require('../models/users');
-let id = 1;
-
 module.exports = {
 	login: (req, res, next) => {
 		const user = users.find((elem) => elem.email === req.body.email);
@@ -12,6 +9,7 @@ module.exports = {
 		}
 	},
 	register: (req, res, next) => {
+		// req.app.get('db')
 		users.push(
 			Object.assign(
 				{ username: req.body.username, password: req.body.password },

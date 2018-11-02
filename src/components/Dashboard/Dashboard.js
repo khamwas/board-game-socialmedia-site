@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import GameCard from '../GameCard/GameCard';
+import { connect } from 'react-redux';
+import GameReview from '../GameReview/GameReview';
 import './Dashboard.css';
 import '../GameCard/GameCard.css';
 
@@ -11,6 +13,7 @@ class Dashboard extends Component {
 			favGames: [],
 			playedGames: [],
 			suggestedGames: [],
+			reviews: [],
 			currentUser: {},
 			profile: [],
 			query: ''
@@ -34,7 +37,16 @@ class Dashboard extends Component {
 	updateSuggested() {
 		axios
 			.get(`/api/suggestions${this.state.query}`)
-			.then((result) => this.setState({ suggestedGames: result.data }));
+			.then((result) =>
+				this.setState({ suggestedGames: result.data }, () =>
+					this.updateReviews()
+				)
+			);
+	}
+	updateReviews() {
+		axios
+			.get(`/api/gamer/reviews/1`)
+			.then((result) => this.setState({ reviews: result.data }));
 	}
 
 	userMapper() {
@@ -66,24 +78,25 @@ class Dashboard extends Component {
 			.then((response) => this.setState({ playedGames: response.data }));
 	}
 	render() {
-		// let info = this.state.currentUser.map((elem) => <h1>{elem.handle}</h1>);
-		let profile = this.state.profile
-			.filter((elem, i) => i < 3)
-			.map((elem, i) => <div key={i}>{elem}</div>);
-
 		let favGames = this.state.favGames.map((elem, i) => {
-			if (i < 1) {
+			if (i < 5) {
 				return <GameCard key={elem.game_id} elem={elem} />;
+			} else {
+				return null;
 			}
 		});
 		let playedGames = this.state.playedGames.map((elem, i) => {
-			if (i < 1) {
+			if (i < 5) {
 				return <GameCard key={elem.game_id} elem={elem} />;
+			} else {
+				return null;
 			}
 		});
 		let suggestedGames = this.state.suggestedGames.map((elem, i) => {
-			if (i < 1) {
+			if (i < 5) {
 				return <GameCard key={elem.game_id} elem={elem} />;
+			} else {
+				return null;
 			}
 		});
 		// let info = [];
@@ -100,32 +113,27 @@ class Dashboard extends Component {
 		// }
 		// let view = info.map((elem) => <h1>{elem}</h1>);
 
+		let reviews = this.state.reviews.map((elem) => <GameReview elem={elem} />);
+
 		return (
 			<div>
 				{/* <div>Dashboard</div> */}
 				<div className="dash">
-					{/* <div className="info">
-						<h1>{this.state.currentUser.handle}</h1>
-						<h2>
-							lvl: {this.state.currentUser.lvl}
-							<br />
-							ROLE: {this.state.currentUser.role}
-						</h2>
-						<h4>Profile</h4>
-						<div className="profile">{profile}</div>
-					</div> */}
-					{/* <button onClick={() => console.log(this.state)}>CHECKER</button> */}
 					<div className="module">
-						Suggested
+						<div className="moduleTitle">Suggested</div>
 						{suggestedGames}
 					</div>
 					<div className="module">
-						Favorites
+						<div className="moduleTitle">Favorites</div>
 						{favGames}
 					</div>
 					<div className="module">
-						Played
+						<div className="moduleTitle">Played</div>
 						{playedGames}
+					</div>
+					<div className="reviewModule">
+						<div className="moduleTitle">Reviews</div>
+						{reviews}
 					</div>
 				</div>
 			</div>
@@ -133,4 +141,11 @@ class Dashboard extends Component {
 	}
 }
 
-export default Dashboard;
+function mapStateToProps(state) {
+	const { games } = state;
+	return {
+		games
+	};
+}
+
+export default connect(mapStateToProps)(Dashboard);

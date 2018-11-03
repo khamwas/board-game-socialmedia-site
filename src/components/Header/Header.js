@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setUser } from '../../redux/reducer';
+import { setUser, setGames } from '../../redux/reducer';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
 	componentDidMount() {
 		this.props.setUser();
+		this.props.setGames();
 	}
 
 	render() {
@@ -72,5 +73,5 @@ function mapStateToProps(state) {
 
 export default connect(
 	mapStateToProps,
-	{ setUser }
+	{ setUser, setGames }
 )(Header);

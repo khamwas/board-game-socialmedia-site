@@ -74,23 +74,20 @@ app.get('/success', (req, res, next) => {
 		.gamer.where(`email=$1`, req.user._json.email)
 		.then((result) => {
 			req.session.user = result;
+			let obj = Object.assign({}, result[0]);
+			let arr = [];
+			for (let i = 0; i < 15; i++) {
+				for (let x in obj) {
+					if (obj[x] === i && x !== 'lvl' && x !== 'gamer_id') {
+						arr.push(x);
+					}
+				}
+				req.session.user[0]['profile'] = arr;
+			}
 
 			res.redirect(`${process.env.REACT_APP_FRONTEND}/dashboard`);
 		})
 		.catch((err) => console.log(err));
-
-	// console.log(req.user._json.email);
-
-	//   const db = req.app.get('db');
-	//   db.users.find(req.user.id).then(user=>{
-	//       if (!user){
-	//           db.users.insert(req.user)
-	//       }else{
-	//           req.session.user=user
-	//       }
-	//   })
-	// res.redirect(`${process.env.REACT_APP_FRONTEND}/dashboard`);
-	// res.redirect(`http://localhost:3000/dashboard`);
 });
 
 app.get('/api/logout', (req, res, next) => {
@@ -110,6 +107,10 @@ app.get('/api/test', authController.printReq);
 app.get('/api/test/daniel', (req, res) => {
 	res.status(200).json(req.session.passport.user.id);
 });
+
+app.get('/api/user/isfavgame/:id', userController.isFav);
+app.post('/api/user/isfavgame/:id', userController.isFavPost);
+app.delete('/api/user/isfavgame/:id', userController.isFavDelete);
 
 app.get('/api/user', userController.getUser);
 app.get('/api/user/favorites', userController.getFavs);

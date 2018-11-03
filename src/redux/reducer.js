@@ -4,15 +4,16 @@ const SET_USER_FAVS = 'SET_USER_FAVS';
 const SET_USER_REVIEWS = 'SET_USER_REVIEWS';
 const SET_USER_PLAYED = 'SET_USER_PLAYED';
 const SET_USER_FAVORITES = 'SET_USER_FAVORITES';
+const SET_USER_SUGGESTED = 'SET_USER_SUGGESTED';
 const SET_GAMES = 'GET_GAMES';
 const SET_PROFILE = 'SET_PROFILE';
 
 const initialState = {
 	games: [],
 	user: [],
-	userProfile: [],
 	userFavs: [],
 	userPlayed: [],
+	userSuggested: [],
 	userReviews: []
 };
 
@@ -28,6 +29,8 @@ function reducer(state = initialState, action) {
 			return Object.assign({}, state, { userPlayed: action.payload });
 		case `${SET_USER_FAVORITES}_FULFILLED`:
 			return Object.assign({}, state, { userFavs: action.payload });
+		case `${SET_USER_SUGGESTED}_FULFILLED`:
+			return Object.assign({}, state, { userSuggested: action.payload });
 		case SET_PROFILE:
 			return Object.assign({}, state, { userProfile: action.payload });
 		case SET_USER_FAVS:
@@ -79,6 +82,14 @@ export function setUserFavs() {
 	return {
 		type: SET_USER_FAVORITES,
 		payload: axios.get(`/api/user/favorites`).then((result) => {
+			return result.data;
+		})
+	};
+}
+export function setUserSuggested() {
+	return {
+		type: SET_USER_SUGGESTED,
+		payload: axios.get(`/api/user/suggestions`).then((result) => {
 			return result.data;
 		})
 	};

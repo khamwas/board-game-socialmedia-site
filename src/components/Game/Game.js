@@ -64,7 +64,9 @@ class Game extends Component {
 			</div>
 		));
 
-		let reviews = this.state.reviews.map((elem) => <GameReview elem={elem} />);
+		let reviews = this.state.reviews.map((elem) => (
+			<GameReview key={elem.review_id} elem={elem} />
+		));
 		return (
 			<div className="game">
 				{game}

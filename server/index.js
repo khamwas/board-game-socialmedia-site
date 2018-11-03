@@ -11,6 +11,7 @@ const session = require('express-session');
 const gameController = require('./controllers/gameCtrl');
 const gamerController = require('./controllers/gamerCtrl');
 const authController = require('./controllers/authCtrl');
+const userController = require('./controllers/userCtrl');
 const port = 3001;
 
 const app = express();
@@ -92,14 +93,6 @@ app.get('/success', (req, res, next) => {
 	// res.redirect(`http://localhost:3000/dashboard`);
 });
 
-app.get('/api/isAuthed', (req, res, next) => {
-	if (req.user) {
-		return res.status(200).json(req.user);
-	} else {
-		res.status(500).json('No user found.');
-	}
-});
-
 app.get('/api/logout', (req, res, next) => {
 	req.session.destroy();
 	res.status(200).json('You are logged out.');
@@ -108,18 +101,21 @@ app.get('/api/logout', (req, res, next) => {
 app.get('/api/games/', gameController.getAllGames);
 app.get('/api/gamer/reviews/:id', gamerController.getReviews);
 app.get('/api/gamer/:id', gamerController.getGamer);
-app.get('/api/favorites/:id', gameController.getFavs);
-app.get('/api/played/:id', gameController.getPlayed);
 app.get('/api/suggestions', gameController.getSuggestions);
 app.get('/api/game/reviews/:id', gameController.getReviews);
+app.get('/api/favorites/:id', gameController.getFavs);
+app.get('/api/played/:id', gameController.getPlayed);
+
 app.get('/api/test', authController.printReq);
-app.get('/api/user', (req, res, next) => {
-	if (req.session.user) {
-		res.status(200).json(req.session.user);
-	} else {
-		res.status(200).json([]);
-	}
+app.get('/api/test/daniel', (req, res) => {
+	res.status(200).json(req.session.passport.user.id);
 });
+
+app.get('/api/user', userController.getUser);
+app.get('/api/user/favorites', userController.getFavs);
+app.get('/api/user/played', userController.getPlayed);
+app.get('/api/user/suggestions', userController.getSuggestions);
+app.get('/api/user/reviews', userController.getReviews);
 
 app.listen(port, () => {
 	console.log(`Port ${port} is listening...`);

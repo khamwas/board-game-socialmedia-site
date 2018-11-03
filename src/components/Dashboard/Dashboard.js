@@ -5,6 +5,11 @@ import { connect } from 'react-redux';
 import GameReview from '../GameReview/GameReview';
 import './Dashboard.css';
 import '../GameCard/GameCard.css';
+import {
+	setUserReviews,
+	setUserPlayed,
+	setUserFavs
+} from '../../redux/reducer';
 
 class Dashboard extends Component {
 	constructor() {
@@ -44,9 +49,7 @@ class Dashboard extends Component {
 			);
 	}
 	updateReviews() {
-		axios
-			.get(`/api/gamer/reviews/1`)
-			.then((result) => this.setState({ reviews: result.data }));
+		this.props.setUserReviews();
 	}
 
 	userMapper() {
@@ -63,30 +66,27 @@ class Dashboard extends Component {
 	}
 
 	componentDidMount() {
+		this.props.setUserReviews();
+		this.props.setUserPlayed();
+		this.props.setUserFavs();
 		// console.log(this.props);
-		axios
-			.get('/api/gamer/2')
-			.then((response) =>
-				this.setState({ currentUser: response.data[0] }, () =>
-					this.userMapper()
-				)
-			);
-		axios
-			.get('/api/favorites/2')
-			.then((response) => this.setState({ favGames: response.data }));
-		axios
-			.get('/api/played/2')
-			.then((response) => this.setState({ playedGames: response.data }));
+
+		// axios
+		// 	.get('/api/favorites/2')
+		// 	.then((response) => this.setState({ favGames: response.data }));
+		// axios
+		// 	.get('/api/played/2')
+		// 	.then((response) => this.setState({ playedGames: response.data }));
 	}
 	render() {
-		let favGames = this.state.favGames.map((elem, i) => {
+		let favGames = this.props.userFavs.map((elem, i) => {
 			if (i < 5) {
 				return <GameCard key={elem.game_id} elem={elem} />;
 			} else {
 				return null;
 			}
 		});
-		let playedGames = this.state.playedGames.map((elem, i) => {
+		let playedGames = this.props.userPlayed.map((elem, i) => {
 			if (i < 5) {
 				return <GameCard key={elem.game_id} elem={elem} />;
 			} else {
@@ -114,7 +114,7 @@ class Dashboard extends Component {
 		// }
 		// let view = info.map((elem) => <h1>{elem}</h1>);
 
-		let reviews = this.state.reviews.map((elem) => (
+		let reviews = this.props.userReviews.map((elem) => (
 			<GameReview key={elem.review_id} elem={elem} />
 		));
 
@@ -145,10 +145,17 @@ class Dashboard extends Component {
 }
 
 function mapStateToProps(state) {
-	const { games } = state;
+	const { games, user, userFavs, userPlayed, userReviews } = state;
 	return {
-		games
+		games,
+		user,
+		userFavs,
+		userPlayed,
+		userReviews
 	};
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(
+	mapStateToProps,
+	{ setUserReviews, setUserPlayed, setUserFavs }
+)(Dashboard);

@@ -14,6 +14,7 @@ class AllGames extends Component {
 				'fantasy',
 				'narrative',
 				'challenge',
+				'sensory',
 				'fellowship',
 				'expression',
 				'discovery',
@@ -68,8 +69,23 @@ class AllGames extends Component {
 					);
 	}
 
+	setProfile() {
+		if (this.props.user[0]) {
+			this.setState(
+				{ selector: this.props.user[0]['profile'].slice() },
+				this.setState({
+					filterArray: this.props.user[0]['profile'].slice(0, 3)
+				})
+			);
+		}
+	}
+
 	componentDidMount() {
 		this.updateGames(this.state.holder, this.state.currentHolder);
+		this.setProfile();
+		if (this.props.user[0]) {
+			this.setState({ filterArray: this.props.user[0]['profile'].slice(0, 3) });
+		}
 	}
 
 	render() {
@@ -109,12 +125,10 @@ class AllGames extends Component {
 }
 
 function mapStateToProps(state) {
-	const { games, filterArray, holder, currentHolder } = state;
+	const { games, user } = state;
 	return {
 		games,
-		filterArray,
-		holder,
-		currentHolder
+		user
 	};
 }
 

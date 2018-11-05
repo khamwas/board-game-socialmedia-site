@@ -14,7 +14,8 @@ const initialState = {
 	userFavs: [],
 	userPlayed: [],
 	userSuggested: [],
-	userReviews: []
+	userReviews: [],
+	userProfile: []
 };
 
 function reducer(state = initialState, action) {
@@ -31,7 +32,7 @@ function reducer(state = initialState, action) {
 			return Object.assign({}, state, { userFavs: action.payload });
 		case `${SET_USER_SUGGESTED}_FULFILLED`:
 			return Object.assign({}, state, { userSuggested: action.payload });
-		case SET_PROFILE:
+		case `${SET_PROFILE}_FULFILLED`:
 			return Object.assign({}, state, { userProfile: action.payload });
 		case SET_USER_FAVS:
 			return Object.assign({}, state, { userFavs: action.payload });
@@ -92,6 +93,12 @@ export function setUserSuggested() {
 		payload: axios.get(`/api/user/suggestions`).then((result) => {
 			return result.data;
 		})
+	};
+}
+export function setUserProfile() {
+	return {
+		type: SET_PROFILE,
+		payload: 1
 	};
 }
 

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setUser, setGames, setUserProfile } from '../../redux/reducer';
+import { setUser, getGames, setUserProfile } from '../../redux/reducer';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
 	componentDidMount() {
 		this.props.setUser();
-		this.props.setGames();
+		this.props.getGames();
 		this.props.setUserProfile();
 	}
 
@@ -74,5 +74,5 @@ function mapStateToProps(state) {
 
 export default connect(
 	mapStateToProps,
-	{ setUser, setGames, setUserProfile }
+	{ setUser, getGames, setUserProfile }
 )(Header);

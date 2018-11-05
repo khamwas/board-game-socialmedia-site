@@ -5,7 +5,8 @@ const SET_USER_REVIEWS = 'SET_USER_REVIEWS';
 const SET_USER_PLAYED = 'SET_USER_PLAYED';
 const SET_USER_FAVORITES = 'SET_USER_FAVORITES';
 const SET_USER_SUGGESTED = 'SET_USER_SUGGESTED';
-const SET_GAMES = 'GET_GAMES';
+const SET_GAMES = 'SET_GAMES';
+const GET_GAMES = 'GET_GAMES';
 const SET_PROFILE = 'SET_PROFILE';
 
 const initialState = {
@@ -20,6 +21,8 @@ const initialState = {
 function reducer(state = initialState, action) {
 	switch (action.type) {
 		case SET_GAMES:
+			return Object.assign({}, state, { games: action.payload });
+		case `${GET_GAMES}_FULFILLED`:
 			return Object.assign({}, state, { games: action.payload });
 		case `${SET_USER}_FULFILLED`:
 			return Object.assign({}, state, { user: action.payload });
@@ -44,6 +47,14 @@ export function setGames(games) {
 	return {
 		type: SET_GAMES,
 		payload: games
+	};
+}
+export function getGames() {
+	return {
+		type: GET_GAMES,
+		payload: axios.get('/api/games/').then((response) => {
+			return response.data;
+		})
 	};
 }
 export function setUser() {

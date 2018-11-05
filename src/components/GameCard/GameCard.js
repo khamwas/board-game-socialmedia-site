@@ -67,9 +67,10 @@ class GameCard extends Component {
 }
 
 function mapStateToProps(state) {
-	const { user } = state;
+	const { user, games } = state;
 	return {
-		user
+		user,
+		games
 	};
 }
 

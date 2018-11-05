@@ -28,7 +28,8 @@ class GameReview extends Component {
 			fellowship: this.props.elem.fellowship,
 			expression: this.props.elem.expression,
 			discovery: this.props.elem.discovery,
-			abnegation: this.props.elem.abnegation
+			abnegation: this.props.elem.abnegation,
+			confirm: false
 		});
 	}
 
@@ -45,6 +46,11 @@ class GameReview extends Component {
 	changeRating(newRating, name) {
 		this.setState({ [name]: newRating });
 	}
+
+	confirmDelete() {
+		this.setState({ confirm: !this.state.confirm });
+	}
+	deleteReview() {}
 
 	render() {
 		if (this.state.edit) {
@@ -69,6 +75,22 @@ class GameReview extends Component {
 				));
 			return (
 				<div className="reviewCard">
+					{this.state.confirm && (
+						<div>
+							<div className="confirmWhiteout" />
+							<div className="confirmBox">
+								<h2>Are you sure you want to delete this review?</h2>
+								<div className="reviewButtonContainer">
+									<button className="confirmDeleteButton link">
+										Yes, Delete Forever
+									</button>
+									<button className="confirmDeleteButton link">
+										No, Cancel
+									</button>
+								</div>
+							</div>
+						</div>
+					)}
 					<h3>
 						{this.props.elem.handle || this.props.elem.title.toUpperCase()}
 					</h3>
@@ -81,6 +103,12 @@ class GameReview extends Component {
 					{stars}
 					<div className="reviewButtonContainer">
 						<button className="reviewButton link">Cancel</button>
+						<button
+							onClick={() => this.confirmDelete()}
+							className="reviewButton link"
+						>
+							Delete
+						</button>
 						<button className="reviewButton link">Submit</button>
 					</div>
 				</div>

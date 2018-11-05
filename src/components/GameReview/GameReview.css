@@ -25,6 +25,7 @@
 .reviewButtonContainer {
 	display: flex;
 	justify-content: space-around;
+	flex-wrap: wrap;
 	width: 100%;
 }
 
@@ -39,4 +40,56 @@
 	margin: 5px;
 	height: 50px;
 	width: 100px;
+}
+
+.confirmWhiteout {
+	position: fixed;
+	top: 0%;
+	left: 0%;
+	width: 100vw;
+	min-height: 100%;
+	/* max-height: 1000%; */
+	z-index: 1;
+	background: #9999a1;
+	opacity: 0.6;
+}
+
+.confirmDeleteButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #2b4162;
+	color: white;
+	font-size: 1.25em;
+	font-weight: 700;
+	margin: 5px;
+	height: 100px;
+	width: 200px;
+}
+
+/* .confirmBox {
+	position: absolute;
+	top: 40%;
+	right: 28vw;
+	background: #66666e;
+	padding: 50px;
+} */
+
+.confirmBox {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding-top: 40px;
+	/* border: solid black 1px; */
+	width: 40vw;
+	min-height: 35vh;
+	max-height: 60vh;
+	position: fixed;
+	top: 20%;
+	left: 30%;
+	background: rgba(40, 44, 52, 0.95);
+	/* opacity: 0.8; */
+	box-shadow: 1px 1px 5px;
+	color: white;
+	z-index: 2;
 }

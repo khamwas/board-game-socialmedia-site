@@ -14,8 +14,7 @@ const initialState = {
 	userFavs: [],
 	userPlayed: [],
 	userSuggested: [],
-	userReviews: [],
-	userProfile: []
+	userReviews: []
 };
 
 function reducer(state = initialState, action) {

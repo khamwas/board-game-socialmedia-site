@@ -40,6 +40,10 @@ class GameReview extends Component {
 	changeHandler(e) {
 		this.setState({ reviewText: e.target.value });
 	}
+	changeRating(newRating, name) {
+		this.setState({ [name]: newRating });
+	}
+
 	render() {
 		if (this.state.edit) {
 			// let profile = this.props.user[0]['profile'].slice(
@@ -57,6 +61,7 @@ class GameReview extends Component {
 							numberOfStars={5}
 							name={`${item}`}
 							starDimension="25px"
+							changeRating={(newRating) => this.changeRating(newRating, item)}
 						/>
 					</div>
 				));
@@ -72,6 +77,10 @@ class GameReview extends Component {
 						value={this.state.reviewText}
 					/>
 					{stars}
+					<div className="reviewButtonContainer">
+						<button className="reviewButton">Cancel</button>
+						<button className="reviewButton">Submit</button>
+					</div>
 				</div>
 			);
 		} else {

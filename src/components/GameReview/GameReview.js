@@ -33,8 +33,10 @@ class GameReview extends Component {
 	}
 
 	editChanger() {
-		if (this.props.elem.gamer_id === this.props.user[0]['gamer_id']) {
-			this.setState({ edit: !this.state.edit });
+		if (this.props.user.length > 0) {
+			if (this.props.elem.gamer_id === this.props.user[0]['gamer_id']) {
+				this.setState({ edit: !this.state.edit });
+			}
 		}
 	}
 	changeHandler(e) {
@@ -78,14 +80,14 @@ class GameReview extends Component {
 					/>
 					{stars}
 					<div className="reviewButtonContainer">
-						<button className="reviewButton">Cancel</button>
-						<button className="reviewButton">Submit</button>
+						<button className="reviewButton link">Cancel</button>
+						<button className="reviewButton link">Submit</button>
 					</div>
 				</div>
 			);
 		} else {
 			return (
-				<div onClick={() => this.editChanger()} className="reviewCard">
+				<div onClick={() => this.editChanger()} className="reviewCard link">
 					<h3>
 						{this.props.elem.handle || this.props.elem.title.toUpperCase()}
 					</h3>

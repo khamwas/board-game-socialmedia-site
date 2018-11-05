@@ -12,6 +12,12 @@
 	/* min-width: 1000px; */
 }
 
+.leftInfo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .gameInfo {
 	flex: 1;
 }

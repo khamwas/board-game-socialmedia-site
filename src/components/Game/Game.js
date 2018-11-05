@@ -33,12 +33,18 @@ class Game extends Component {
 	}
 
 	render() {
+		if (this.props.user.length === 1) {
+			var button = this.state.reviews.filter(
+				(elem) => elem.gamer_id === this.props.user[0]['gamer_id']
+			).length;
+		}
+
 		let game = this.state.game.map((elem) => (
 			<div className="gameInfo" key={elem.game_id}>
 				<h1>{elem.title.charAt(0).toUpperCase() + elem.title.slice(1)}</h1>
 				<img className="gameImg" alt={elem.title} src={elem.img} />
 				<div className="littleInfo">
-					<div>
+					<div className="leftInfo">
 						<h2>Age: {elem.age}+</h2>
 						<h2>Set up: {parseInt(elem.set_up * 60)} mins</h2>
 						<h2>Play Time: {elem.play_time} hrs</h2>
@@ -55,6 +61,7 @@ class Game extends Component {
 								starDimension="25px"
 							/>
 						</h2>
+						{button === 0 && <div className="reviewButton link">Review</div>}
 					</div>
 					<div>
 						<div>Reviews: {elem.reviews}</div>
@@ -77,9 +84,10 @@ class Game extends Component {
 }
 
 function mapStateToProps(state) {
-	const { games } = state;
+	const { games, user } = state;
 	return {
-		games
+		games,
+		user
 	};
 }
 

@@ -12,6 +12,7 @@ const gameController = require('./controllers/gameCtrl');
 const gamerController = require('./controllers/gamerCtrl');
 const authController = require('./controllers/authCtrl');
 const userController = require('./controllers/userCtrl');
+const reviewController = require('./controllers/reviewCtrl');
 const port = 3001;
 
 const app = express();
@@ -117,6 +118,10 @@ app.get('/api/user/favorites', userController.getFavs);
 app.get('/api/user/played', userController.getPlayed);
 app.get('/api/user/suggestions', userController.getSuggestions);
 app.get('/api/user/reviews', userController.getReviews);
+
+app.post('/api/user/review', reviewController.postReview);
+app.put('/api/user/review', reviewController.updateReview);
+app.delete('/api/user/review/:id', reviewController.deleteReview);
 
 app.listen(port, () => {
 	console.log(`Port ${port} is listening...`);

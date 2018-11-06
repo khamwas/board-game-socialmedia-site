@@ -7,8 +7,10 @@ import { Link } from 'react-router-dom';
 class Header extends Component {
 	componentDidMount() {
 		this.props.setUser();
-		this.props.getGames();
-		this.props.setUserProfile();
+		if (this.props.user.length === 1) {
+			this.props.getGames();
+			this.props.setUserProfile();
+		}
 	}
 
 	render() {

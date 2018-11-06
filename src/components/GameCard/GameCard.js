@@ -13,13 +13,15 @@ class GameCard extends Component {
 		};
 	}
 	componentDidMount() {
-		axios
-			.get(`/api/user/isfavgame/${this.props.elem.game_id}`)
-			.then((result) => {
-				if (result.data.length > 0) {
-					this.setState({ fav: true });
-				}
-			});
+		if (this.props.user.length === 1) {
+			axios
+				.get(`/api/user/isfavgame/${this.props.elem.game_id}`)
+				.then((result) => {
+					if (result.data.length > 0) {
+						this.setState({ fav: true });
+					}
+				});
+		}
 	}
 
 	likeButton() {

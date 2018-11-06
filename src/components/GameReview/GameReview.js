@@ -3,34 +3,56 @@ import GameRating from '../GameRating/GameRating';
 import { connect } from 'react-redux';
 import StarRating from 'react-star-ratings';
 import './GameReview.css';
+import axios from 'axios';
 
 class GameReview extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			edit: false,
-			reviewText: '',
+			review: '',
 			fantasy: null,
 			narrative: null,
 			challenge: null,
 			fellowship: null,
 			expression: null,
 			discovery: null,
-			abnegatoin: null
+			abnegation: null,
+			sensory: null,
+			confirm: false
 		};
 	}
 	componentDidMount() {
+		this.cleanState();
+	}
+
+	cleanState() {
 		this.setState({
-			reviewText: this.props.elem.review,
+			review: this.props.elem.review,
 			fantasy: this.props.elem.fantasy,
+			sensory: this.props.elem.sensory,
 			narrative: this.props.elem.narrative,
 			challenge: this.props.elem.challenge,
 			fellowship: this.props.elem.fellowship,
 			expression: this.props.elem.expression,
 			discovery: this.props.elem.discovery,
-			abnegation: this.props.elem.abnegation,
-			confirm: false
+			abnegation: this.props.elem.abnegation
 		});
+	}
+
+	submitEdit() {
+		axios
+			.put(
+				'/api/user/review',
+				Object.assign({}, this.state, { review_id: this.props.elem.review_id })
+			)
+			.then(() => this.props.getReviews(this.props.elem.game_id));
+		this.editChanger();
+	}
+
+	cancelEdit() {
+		this.cleanState();
+		this.editChanger();
 	}
 
 	editChanger() {
@@ -41,7 +63,7 @@ class GameReview extends Component {
 		}
 	}
 	changeHandler(e) {
-		this.setState({ reviewText: e.target.value });
+		this.setState({ review: e.target.value }, () => console.log(this.state));
 	}
 	changeRating(newRating, name) {
 		this.setState({ [name]: newRating });
@@ -50,7 +72,12 @@ class GameReview extends Component {
 	confirmDelete() {
 		this.setState({ confirm: !this.state.confirm });
 	}
-	deleteReview() {}
+	deleteReview() {
+		axios
+			.delete(`/api/user/review/${this.props.elem.review_id}`)
+			.then(() => this.props.getReviews(this.props.elem.game_id));
+		this.confirmDelete();
+	}
 
 	render() {
 		if (this.state.edit) {
@@ -81,7 +108,10 @@ class GameReview extends Component {
 							<div className="confirmBox">
 								<h2>Are you sure you want to delete this review?</h2>
 								<div className="reviewButtonContainer">
-									<button className="confirmDeleteButton link">
+									<button
+										onClick={() => this.deleteReview()}
+										className="confirmDeleteButton link"
+									>
 										Yes, Delete Forever
 									</button>
 									<button
@@ -101,18 +131,28 @@ class GameReview extends Component {
 						type="text"
 						className="input"
 						onChange={(e) => this.changeHandler(e)}
-						value={this.state.reviewText}
+						value={this.state.review}
 					/>
 					{stars}
 					<div className="reviewButtonContainer">
-						<button className="reviewButton link">Cancel</button>
+						<button
+							onClick={() => this.cancelEdit()}
+							className="reviewButton link"
+						>
+							Cancel
+						</button>
 						<button
 							onClick={() => this.confirmDelete()}
 							className="reviewButton link"
 						>
 							Delete
 						</button>
-						<button className="reviewButton link">Submit</button>
+						<button
+							onClick={() => this.submitEdit()}
+							className="reviewButton link"
+						>
+							Submit
+						</button>
 					</div>
 				</div>
 			);

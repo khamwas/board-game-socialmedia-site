@@ -13,6 +13,7 @@ class Game extends Component {
 			game: [],
 			reviews: []
 		};
+		this.getReviews = this.getReviews.bind(this);
 	}
 
 	componentDidMount() {
@@ -22,13 +23,13 @@ class Game extends Component {
 					(elem) => elem.game_id === parseInt(this.props.match.params.id)
 				)
 			},
-			() => this.getReviews()
+			() => this.getReviews(this.props.match.params.id)
 		);
 	}
 
-	getReviews() {
+	getReviews(id) {
 		axios
-			.get(`/api/game/reviews/${this.props.match.params.id}`)
+			.get(`/api/game/reviews/${id}`)
 			.then((result) => this.setState({ reviews: result.data }));
 	}
 
@@ -72,7 +73,11 @@ class Game extends Component {
 		));
 
 		let reviews = this.state.reviews.map((elem) => (
-			<GameReview key={elem.review_id} elem={elem} />
+			<GameReview
+				key={elem.review_id}
+				elem={elem}
+				getReviews={this.getReviews}
+			/>
 		));
 		return (
 			<div className="game">

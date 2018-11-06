@@ -84,7 +84,10 @@ class GameReview extends Component {
 									<button className="confirmDeleteButton link">
 										Yes, Delete Forever
 									</button>
-									<button className="confirmDeleteButton link">
+									<button
+										onClick={() => this.confirmDelete()}
+										className="confirmDeleteButton link"
+									>
 										No, Cancel
 									</button>
 								</div>

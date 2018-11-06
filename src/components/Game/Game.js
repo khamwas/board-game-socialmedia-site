@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GameRating from '../GameRating/GameRating';
+import NewReview from '../NewReview/NewReview';
 import GameReview from '../GameReview/GameReview';
 import StarRatings from 'react-star-ratings';
 import axios from 'axios';
@@ -11,9 +12,11 @@ class Game extends Component {
 		super(props);
 		this.state = {
 			game: [],
-			reviews: []
+			reviews: [],
+			newReview: false
 		};
 		this.getReviews = this.getReviews.bind(this);
+		this.newReviewStatus = this.newReviewStatus.bind(this);
 	}
 
 	componentDidMount() {
@@ -25,6 +28,10 @@ class Game extends Component {
 			},
 			() => this.getReviews(this.props.match.params.id)
 		);
+	}
+
+	newReviewStatus() {
+		this.setState({ newReview: !this.state.newReview });
 	}
 
 	getReviews(id) {
@@ -62,7 +69,24 @@ class Game extends Component {
 								starDimension="25px"
 							/>
 						</h2>
-						{button === 0 && <div className="reviewButton link">Review</div>}
+						{button === 0 && (
+							<button
+								onClick={() => this.newReviewStatus()}
+								className="reviewButton link"
+							>
+								Review
+							</button>
+						)}
+						{this.state.newReview ? (
+							<div>
+								<NewReview
+									game={this.state.game}
+									newReviewStatus={this.newReviewStatus}
+									getReviews={this.getReviews}
+									game_id={this.props.match.params.id}
+								/>
+							</div>
+						) : null}
 					</div>
 					<div>
 						<div>Reviews: {elem.reviews}</div>

@@ -34,7 +34,7 @@ module.exports = {
 			return `insert into ${table}${keyValues[0]} values${keyValues[1]}`;
 		}
 		let x = postMaker(req.body, 'game_reviews');
-		console.log(x);
+		// console.log(x);
 		req.app
 			.get('db')
 			.query(x)

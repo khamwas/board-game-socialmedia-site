@@ -16,9 +16,15 @@ class Header extends Component {
 	render() {
 		let user = this.props.user.map((elem) => (
 			<div className="profile" key={elem.gamer_id}>
-				<div>User: {elem.handle}</div>
-				<div>Level: {elem.lvl}</div>
-				<div>Role: {elem.role}</div>
+				<div>
+					User: {elem.handle}
+					<br />
+					Level: {elem.lvl}
+					<br />
+					Role: {elem.role}
+				</div>
+				{/* <div> </div>
+				<div> </div> */}
 			</div>
 		));
 		let login = (
@@ -43,7 +49,10 @@ class Header extends Component {
 		);
 		let fun = (
 			<Link to="/about">
-				<div className="navLink">8 Type of Fun</div>
+				<div className="navLink types">8 Type of Fun</div>
+
+				{/* <Link to="/about"> */}
+				<div className="navLink about">About</div>
 			</Link>
 		);
 		return (

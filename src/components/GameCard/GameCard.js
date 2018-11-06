@@ -3,6 +3,11 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {
+	setUserSuggested,
+	setUserFavs,
+	setUserPlayed
+} from '../../redux/reducer';
 import './GameCard.css';
 
 class GameCard extends Component {
@@ -24,15 +29,21 @@ class GameCard extends Component {
 		}
 	}
 
+	resetDash() {
+		this.props.setUserFavs();
+		this.props.setUserSuggested();
+		this.props.setUserPlayed();
+	}
+
 	likeButton() {
 		if (this.state.fav === false) {
 			axios
 				.post(`/api/user/isfavgame/${this.props.elem.game_id}`)
-				.then(() => this.setState({ fav: true }));
+				.then(() => this.setState({ fav: true }, this.resetDash()));
 		} else {
 			axios
 				.delete(`/api/user/isfavgame/${this.props.elem.game_id}`)
-				.then(() => this.setState({ fav: false }));
+				.then(() => this.setState({ fav: false }, this.resetDash()));
 		}
 	}
 
@@ -76,4 +87,7 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(GameCard);
+export default connect(
+	mapStateToProps,
+	{ setUserSuggested, setUserFavs, setUserPlayed }
+)(GameCard);

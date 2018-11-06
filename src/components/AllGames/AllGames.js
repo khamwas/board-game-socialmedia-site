@@ -103,8 +103,8 @@ class AllGames extends Component {
 						.slice()
 						.join('')
 						.includes(elem)
-						? 'selected'
-						: null
+						? 'selected clicker'
+						: 'clicker'
 				}
 			>
 				{elem.charAt(0).toUpperCase() + elem.slice(1)}

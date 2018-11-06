@@ -46,8 +46,9 @@
 	font-weight: 700;
 	font-size: 1.25em;
 	width: 100vw;
-	height: 30px;
+	min-height: 30px;
 	cursor: pointer;
+	flex-wrap: wrap;
 }
 
 .selected {
@@ -60,8 +61,13 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: row;
+	flex-wrap: wrap;
 }
 
 .onFilter {
 	margin: 10px;
+}
+
+.clicker {
+	margin: 1px;
 }

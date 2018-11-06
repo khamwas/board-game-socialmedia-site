@@ -46,7 +46,7 @@ class GameReview extends Component {
 				'/api/user/review',
 				Object.assign({}, this.state, { review_id: this.props.elem.review_id })
 			)
-			.then(() => this.props.getReviews(this.props.elem.game_id));
+			.then(() => this.props.getReviews(parseInt(this.props.elem.game_id)));
 		this.editChanger();
 	}
 

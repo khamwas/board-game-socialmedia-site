@@ -42,7 +42,11 @@ class Dashboard extends Component {
 		});
 
 		let reviews = this.props.userReviews.map((elem) => (
-			<GameReview key={elem.review_id} elem={elem} />
+			<GameReview
+				key={elem.review_id}
+				getReviews={this.props.setUserReviews}
+				elem={elem}
+			/>
 		));
 
 		return (

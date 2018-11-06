@@ -4,6 +4,7 @@ import GameRating from '../GameRating/GameRating';
 import NewReview from '../NewReview/NewReview';
 import GameReview from '../GameReview/GameReview';
 import StarRatings from 'react-star-ratings';
+import { getGames } from '../../redux/reducer';
 import axios from 'axios';
 import './Game.css';
 
@@ -20,6 +21,10 @@ class Game extends Component {
 	}
 
 	componentDidMount() {
+		this.setGame();
+	}
+
+	setGame() {
 		this.setState(
 			{
 				game: this.props.games.filter(
@@ -37,7 +42,9 @@ class Game extends Component {
 	getReviews(id) {
 		axios
 			.get(`/api/game/reviews/${id}`)
-			.then((result) => this.setState({ reviews: result.data }));
+			.then((result) =>
+				this.setState({ reviews: result.data }, () => this.props.getGames())
+			);
 	}
 
 	render() {
@@ -47,54 +54,56 @@ class Game extends Component {
 			).length;
 		}
 
-		let game = this.state.game.map((elem) => (
-			<div className="gameInfo" key={elem.game_id}>
-				<h1>{elem.title.charAt(0).toUpperCase() + elem.title.slice(1)}</h1>
-				<img className="gameImg" alt={elem.title} src={elem.img} />
-				<div className="littleInfo">
-					<div className="leftInfo">
-						<h2>Age: {elem.age}+</h2>
-						<h2>Set up: {parseInt(elem.set_up * 60)} mins</h2>
-						<h2>Play Time: {elem.play_time} hrs</h2>
-						<h2>
-							For {elem.min_players} to {elem.max_players} players
-						</h2>
-						<h2>
-							Rules
-							{'  '}
-							<StarRatings
-								rating={elem.rules}
-								starRatedColor="rgb(109,122,130)"
-								numberOfStars={5}
-								starDimension="25px"
-							/>
-						</h2>
-						{button === 0 && (
-							<button
-								onClick={() => this.newReviewStatus()}
-								className="reviewButton link"
-							>
-								Review
-							</button>
-						)}
-						{this.state.newReview ? (
-							<div>
-								<NewReview
-									game={this.state.game}
-									newReviewStatus={this.newReviewStatus}
-									getReviews={this.getReviews}
-									game_id={this.props.match.params.id}
+		let game = this.props.games
+			.filter((elem) => elem.game_id === parseInt(this.props.match.params.id))
+			.map((elem) => (
+				<div className="gameInfo" key={elem.game_id}>
+					<h1>{elem.title.charAt(0).toUpperCase() + elem.title.slice(1)}</h1>
+					<img className="gameImg" alt={elem.title} src={elem.img} />
+					<div className="littleInfo">
+						<div className="leftInfo">
+							<h2>Age: {elem.age}+</h2>
+							<h2>Set up: {parseInt(elem.set_up * 60)} mins</h2>
+							<h2>Play Time: {elem.play_time} hrs</h2>
+							<h2>
+								For {elem.min_players} to {elem.max_players} players
+							</h2>
+							<h2>
+								Rules
+								{'  '}
+								<StarRatings
+									rating={elem.rules}
+									starRatedColor="rgb(109,122,130)"
+									numberOfStars={5}
+									starDimension="25px"
 								/>
-							</div>
-						) : null}
-					</div>
-					<div>
-						<div>Reviews: {elem.reviews}</div>
-						<GameRating elem={elem} />
+							</h2>
+							{button === 0 && (
+								<button
+									onClick={() => this.newReviewStatus()}
+									className="reviewButton link"
+								>
+									Review
+								</button>
+							)}
+							{this.state.newReview ? (
+								<div>
+									<NewReview
+										game={this.state.game}
+										newReviewStatus={this.newReviewStatus}
+										getReviews={this.getReviews}
+										game_id={this.props.match.params.id}
+									/>
+								</div>
+							) : null}
+						</div>
+						<div>
+							<div>Reviews: {elem.reviews}</div>
+							<GameRating elem={elem} />
+						</div>
 					</div>
 				</div>
-			</div>
-		));
+			));
 
 		let reviews = this.state.reviews.map((elem) => (
 			<GameReview
@@ -120,4 +129,7 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(Game);
+export default connect(
+	mapStateToProps,
+	{ getGames }
+)(Game);

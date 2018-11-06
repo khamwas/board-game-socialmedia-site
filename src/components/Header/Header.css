@@ -39,6 +39,25 @@
 	/* border: solid 1px #2b4162; */
 	/* padding: 10px; */
 }
+@media (max-width: 800px) {
+	.profile {
+		display: none;
+	}
+	.types {
+		display: none;
+	}
+}
+@media (max-width: 500px) {
+	.logo {
+		margin-left: 0px;
+	}
+}
+
+@media (min-width: 800px) {
+	.about {
+		display: none;
+	}
+}
 
 .nav {
 	display: flex;

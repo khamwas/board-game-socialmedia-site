@@ -69,6 +69,7 @@ class Header extends Component {
 				<nav className="nav">
 					{games} {fun} {this.props.user.length < 1 ? login : dashboard}
 				</nav>
+				{/* <Suggested /> */}
 			</div>
 		);
 	}

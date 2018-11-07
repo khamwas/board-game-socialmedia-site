@@ -28,6 +28,17 @@ class GameCard extends Component {
 				});
 		}
 	}
+	// componentWillReceiveProps() {
+	// 	if (this.props.user.length === 1) {
+	// 		axios
+	// 			.get(`/api/user/isfavgame/${this.props.elem.game_id}`)
+	// 			.then((result) => {
+	// 				if (result.data.length > 0) {
+	// 					this.setState({ fav: true });
+	// 				}
+	// 			});
+	// 	}
+	// }
 
 	resetDash() {
 		this.props.setUserFavs();

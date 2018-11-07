@@ -81,8 +81,8 @@ class About extends Component {
 						.map(
 							(elem) => this.state.types.filter((item) => item.type === elem)[0]
 						)
-						.map((elem) => (
-							<div className="typeBox">
+						.map((elem, i) => (
+							<div key={i} className="typeBox">
 								<div className="aboutTitleContainer">
 									<Icon elem={elem.type} />
 									<h2 className="aboutTitle">{elem.type.toUpperCase()}</h2>

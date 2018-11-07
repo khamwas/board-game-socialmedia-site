@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import GameCard from '../GameCard/GameCard';
 import { connect } from 'react-redux';
 import GameReview from '../GameReview/GameReview';
+import { Link } from 'react-router-dom';
+import Dash from './Dash';
 import './Dashboard.css';
 import '../GameCard/GameCard.css';
 import {
@@ -19,6 +21,7 @@ class Dashboard extends Component {
 		this.props.setUserSuggested(); // console.log(this.props);
 	}
 	render() {
+		// let dashHeader =
 		let favGames = this.props.userFavs.map((elem, i) => {
 			if (i < 5) {
 				return <GameCard key={elem.game_id} elem={elem} />;
@@ -51,22 +54,36 @@ class Dashboard extends Component {
 
 		return (
 			<div>
-				{/* <div>Dashboard</div> */}
+				<Dash match={this.props.match.path} />
+				{/* <div className="selector">
+					<div>Suggested</div>
+					<div>Favorites</div>
+					<div>Played</div>
+					<div>Reviews</div>
+				</div> */}
 				<div className="dash">
 					<div className="module">
-						<div className="moduleTitle">Suggested</div>
+						<Link to="/dashboard/suggested">
+							<div className="moduleTitle">Suggested</div>
+						</Link>
 						{suggestedGames}
 					</div>
 					<div className="module">
-						<div className="moduleTitle">Favorites</div>
+						<Link to="/dashboard/favorites">
+							<div className="moduleTitle">Favorites</div>
+						</Link>
 						{favGames}
 					</div>
 					<div className="module">
-						<div className="moduleTitle">Played</div>
+						<Link to="/dashboard/played">
+							<div className="moduleTitle">Played</div>
+						</Link>
 						{playedGames}
 					</div>
 					<div className="reviewModule">
-						<div className="moduleTitle">Reviews</div>
+						<Link to="/dashboard/reviews">
+							<div className="moduleTitle">Reviews</div>
+						</Link>
 						{reviews}
 					</div>
 				</div>

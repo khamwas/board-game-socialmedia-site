@@ -60,6 +60,7 @@ class Game extends Component {
 				<div className="gameInfo" key={elem.game_id}>
 					<h1>{elem.title.charAt(0).toUpperCase() + elem.title.slice(1)}</h1>
 					<img className="gameImg" alt={elem.title} src={elem.img} />
+					<p className="description">{elem.description}</p>
 					<div className="littleInfo">
 						<div className="leftInfo">
 							<h2>Age: {elem.age}+</h2>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { setGames } from '../../redux/reducer';
 import GameCard from '../GameCard/GameCard';
+import Icon from '../Icon/Icon';
 import './AllGames.css';
 
 class AllGames extends Component {
@@ -107,7 +108,10 @@ class AllGames extends Component {
 						: 'clicker'
 				}
 			>
-				{elem.charAt(0).toUpperCase() + elem.slice(1)}
+				<Icon elem={elem} />
+				<div className="subHeader">
+					{elem.charAt(0).toUpperCase() + elem.slice(1)}
+				</div>
 			</div>
 		));
 
@@ -116,6 +120,7 @@ class AllGames extends Component {
 		));
 		return (
 			<div>
+				{/* <Icon /> */}
 				<div className="selector">{selector}</div>
 				<div className="searchBar">{selected}</div>
 				<div className="gameScreen">{display}</div>

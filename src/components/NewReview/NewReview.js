@@ -67,51 +67,32 @@ class NewReview extends Component {
 				</div>
 			));
 		return (
-			<div className="reviewCard newReview">
-				{this.state.confirm && (
-					<div>
-						<div className="confirmWhiteout" />
-						<div className="confirmBox">
-							<h2>Are you sure you want to delete this review?</h2>
-							<div className="reviewButtonContainer">
-								<button
-									onClick={() => this.deleteReview()}
-									className="confirmDeleteButton link"
-								>
-									Yes, Delete Forever
-								</button>
-								<button
-									onClick={() => this.confirmDelete()}
-									className="confirmDeleteButton link"
-								>
-									No, Cancel
-								</button>
-							</div>
-						</div>
-					</div>
-				)}
-				<h3>{this.props.user[0]['handle'].toUpperCase()}</h3>
-				<textarea
-					type="text"
-					className="input"
-					onChange={(e) => this.changeHandler(e)}
-					value={this.state.review}
-				/>
-				{stars}
-				<div className="reviewButtonContainer">
-					<button
-						onClick={() => this.props.newReviewStatus()}
-						className="reviewButton link"
-					>
-						Cancel
-					</button>
+			<div>
+				<div className="confirmWhiteout" />
+				<div className="reviewCard newReview">
+					<h3>{this.props.user[0]['handle'].toUpperCase()}</h3>
+					<textarea
+						type="text"
+						className="input"
+						onChange={(e) => this.changeHandler(e)}
+						value={this.state.review}
+					/>
+					{stars}
+					<div className="reviewButtonContainer">
+						<button
+							onClick={() => this.props.newReviewStatus()}
+							className="reviewButton link"
+						>
+							Cancel
+						</button>
 
-					<button
-						onClick={() => this.submitReview()}
-						className="reviewButton link"
-					>
-						Submit
-					</button>
+						<button
+							onClick={() => this.submitReview()}
+							className="reviewButton link"
+						>
+							Submit
+						</button>
+					</div>
 				</div>
 			</div>
 		);

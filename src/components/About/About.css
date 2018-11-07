@@ -29,9 +29,19 @@
 	/* background: gray; */
 }
 
+.aboutCard {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+}
+
 .aboutKeysContainer {
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
+	align-items: center;
+	/* flex-wrap: wrap; */
 	justify-content: center;
 	margin-left: 50px;
 }
@@ -43,4 +53,22 @@
 	.aboutKeysContainer {
 		margin-left: 0px;
 	}
+}
+
+.buttonDiv {
+	display: flex;
+	justify-content: center;
+}
+
+.exampleButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #2b4162;
+	color: white;
+	font-size: 1.25em;
+	font-weight: 700;
+	margin: 5px;
+	height: 70px;
+	width: 150px;
 }

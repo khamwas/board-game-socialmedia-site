@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Icon from '../Icon/Icon';
 import axios from 'axios';
+import GameCard from '../GameCard/GameCard';
 import './About.css';
 // import ReactS3Uploader from 'react-s3-uploader';
 
@@ -9,7 +10,16 @@ class About extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			example: false,
 			types: [],
+			sensory: [],
+			fantasy: [],
+			narrative: [],
+			challenge: [],
+			fellowship: [],
+			expression: [],
+			discovery: [],
+			abnegation: [],
 			selector: [
 				'fantasy',
 				'narrative',
@@ -24,16 +34,44 @@ class About extends Component {
 	}
 
 	componentDidMount() {
-		this.getFun();
 		if (this.props.user[0]) {
 			this.setState({ selector: this.props.user[0]['profile'].slice() });
 		}
+		this.getFun();
+		axios
+			.get('/api/games?x=sensory')
+			.then((result) => this.setState({ sensory: result.data.slice(0, 3) }));
+		axios
+			.get('/api/games?x=fantasy')
+			.then((result) => this.setState({ fantasy: result.data.slice(0, 3) }));
+		axios
+			.get('/api/games?x=narrative')
+			.then((result) => this.setState({ narrative: result.data.slice(0, 3) }));
+		axios
+			.get('/api/games?x=challenge')
+			.then((result) => this.setState({ challenge: result.data.slice(0, 3) }));
+		axios
+			.get('/api/games?x=fellowship')
+			.then((result) => this.setState({ fellowship: result.data.slice(0, 3) }));
+		axios
+			.get('/api/games?x=expression')
+			.then((result) => this.setState({ expression: result.data.slice(0, 3) }));
+		axios
+			.get('/api/games?x=discovery')
+			.then((result) => this.setState({ discovery: result.data.slice(0, 3) }));
+		axios
+			.get('/api/games?x=abnegation')
+			.then((result) => this.setState({ abnegation: result.data.slice(0, 3) }));
 	}
 
 	getFun() {
 		axios
 			.get('/api/info')
 			.then((result) => this.setState({ types: result.data }));
+	}
+
+	exampler() {
+		this.setState({ example: !this.state.example });
 	}
 
 	render() {
@@ -46,13 +84,23 @@ class About extends Component {
 						.map((elem) => (
 							<div className="typeBox">
 								<div className="aboutTitleContainer">
-									{/* <Icon elem={elem.type} /> */}
+									<Icon elem={elem.type} />
 									<h2 className="aboutTitle">{elem.type.toUpperCase()}</h2>
 								</div>
-								<div className="aboutKeysContainer">
-									<div className="aboutDescription">{elem.description}</div>
-									<div className="aboutKeys">Keys: {elem.keys}</div>
-								</div>
+								{this.state.example ? (
+									<div className="aboutKeysContainer">
+										<div className="aboutCard">
+											{this.state[elem.type].map((elem) => (
+												<GameCard elem={elem} />
+											))}
+										</div>
+									</div>
+								) : (
+									<div className="aboutKeysContainer">
+										<div className="aboutDescription">{elem.description}</div>
+										<div className="aboutKeys">Keys: {elem.keys}</div>
+									</div>
+								)}
 							</div>
 						))
 				: null;
@@ -65,6 +113,11 @@ class About extends Component {
 					determine the best games for your type of fun based on the profile you
 					are assigned when you take the quiz and sign up.
 				</p>
+				<div className="buttonDiv">
+					<button className="exampleButton" onClick={() => this.exampler()}>
+						{this.state.example ? 'Descriptions' : 'Examples'}
+					</button>
+				</div>
 				{display}
 				{/* {thing} */}
 				{/* <ReactS3Uploader

@@ -108,6 +108,15 @@ app.get('/api/test', authController.printReq);
 app.get('/api/test/daniel', (req, res) => {
 	res.status(200).json(req.session.passport.user.id);
 });
+app.get('/api/info', (req, res, next) => {
+	req.app
+		.get('db')
+		.query('select * from typeoffun')
+		.then((result) => {
+			res.status(200).json(result);
+		})
+		.catch((err) => res.status(500).send(err));
+});
 
 app.get('/api/user/isfavgame/:id', userController.isFav);
 app.post('/api/user/isfavgame/:id', userController.isFavPost);

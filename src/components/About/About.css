@@ -1,0 +1,46 @@
+.typeBox {
+	display: flex;
+	align-items: center;
+	/* flex-wrap: wrap; */
+	/* justify-content: space-between; */
+	border: solid 1px #2b4162;
+	margin: 30px;
+}
+
+.aboutTitle {
+	margin: 20px;
+	background: #2b4162;
+	color: white;
+}
+.aboutTitleContainer {
+	background: #2b4162;
+	min-width: 170px;
+	max-width: 170px;
+}
+
+.text {
+	color: #2b4162;
+}
+.aboutKeys {
+	display: flex;
+	margin: 10px;
+	/* height: 100%; */
+
+	/* background: gray; */
+}
+
+.aboutKeysContainer {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-left: 50px;
+}
+
+@media (max-width: 800px) {
+	.typeBox {
+		flex-direction: column;
+	}
+	.aboutKeysContainer {
+		margin-left: 0px;
+	}
+}

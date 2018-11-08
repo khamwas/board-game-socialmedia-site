@@ -178,24 +178,31 @@ class GameReview extends Component {
 					<GameRating elem={this.props.elem} />
 				</div>
 			);
+		} else if (this.props.elem.title) {
+			return (
+				<div onClick={() => this.editChanger()} className="reviewCard link">
+					{
+						<h3 className="super">
+							<Link to={`/game/${this.props.elem.game_id}`}>
+								{this.props.elem.title.toUpperCase()}
+							</Link>
+						</h3>
+					}
+
+					<p>{this.props.elem.review}</p>
+					<GameRating elem={this.props.elem} />
+				</div>
+			);
 		} else {
 			return (
 				<div onClick={() => this.editChanger()} className="reviewCard link">
-					{(
+					{
 						<h3 className="super">
 							<Link to={`/gamer/${this.props.elem.gamer_id}`}>
 								{this.props.elem.handle}
 							</Link>
 						</h3>
-					) || (
-						<h3 className="super">
-							{
-								<Link to={`/game/${this.props.elem.game_id}`}>
-									this.props.elem.title.toUpperCase()
-								</Link>
-							}
-						</h3>
-					)}
+					}
 
 					<p>{this.props.elem.review}</p>
 					<GameRating elem={this.props.elem} />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GameRating from '../GameRating/GameRating';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import StarRating from 'react-star-ratings';
 import './GameReview.css';
 import axios from 'axios';
@@ -159,9 +160,20 @@ class GameReview extends Component {
 		} else {
 			return (
 				<div onClick={() => this.editChanger()} className="reviewCard link">
-					<h3>
-						{this.props.elem.handle || this.props.elem.title.toUpperCase()}
-					</h3>
+					{this.props.elem.handle ? (
+						this.props.elem.handle === this.props.user[0]['handle'] ? (
+							<h3 className="super">{this.props.elem.handle}</h3>
+						) : (
+							<Link to={`/gamer/${this.props.elem.gamer_id}`}>
+								<h3 className="super">{this.props.elem.handle}</h3>
+							</Link>
+						)
+					) : (
+						<Link to={`/game/${this.props.elem.game_id}`}>
+							<h3 className="super">{this.props.elem.title.toUpperCase()}</h3>
+						</Link>
+					)}
+
 					<p>{this.props.elem.review}</p>
 					<GameRating elem={this.props.elem} />
 				</div>

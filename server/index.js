@@ -132,6 +132,14 @@ app.post('/api/user/review', reviewController.postReview);
 app.put('/api/user/review', reviewController.updateReview);
 app.delete('/api/user/review/:id', reviewController.deleteReview);
 
+app.get('/api/twoquery', (req, res, next) => {
+	req.app
+		.get('db')
+		.query('select * from gamer;select * from board_games')
+		.then((response) => res.status(200).json(response))
+		.catch((err) => res.status(500).send(err));
+});
+
 app.listen(port, () => {
 	console.log(`Port ${port} is listening...`);
 });

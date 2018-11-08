@@ -6,15 +6,18 @@ function GamerDash(props) {
 	return (
 		<div>
 			<div className="selector">
-				<Link to={`/gamer/suggested/${props.match.params.id}`}>
+				{props.user.length === 1 ? (
 					<div
 						className={
 							props.match.url.includes('suggested') ? 'selected' : 'fun'
 						}
 					>
-						{props.user.length === 1 ? 'Shared Suggested' : 'Suggested'}
+						<Link to={`/gamer/suggested/${props.match.params.id}`}>
+							{props.user.length === 1 ? 'Shared Suggested' : 'Suggested'}
+						</Link>
 					</div>
-				</Link>
+				) : null}
+
 				<Link to={`/gamer/favorites/${props.match.params.id}`}>
 					<div
 						className={

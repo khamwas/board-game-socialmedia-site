@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import GamerDash from './GamerDash';
+import GameCard from '../GameCard/GameCard';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 class GamerSuggested extends Component {
@@ -11,20 +13,34 @@ class GamerSuggested extends Component {
 	}
 	componentDidMount() {
 		if (this.props.user.length === 1) {
-		} else {
+			this.sharedSuggested();
 		}
 	}
 
-	setSuggested() {}
-	sharedSuggested() {}
+	sharedSuggested() {
+		axios
+			.get(`/api/both/suggestions/${this.props.match.params.id}`)
+			.then((result) => this.setState({ suggested: result.data }));
+	}
 
 	render() {
+		let display = this.state.suggested.map((elem) => {
+			return <GameCard elem={elem} />;
+		});
 		return (
 			<div>
 				<GamerDash match={this.props.match} />
+				<div className="gameScreen">{display}</div>
 			</div>
 		);
 	}
 }
 
-export default GamerSuggested;
+function mapStateToProps(state) {
+	const { user } = state;
+	return {
+		user
+	};
+}
+
+export default connect(mapStateToProps)(GamerSuggested);

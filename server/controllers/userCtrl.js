@@ -96,5 +96,34 @@ module.exports = {
 			)
 			.then((response) => res.status(200).json(response))
 			.catch((err) => res.status(500).send(err));
+	},
+	getNewsFeed: (req, res, next) => {
+		let text = `select sensory,fantasy,narrative,challenge,fellowship,discovery,expression,abnegation,gamer_id,game_id, review_id,null as reviews,review,null as title,null as description,null as img,null as rules, null as play_time, null as set_up, null as age, null as min_players, null as max_players,null as email,null as handle,null as role,20 as lvl from game_reviews
+		where gamer_id !=${req.session.user[0].gamer_id}
+		union all
+		select sensory,fantasy,narrative,challenge,fellowship,discovery,expression,abnegation,null as gamer_id,game_id, null as review_id,reviews,null as review,title,description,img,rules,play_time,set_up,age,min_players,max_players, null as email,null as handle,null as role,30 as lvl from ((select count(*) as reviews,game_id as link,avg(sensory) as sensory,avg(fantasy) as fantasy,avg(narrative) as narrative,avg(challenge) as challenge,avg(fellowship) as fellowship,avg(discovery) as discovery,avg(expression) as expression,avg(abnegation) as abnegation from game_reviews
+		group by game_id) as scores
+		join board_games on scores.link=board_games.game_id) as super
+		where game_id not in(select game_id from favorite_game where gamer_id=${
+			req.session.user[0].gamer_id
+		}) and game_id not in (select game_id from played_games where gamer_id=${
+			req.session.user[0].gamer_id
+		})
+		union all
+		select sensory,fantasy,narrative,challenge,fellowship,discovery,expression,abnegation,gamer_id, null as game_id, null as review_id,null as reviews,null as review,null as title,null as description,null as img,null as rules, null as play_time, null as set_up, null as age, null as min_players, null as max_players,email,handle,role,lvl from gamer
+		where gamer_id!=${req.session.user[0].gamer_id}`;
+		let profile = req.session.user[0]['profile'];
+		for (let i = 0; i < profile.length; i++) {
+			if (i === 0) {
+				text += ` order by ${profile[i]} desc nulls last`;
+			} else {
+				text += `, ${profile[i]} desc nulls last`;
+			}
+		}
+		req.app
+			.get('db')
+			.query(text)
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
 	}
 };

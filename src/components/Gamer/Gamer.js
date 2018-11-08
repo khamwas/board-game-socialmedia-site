@@ -4,6 +4,7 @@ import GameCard from '../GameCard/GameCard';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import GameReview from '../GameReview/GameReview';
+import GamerDash from './GamerDash';
 
 class Gamer extends Component {
 	constructor() {
@@ -18,6 +19,7 @@ class Gamer extends Component {
 	}
 
 	componentDidMount() {
+		console.log(this.props);
 		this.setGamer();
 		if (this.props.user.length === 1) {
 			this.setBothFavs();
@@ -123,6 +125,7 @@ class Gamer extends Component {
 
 		return (
 			<div>
+				<GamerDash match={this.props.match} />
 				<div className="dash">
 					{/* <div className="module">
 						<Link to="/dashboard/suggested">

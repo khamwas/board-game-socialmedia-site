@@ -56,7 +56,13 @@ class Dash extends Component {
 						</div>
 					</Link>
 					<Link to="/dashboard/reviews">
-						<div>Reviews</div>
+						<div
+							className={
+								this.props.match.includes('review') ? 'selected' : 'fun'
+							}
+						>
+							Reviews
+						</div>
 					</Link>
 				</div>
 			</div>

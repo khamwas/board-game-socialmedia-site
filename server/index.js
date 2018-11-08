@@ -13,6 +13,7 @@ const gamerController = require('./controllers/gamerCtrl');
 const authController = require('./controllers/authCtrl');
 const userController = require('./controllers/userCtrl');
 const reviewController = require('./controllers/reviewCtrl');
+const sharedController = require('./controllers/sharedCtrl');
 const port = 3001;
 
 const app = express();
@@ -131,6 +132,10 @@ app.get('/api/user/reviews', userController.getReviews);
 app.post('/api/user/review', reviewController.postReview);
 app.put('/api/user/review', reviewController.updateReview);
 app.delete('/api/user/review/:id', reviewController.deleteReview);
+
+app.get('/api/both/played/:id', sharedController.getBothPlayed);
+app.get('/api/both/favorites/:id', sharedController.getBothFavs);
+app.get('/api/both/reviews/:id', sharedController.getReviews);
 
 app.get('/api/twoquery', (req, res, next) => {
 	req.app

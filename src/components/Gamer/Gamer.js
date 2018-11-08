@@ -19,9 +19,15 @@ class Gamer extends Component {
 
 	componentDidMount() {
 		this.setGamer();
-		this.setFavs();
-		this.setReviews();
-		this.setPlayed();
+		if (this.props.user.length === 1) {
+			this.setBothFavs();
+			this.setBothReviews();
+			this.setBothPlayed();
+		} else {
+			this.setFavs();
+			this.setReviews();
+			this.setPlayed();
+		}
 	}
 
 	setGamer() {
@@ -29,7 +35,6 @@ class Gamer extends Component {
 			.get(`/api/gamer/${this.props.match.params.id}`)
 			.then((result) => this.setState({ gamer: result.data }));
 	}
-
 	setReviews() {
 		axios
 			.get(`/api/gamer/reviews/${this.props.match.params.id}`)
@@ -45,6 +50,23 @@ class Gamer extends Component {
 			.get(`/api/played/${this.props.match.params.id}`)
 			.then((result) => this.setState({ playedGames: result.data }));
 	}
+
+	setBothReviews() {
+		axios
+			.get(`/api/both/reviews/${this.props.match.params.id}`)
+			.then((result) => this.setState({ reviews: result.data }));
+	}
+	setBothFavs() {
+		axios
+			.get(`/api/both/favorites/${this.props.match.params.id}`)
+			.then((result) => this.setState({ favoriteGames: result.data }));
+	}
+	setBothPlayed() {
+		axios
+			.get(`/api/both/played/${this.props.match.params.id}`)
+			.then((result) => this.setState({ playedGames: result.data }));
+	}
+
 	// setProfile() {
 	// 	let obj = Object.assign({}, this.state.gamer[0]);
 	// 	let arr = [];
@@ -142,13 +164,17 @@ class Gamer extends Component {
 					) : null}
 					<div className="module">
 						<Link to="/dashboard/favorites">
-							<div className="moduleTitle">Favorites</div>
+							<div className="moduleTitle">
+								{this.props.user.length === 1 ? 'Shared Favs' : 'Favorites'}
+							</div>
 						</Link>
 						{favGames}
 					</div>
 					<div className="module">
 						<Link to="/dashboard/played">
-							<div className="moduleTitle">Played</div>
+							<div className="moduleTitle">
+								{this.props.user.length === 1 ? 'Both Played' : 'Played'}
+							</div>
 						</Link>
 						{playedGames}
 					</div>

@@ -157,7 +157,7 @@ class GameReview extends Component {
 					</div>
 				</div>
 			);
-		} else {
+		} else if (this.props.user.length === 1) {
 			return (
 				<div onClick={() => this.editChanger()} className="reviewCard link">
 					{this.props.elem.handle ? (
@@ -172,6 +172,29 @@ class GameReview extends Component {
 						<Link to={`/game/${this.props.elem.game_id}`}>
 							<h3 className="super">{this.props.elem.title.toUpperCase()}</h3>
 						</Link>
+					)}
+
+					<p>{this.props.elem.review}</p>
+					<GameRating elem={this.props.elem} />
+				</div>
+			);
+		} else {
+			return (
+				<div onClick={() => this.editChanger()} className="reviewCard link">
+					{(
+						<h3 className="super">
+							<Link to={`/gamer/${this.props.elem.gamer_id}`}>
+								{this.props.elem.handle}
+							</Link>
+						</h3>
+					) || (
+						<h3 className="super">
+							{
+								<Link to={`/game/${this.props.elem.game_id}`}>
+									this.props.elem.title.toUpperCase()
+								</Link>
+							}
+						</h3>
 					)}
 
 					<p>{this.props.elem.review}</p>

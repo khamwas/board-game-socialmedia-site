@@ -64,6 +64,13 @@ class Dash extends Component {
 							Reviews
 						</div>
 					</Link>
+					<Link to="/dashboard/newsfeed">
+						<div
+							className={this.props.match.includes('news') ? 'selected' : 'fun'}
+						>
+							Reviews
+						</div>
+					</Link>
 				</div>
 			</div>
 			// 	</BrowserRouter>

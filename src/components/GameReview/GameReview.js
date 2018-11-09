@@ -81,7 +81,22 @@ class GameReview extends Component {
 	}
 
 	render() {
-		if (this.state.edit) {
+		if (this.props.match) {
+			return (
+				<div onClick={() => this.editChanger()} className="reviewCard link">
+					<Link to={`/gamer/${this.props.elem.gamer_id}`}>
+						<h3 className="super">{this.props.elem.handle}</h3>
+					</Link>
+
+					<Link to={`/game/${this.props.elem.game_id}`}>
+						<h3 className="super">{this.props.elem.title.toUpperCase()}</h3>
+					</Link>
+
+					<p>{this.props.elem.review}</p>
+					<GameRating elem={this.props.elem} />
+				</div>
+			);
+		} else if (this.state.edit) {
 			// let profile = this.props.user[0]['profile'].slice(
 			// 	0,
 			// 	this.props.user[0]['lvl'] + 3
@@ -186,6 +201,11 @@ class GameReview extends Component {
 							<Link to={`/game/${this.props.elem.game_id}`}>
 								{this.props.elem.title.toUpperCase()}
 							</Link>
+							{this.props.elem.handle && (
+								<Link to={`/gamer/${this.props.elem.gamer_id}`}>
+									{this.props.elem.handle}
+								</Link>
+							)}
 						</h3>
 					}
 

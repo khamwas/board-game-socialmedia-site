@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import GameCard from '../GameCard/GameCard';
+// import GameCard from '../GameCard/GameCard';
 import { connect } from 'react-redux';
+import NewsCard from './NewsCard';
 import Dash from './Dash';
 // import GameReview from '../GameReview/GameReview';
 import './Dashboard.css';
 import '../GameCard/GameCard.css';
 import axios from 'axios';
+import './Dashboard.css';
 
 class NewsFeed extends Component {
 	constructor(props) {
@@ -22,13 +24,19 @@ class NewsFeed extends Component {
 
 	render() {
 		let newsFeed = this.state.news.map((elem) => {
-			return <GameCard key={elem.game_id} elem={elem} />;
+			return (
+				<NewsCard
+					match={this.props.match.path}
+					key={elem.game_id}
+					elem={elem}
+				/>
+			);
 		});
 
 		return (
-			<div>
+			<div className="dash">
 				<Dash match={this.props.match.path} />
-				<div className="gameScreen">{newsFeed}</div>
+				<div className="news">{newsFeed}</div>
 			</div>
 		);
 	}

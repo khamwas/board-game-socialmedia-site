@@ -68,7 +68,7 @@ class Dash extends Component {
 						<div
 							className={this.props.match.includes('news') ? 'selected' : 'fun'}
 						>
-							Reviews
+							News Feed
 						</div>
 					</Link>
 				</div>

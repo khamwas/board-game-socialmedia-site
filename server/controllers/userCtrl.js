@@ -98,8 +98,10 @@ module.exports = {
 			.catch((err) => res.status(500).send(err));
 	},
 	getNewsFeed: (req, res, next) => {
-		let text = `select sensory,fantasy,narrative,challenge,fellowship,discovery,expression,abnegation,gamer_id,game_id, review_id,null as reviews,review,null as title,null as description,null as img,null as rules, null as play_time, null as set_up, null as age, null as min_players, null as max_players,null as email,null as handle,null as role,20 as lvl from game_reviews
-		where gamer_id !=${req.session.user[0].gamer_id}
+		let text = `select game_reviews.sensory,game_reviews.fantasy,game_reviews.narrative,game_reviews.challenge,game_reviews.fellowship,game_reviews.discovery,game_reviews.expression,game_reviews.abnegation,game_reviews.gamer_id,game_reviews.game_id, review_id,null as reviews,review,title,null as description,null as img,null as rules, null as play_time, null as set_up, null as age, null as min_players, null as max_players,null as email,handle,null as role,20 as lvl from game_reviews 
+		left join board_games on game_reviews.game_id=board_games.game_id
+		right join gamer on game_reviews.gamer_id=gamer.gamer_id
+		where game_reviews.gamer_id !=${req.session.user[0].gamer_id}
 		union all
 		select sensory,fantasy,narrative,challenge,fellowship,discovery,expression,abnegation,null as gamer_id,game_id, null as review_id,reviews,null as review,title,description,img,rules,play_time,set_up,age,min_players,max_players, null as email,null as handle,null as role,30 as lvl from ((select count(*) as reviews,game_id as link,avg(sensory) as sensory,avg(fantasy) as fantasy,avg(narrative) as narrative,avg(challenge) as challenge,avg(fellowship) as fellowship,avg(discovery) as discovery,avg(expression) as expression,avg(abnegation) as abnegation from game_reviews
 		group by game_id) as scores

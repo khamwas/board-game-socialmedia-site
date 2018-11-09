@@ -25,4 +25,50 @@
 .quizRatings {
 	display: flex;
 	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.quizResults {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	/* margin: 5px; */
+	background: #2b4162;
+	color: white;
+	font-weight: 700;
+	font-size: 1.25em;
+	/* max-width: 500px; */
+	min-height: 30px;
+	width: 100vw;
+	cursor: pointer;
+	flex-wrap: wrap;
+}
+
+.quizInput {
+	font-size: 0.7em;
+	width: 150px;
+	margin: 10px;
+	height: 50px;
+}
+
+.resultNames {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+p {
+	margin: 50px;
+}
+
+.bottomButton {
+	margin-top: 50px;
+	margin-bottom: 200px;
+	width: 150px;
+	height: 50px;
+	color: white;
+	background: #2b4162;
+	font-weight: 700;
+	font-size: 1.2em;
 }

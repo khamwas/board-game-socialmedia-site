@@ -31,8 +31,8 @@ class GamerFavs extends Component {
 	}
 
 	render() {
-		let display = this.state.favs.map((elem) => {
-			return <GameCard elem={elem} />;
+		let display = this.state.favs.map((elem, i) => {
+			return <GameCard key={elem + i} elem={elem} />;
 		});
 		return (
 			<div>

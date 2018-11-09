@@ -9,11 +9,10 @@ function NewsCard(props) {
 		for (let i = 0; i < 15; i++) {
 			for (let x in obj) {
 				if (parseInt(obj[x]) === i && x !== 'lvl' && x !== 'gamer_id') {
-					profile.push(x.toUpperCase(), <br />);
+					profile.push(x.toUpperCase(), <br key={x + i} />);
 				}
 			}
 		}
-		console.log(profile);
 		return (
 			<div className="module">
 				<div className="moduleTitle">

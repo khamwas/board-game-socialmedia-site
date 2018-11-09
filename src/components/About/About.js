@@ -34,6 +34,47 @@ class About extends Component {
 	}
 
 	componentDidMount() {
+		if (this.props.quiz) {
+			this.setState({ selector: this.props.quiz });
+
+			this.getFun();
+			axios
+				.get('/api/games?x=sensory')
+				.then((result) => this.setState({ sensory: result.data.slice(0, 3) }));
+			axios
+				.get('/api/games?x=fantasy')
+				.then((result) => this.setState({ fantasy: result.data.slice(0, 3) }));
+			axios
+				.get('/api/games?x=narrative')
+				.then((result) =>
+					this.setState({ narrative: result.data.slice(0, 3) })
+				);
+			axios
+				.get('/api/games?x=challenge')
+				.then((result) =>
+					this.setState({ challenge: result.data.slice(0, 3) })
+				);
+			axios
+				.get('/api/games?x=fellowship')
+				.then((result) =>
+					this.setState({ fellowship: result.data.slice(0, 3) })
+				);
+			axios
+				.get('/api/games?x=expression')
+				.then((result) =>
+					this.setState({ expression: result.data.slice(0, 3) })
+				);
+			axios
+				.get('/api/games?x=discovery')
+				.then((result) =>
+					this.setState({ discovery: result.data.slice(0, 3) })
+				);
+			axios
+				.get('/api/games?x=abnegation')
+				.then((result) =>
+					this.setState({ abnegation: result.data.slice(0, 3) })
+				);
+		}
 		if (this.props.user[0]) {
 			this.setState({ selector: this.props.user[0]['profile'].slice() });
 		}
@@ -82,7 +123,7 @@ class About extends Component {
 							(elem) => this.state.types.filter((item) => item.type === elem)[0]
 						)
 						.map((elem, i) => (
-							<div key={i} className="typeBox">
+							<div key={elem + i} className="typeBox">
 								<div className="aboutTitleContainer">
 									<Icon elem={elem.type} />
 									<h2 className="aboutTitle">{elem.type.toUpperCase()}</h2>
@@ -90,8 +131,8 @@ class About extends Component {
 								{this.state.example ? (
 									<div className="aboutKeysContainer">
 										<div className="aboutCard">
-											{this.state[elem.type].map((elem) => (
-												<GameCard elem={elem} />
+											{this.state[elem.type].map((elem, j) => (
+												<GameCard key={elem + j} elem={elem} />
 											))}
 										</div>
 									</div>

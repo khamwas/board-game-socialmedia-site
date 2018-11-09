@@ -103,8 +103,8 @@ class GameReview extends Component {
 			// );
 			let stars = this.props.user[0]['profile']
 				.slice(0, this.props.user[0]['lvl'] + 3)
-				.map((item) => (
-					<div>
+				.map((item, i) => (
+					<div key={item + i}>
 						{item}
 						<StarRating
 							rating={this.state[item]}

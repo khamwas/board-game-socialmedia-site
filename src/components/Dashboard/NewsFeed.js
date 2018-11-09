@@ -23,13 +23,9 @@ class NewsFeed extends Component {
 	}
 
 	render() {
-		let newsFeed = this.state.news.map((elem) => {
+		let newsFeed = this.state.news.map((elem, i) => {
 			return (
-				<NewsCard
-					match={this.props.match.path}
-					key={elem.game_id}
-					elem={elem}
-				/>
+				<NewsCard match={this.props.match.path} key={elem + i} elem={elem} />
 			);
 		});
 

@@ -10,7 +10,7 @@ module.exports = {
 			.catch((err) => res.status(500).send(err));
 	},
 	updateReview: (req, res, next) => {
-		console.log(req.body);
+		// console.log(req.body);
 		req.app
 			.get('db')
 			.game_reviews.save(req.body)

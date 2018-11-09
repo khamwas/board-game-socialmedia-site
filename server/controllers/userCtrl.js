@@ -127,5 +127,12 @@ module.exports = {
 			.query(text)
 			.then((response) => res.status(200).json(response))
 			.catch((err) => res.status(500).send(err));
+	},
+	addUser: (req, res, next) => {
+		req.app
+			.get('db')
+			.gamer.insert(req.body)
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
 	}
 };

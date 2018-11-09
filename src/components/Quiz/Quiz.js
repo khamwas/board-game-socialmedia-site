@@ -3,6 +3,7 @@ import StarRating from 'react-star-ratings';
 import axios from 'axios';
 import GameCard from '../GameCard/GameCard';
 import './Quiz.css';
+import Icon from '../Icon/Icon';
 import About from '../About/About';
 
 class Quiz extends Component {
@@ -21,8 +22,45 @@ class Quiz extends Component {
 			games: [],
 			index: 0,
 			profile: [],
-			incomplete: true
+			incomplete: true,
+			selector: [
+				'fantasy',
+				'narrative',
+				'challenge',
+				'sensory',
+				'fellowship',
+				'expression',
+				'discovery',
+				'abnegation'
+			],
+			filterArray: [],
+			lvl: 0,
+			role: 'gamer',
+			email: '',
+			handle: ''
 		};
+	}
+
+	createAccount() {
+		// alert("You've created a gamer account!");
+		let newUser = Object.assign(
+			{},
+			{
+				handle: this.state.handle,
+				email: this.state.email,
+				role: this.state.role,
+				lvl: this.state.lvl
+			}
+		);
+
+		this.state.filterArray.map((elem, i) =>
+			Object.assign(newUser, { [elem]: i + 1 })
+		);
+		axios
+			.post('/api/user', newUser)
+			.then(() =>
+				window.open(`${process.env.REACT_APP_SERVER}/login`, '_self')
+			);
 	}
 
 	componentDidMount() {
@@ -35,6 +73,9 @@ class Quiz extends Component {
 					.then((result) => this.setState({ games: result.data }));
 			}
 		});
+	}
+	changeHandler(e, name) {
+		this.setState({ [name]: e.target.value });
 	}
 
 	changeRating(newRating, name) {
@@ -52,6 +93,19 @@ class Quiz extends Component {
 	completeChecker() {
 		if (this.state.index === this.state.games.length) {
 			this.setState({ incomplete: false }, () => this.profiler());
+		}
+	}
+
+	updateFilter(str) {
+		if (this.state.filterArray.join('').includes(str)) {
+			let temp = this.state.filterArray.slice();
+			let index = this.state.filterArray.findIndex((elem) => elem === str);
+			temp.splice(index, 1);
+			this.setState({ filterArray: temp });
+		} else {
+			let temp = this.state.filterArray.slice();
+			temp.push(str);
+			this.setState({ filterArray: temp });
 		}
 	}
 
@@ -101,6 +155,7 @@ class Quiz extends Component {
 	}
 
 	profiler() {
+		var selector = [];
 		var profile = [];
 		for (let i = 0; i < this.state.index * 25; i++) {
 			var things = Object.assign(
@@ -116,17 +171,28 @@ class Quiz extends Component {
 			);
 			for (var x in things) {
 				if (parseInt(things[x]) === i) {
-					profile.push(<h4>{x}</h4>);
+					profile.push(
+						<h4 className="resultNames" key={x + things[x]}>
+							{x.toUpperCase()}
+						</h4>
+					);
+					selector.push(x);
 				}
 			}
 		}
-		this.setState({ profile: profile });
+		this.setState({ profile: profile }, () =>
+			this.setState({ selector: selector }, () =>
+				this.setState({ filterArray: selector })
+			)
+		);
 	}
 
 	render() {
 		let game = this.state.games
 			.slice(this.state.index, this.state.index + 1)
-			.map((elem) => <GameCard match={this.props.match} elem={elem} />);
+			.map((elem, i) => (
+				<GameCard key={elem + i} match={this.props.match} elem={elem} />
+			));
 		if (this.state.incomplete) {
 			return (
 				<div className="quiz">
@@ -157,25 +223,75 @@ class Quiz extends Component {
 						</button>
 					</div>
 					<div>{this.state.profile}</div>
-					<button className="quizButton" onClick={() => this.profiler()}>
-						Submit
-					</button>
 				</div>
 			);
 		} else {
+			let selectorDisplay = this.state.selector.map((elem, i) => {
+				return (
+					<div
+						key={i}
+						onClick={() => this.updateFilter(elem)}
+						className={
+							this.state.filterArray
+								.slice()
+								.join('')
+								.includes(elem)
+								? 'selected clicker'
+								: 'clicker'
+						}
+					>
+						<Icon elem={elem} />
+						<div className="subHeader">
+							{elem.charAt(0).toUpperCase() + elem.slice(1)}
+						</div>
+					</div>
+				);
+			});
+			let selected = this.state.filterArray.map((elem, i) => (
+				<h4 className="onFilter" key={i}>
+					<Icon elem={elem} />
+					{i + 1}. {elem.toUpperCase()}
+				</h4>
+			));
 			return (
 				<div className="quiz">
 					<h1>Results</h1>
+					<div className="quizResults">{this.state.profile}</div>
 					<p>
-						Rate each game on a scale of 0-5 stars. Hit the submit button to
-						rate the next game. If you don't know a game, skip it by selecting
-						"I don't know this game." When you are finished with your quiz, we
-						will create a gaming profile for you that will indicate
+						Congratulations! You have completed the first step to never being
+						board again. This profile indicates the types of fun that are most
+						important to you and helps our algorithm present games that match
+						your profile and fit your gaming personality. Read about each type
+						of fun below and then make any final changes to your profile before
+						creating an account so you can find your next best game.
 					</p>
-					<div className="gameScreen">{game}</div>
 
-					<div>{this.state.profile}</div>
-					<About />
+					<About quiz={this.state.selector} />
+					<div className="selector">{selectorDisplay}</div>
+					<div className="searchBar">{selected}</div>
+					<h4>
+						If you feel like your profile should be different than what our quiz
+						suggested, please rearrange your profile here before creating an
+						account. Take care, you will not be able to update your profile
+						after you set it.
+					</h4>
+					<div>
+						<input
+							className="quizInput"
+							placeholder="Register your email here"
+							value={this.state.handle}
+							onChange={(e) => this.changeHandler(e, 'handle')}
+						/>
+						<input
+							className="quizInput"
+							placeholder="Register your username here"
+							value={this.state.email}
+							onChange={(e) => this.changeHandler(e, 'email')}
+						/>
+					</div>
+					<button className="bottomButton" onClick={() => this.createAccount()}>
+						Create Account
+					</button>
 				</div>
 			);
 		}

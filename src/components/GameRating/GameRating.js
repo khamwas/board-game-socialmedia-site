@@ -16,7 +16,7 @@ function GameReview(props) {
 				x === 'abnegation')
 		)
 			review.push(
-				<h4>
+				<h4 key={x + props.elem[x]}>
 					{x}
 					<StarRatings
 						rating={parseFloat(props.elem[x])}

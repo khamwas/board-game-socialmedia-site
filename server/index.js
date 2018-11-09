@@ -124,6 +124,7 @@ app.post('/api/user/isfavgame/:id', userController.isFavPost);
 app.delete('/api/user/isfavgame/:id', userController.isFavDelete);
 
 app.get('/api/user', userController.getUser);
+app.post('/api/user', userController.addUser);
 app.get('/api/user/favorites', userController.getFavs);
 app.get('/api/user/played', userController.getPlayed);
 app.get('/api/user/suggestions', userController.getSuggestions);

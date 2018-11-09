@@ -19,7 +19,6 @@ class Gamer extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props);
 		this.setGamer();
 		if (this.props.user.length === 1) {
 			this.setBothFavs();
@@ -85,14 +84,14 @@ class Gamer extends Component {
 	render() {
 		let favGames = this.state.favoriteGames.map((elem, i) => {
 			if (i < 5) {
-				return <GameCard key={elem.game_id} elem={elem} />;
+				return <GameCard key={elem + i} elem={elem} />;
 			} else {
 				return null;
 			}
 		});
 		let playedGames = this.state.playedGames.map((elem, i) => {
 			if (i < 5) {
-				return <GameCard key={elem.game_id} elem={elem} />;
+				return <GameCard key={elem + i} elem={elem} />;
 			} else {
 				return null;
 			}
@@ -105,9 +104,9 @@ class Gamer extends Component {
 		// 	}
 		// });
 
-		let reviews = this.state.reviews.map((elem) => (
+		let reviews = this.state.reviews.map((elem, i) => (
 			<GameReview
-				key={elem.review_id}
+				key={elem + i}
 				getReviews={this.props.setUserReviews}
 				elem={elem}
 			/>
@@ -118,7 +117,7 @@ class Gamer extends Component {
 		for (let i = 0; i < 15; i++) {
 			for (let x in obj) {
 				if (obj[x] === i && x !== 'lvl' && x !== 'gamer_id') {
-					profile.push(x.toUpperCase(), <br />);
+					profile.push(x.toUpperCase(), <br key={x + i} />);
 				}
 			}
 		}
@@ -156,8 +155,8 @@ class Gamer extends Component {
 							</div>
 
 							<h4>
-								{this.props.user[0]['profile'].map((elem) => (
-									<div>
+								{this.props.user[0]['profile'].map((elem, i) => (
+									<div key={elem + i}>
 										{elem.toUpperCase()}
 										<br />
 									</div>

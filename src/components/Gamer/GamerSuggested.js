@@ -24,8 +24,8 @@ class GamerSuggested extends Component {
 	}
 
 	render() {
-		let display = this.state.suggested.map((elem) => {
-			return <GameCard elem={elem} />;
+		let display = this.state.suggested.map((elem, i) => {
+			return <GameCard key={elem + i} elem={elem} />;
 		});
 		return (
 			<div>

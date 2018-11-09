@@ -31,8 +31,8 @@ class GamerPlayed extends Component {
 	}
 
 	render() {
-		let display = this.state.played.map((elem) => {
-			return <GameCard elem={elem} />;
+		let display = this.state.played.map((elem, i) => {
+			return <GameCard key={elem + i} elem={elem} />;
 		});
 		return (
 			<div>

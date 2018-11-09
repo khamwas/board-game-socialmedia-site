@@ -13,7 +13,7 @@ function GamerDash(props) {
 						}
 					>
 						<Link to={`/gamer/suggested/${props.match.params.id}`}>
-							{props.user.length === 1 ? 'Shared Suggested' : 'Suggested'}
+							{props.user.length === 1 ? 'Play Together' : 'Suggested'}
 						</Link>
 					</div>
 				) : null}

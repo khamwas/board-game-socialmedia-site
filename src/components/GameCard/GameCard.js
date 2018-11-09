@@ -59,34 +59,54 @@ class GameCard extends Component {
 	}
 
 	render() {
-		return (
-			<div className="cardLike" key={this.props.elem.game_id}>
-				{!this.props.user[0] ? null : (
-					<div>
-						<div onClick={() => this.likeButton()} className="circle">
-							<div className={this.state.fav ? 'heart fav' : 'heart'} />
+		if (this.props.match) {
+			return (
+				<div className="gameCardContainer">
+					<img
+						className="gameScrollImg"
+						src={this.props.elem.img}
+						alt={this.props.elem.title}
+					/>
+					<div className="cardBottom">
+						<div>{this.props.elem.title.toUpperCase()}</div>
+						<div className="line" />
+						<div>
+							{this.props.elem.reviews ? this.props.elem.reviews : 0} Review
+							{parseInt(this.props.elem.reviews) !== 1 ? 's' : null}
 						</div>
 					</div>
-				)}
-				<Link to={`/game/${this.props.elem.game_id}`}>
-					<div className="gameCardContainer">
-						<img
-							className="gameScrollImg"
-							src={this.props.elem.img}
-							alt={this.props.elem.title}
-						/>
-						<div className="cardBottom">
-							<div>{this.props.elem.title.toUpperCase()}</div>
-							<div className="line" />
-							<div>
-								{this.props.elem.reviews ? this.props.elem.reviews : 0} Review
-								{parseInt(this.props.elem.reviews) !== 1 ? 's' : null}
+				</div>
+			);
+		} else {
+			return (
+				<div className="cardLike" key={this.props.elem.game_id}>
+					{!this.props.user[0] ? null : (
+						<div>
+							<div onClick={() => this.likeButton()} className="circle">
+								<div className={this.state.fav ? 'heart fav' : 'heart'} />
 							</div>
 						</div>
-					</div>
-				</Link>
-			</div>
-		);
+					)}
+					<Link to={`/game/${this.props.elem.game_id}`}>
+						<div className="gameCardContainer">
+							<img
+								className="gameScrollImg"
+								src={this.props.elem.img}
+								alt={this.props.elem.title}
+							/>
+							<div className="cardBottom">
+								<div>{this.props.elem.title.toUpperCase()}</div>
+								<div className="line" />
+								<div>
+									{this.props.elem.reviews ? this.props.elem.reviews : 0} Review
+									{parseInt(this.props.elem.reviews) !== 1 ? 's' : null}
+								</div>
+							</div>
+						</div>
+					</Link>
+				</div>
+			);
+		}
 	}
 }
 

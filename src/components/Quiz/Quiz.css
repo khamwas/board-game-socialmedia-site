@@ -1,0 +1,28 @@
+.quiz {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.quizButton {
+	font-size: 1em;
+	margin: 10px;
+	background: #2b4162;
+	color: white;
+	max-width: 150px;
+	min-width: 150px;
+	height: 50px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.quizButton:hover {
+	cursor: pointer;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.quizRatings {
+	display: flex;
+	align-items: center;
+}

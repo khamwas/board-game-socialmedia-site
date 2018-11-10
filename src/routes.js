@@ -15,6 +15,7 @@ import GamerPlayed from './components/Gamer/GamerPlayed';
 import GamerSuggested from './components/Gamer/GamerSuggested';
 import GamerReviews from './components/Gamer/GamerReviews';
 import NewsFeed from './components/Dashboard/NewsFeed';
+import Search from './components/Search/Search';
 
 export default (
 	<Switch>
@@ -34,5 +35,6 @@ export default (
 		<Route path="/gamer/favorites/:id" component={GamerFavs} />
 		<Route path="/gamer/reviews/:id" component={GamerReviews} />
 		<Route path="/gamer/:id" component={Gamer} />
+		<Route path="/search" component={Search} />
 	</Switch>
 );

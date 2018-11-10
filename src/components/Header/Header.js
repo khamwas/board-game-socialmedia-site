@@ -55,18 +55,26 @@ class Header extends Component {
 				<div className="navLink about">About</div>
 			</Link>
 		);
+		let search = (
+			<Link to="/search">
+				<div className="navLink types">Search</div>
+			</Link>
+		);
 		return (
 			<div className="header">
 				<div className="logoContainer">
-					<img
-						className="logo"
-						src="https://s3.us-east-2.amazonaws.com/boardashell/logo.png"
-						alt="logo"
-					/>
+					<Link to="/search">
+						<img
+							className="logo"
+							src="https://s3.us-east-2.amazonaws.com/boardashell/logo.png"
+							alt="logo"
+						/>
+					</Link>
 					{/* <div className="logoText">Board as Hell</div> */}
 					{this.props.user.length < 1 ? null : user}
 				</div>
 				<nav className="nav">
+					{search}
 					{games} {fun} {this.props.user.length < 1 ? login : dashboard}
 				</nav>
 				{/* <Suggested /> */}

@@ -85,5 +85,18 @@ module.exports = {
 			)
 			.then((response) => res.status(200).json(response))
 			.catch((err) => res.status(500).send(err));
+	},
+	suggestion: (req, res, next) => {
+		console.log(req.body);
+		let game = Object.assign(
+			{},
+			{ gamer_id: req.session.user[0].gamer_id },
+			req.body
+		);
+		req.app
+			.get('db')
+			.pending_new_games.insert(game)
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
 	}
 };

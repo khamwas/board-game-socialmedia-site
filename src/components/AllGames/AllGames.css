@@ -59,7 +59,7 @@
 
 .selected {
 	color: #2b4162;
-	border: 1px solid #2b4162;
+	/* border: 1px solid #2b4162; */
 }
 
 .searchBar {

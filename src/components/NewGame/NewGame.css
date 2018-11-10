@@ -1,0 +1,43 @@
+.newGameCard {
+	padding: 25px;
+	justify-content: space-around;
+	align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	left: 20vw;
+	right: 20vw;
+	top: 25vw;
+	z-index: 2;
+	max-width: 800px;
+	min-height: 400px;
+	background: #9999a1;
+	color: white;
+	flex-wrap: wrap;
+}
+
+input {
+	color: black;
+}
+
+textarea {
+	color: black;
+}
+
+.NewGameNumbers {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+.indiNumbers {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-end;
+	flex-wrap: wrap;
+	/* width: 200px;
+	height: 200px; */
+}

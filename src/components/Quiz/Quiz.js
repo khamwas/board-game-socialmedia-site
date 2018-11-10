@@ -280,13 +280,13 @@ class Quiz extends Component {
 							className="quizInput"
 							placeholder="Register your email here"
 							value={this.state.handle}
-							onChange={(e) => this.changeHandler(e, 'handle')}
+							onChange={(e) => this.changeHandler(e, 'email')}
 						/>
 						<input
 							className="quizInput"
 							placeholder="Register your username here"
 							value={this.state.email}
-							onChange={(e) => this.changeHandler(e, 'email')}
+							onChange={(e) => this.changeHandler(e, 'handle')}
 						/>
 					</div>
 					<button className="bottomButton" onClick={() => this.createAccount()}>

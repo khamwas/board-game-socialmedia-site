@@ -125,6 +125,7 @@ app.delete('/api/user/isfavgame/:id', userController.isFavDelete);
 
 app.get('/api/user', userController.getUser);
 app.post('/api/user', userController.addUser);
+app.get('/api/users', userController.getUsers);
 app.get('/api/user/favorites', userController.getFavs);
 app.get('/api/user/played', userController.getPlayed);
 app.get('/api/user/suggestions', userController.getSuggestions);
@@ -139,6 +140,8 @@ app.get('/api/both/played/:id', sharedController.getBothPlayed);
 app.get('/api/both/favorites/:id', sharedController.getBothFavs);
 app.get('/api/both/reviews/:id', sharedController.getReviews);
 app.get('/api/both/suggestions/:id', sharedController.getBothSuggestions);
+
+app.post('/api/game/suggestion', gameController.suggestion);
 
 app.get('/api/twoquery', (req, res, next) => {
 	req.app

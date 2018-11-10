@@ -109,12 +109,10 @@ class AllGames extends Component {
 				}
 			>
 				<Icon
-					classname={
-						this.state.filterArray
-							.slice()
-							.join('')
-							.includes(elem) && 'selectedIcon'
-					}
+					clicked={this.state.filterArray
+						.slice()
+						.join('')
+						.includes(elem)}
 					elem={elem}
 				/>
 				<div className="subHeader">

@@ -35,6 +35,7 @@ class About extends Component {
 
 	componentDidMount() {
 		if (this.props.quiz) {
+			console.log(this.props.quiz);
 			this.setState({ selector: this.props.quiz });
 
 			this.getFun();

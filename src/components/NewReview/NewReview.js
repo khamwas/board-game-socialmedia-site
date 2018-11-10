@@ -32,6 +32,9 @@ class NewReview extends Component {
 		);
 	}
 
+	zero(name) {
+		this.setState({ [name]: 0 });
+	}
 	submitReview() {
 		axios
 			.post('/api/user/review', this.state)
@@ -53,9 +56,9 @@ class NewReview extends Component {
 		// );
 		let stars = this.props.user[0]['profile']
 			.slice(0, this.props.user[0]['lvl'] + 3)
-			.map((item) => (
-				<div>
-					{item}
+			.map((item, i) => (
+				<div className="starEdit" key={item + i}>
+					<div onClick={() => this.zero(item)}>{item}</div>
 					<StarRating
 						rating={this.state[item]}
 						starRatedColor="rgb(43,65,98)"

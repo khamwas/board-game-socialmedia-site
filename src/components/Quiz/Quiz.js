@@ -155,7 +155,7 @@ class Quiz extends Component {
 	}
 
 	profiler() {
-		var selector = [];
+		var selector2 = [];
 		var profile = [];
 		for (let i = 0; i < this.state.index * 25; i++) {
 			var things = Object.assign(
@@ -176,13 +176,13 @@ class Quiz extends Component {
 							{x.toUpperCase()}
 						</h4>
 					);
-					selector.push(x);
+					selector2.push(x);
 				}
 			}
 		}
 		this.setState({ profile: profile }, () =>
-			this.setState({ selector: selector }, () =>
-				this.setState({ filterArray: selector })
+			this.setState({ quizResult: selector2 }, () =>
+				this.setState({ filterArray: selector2 })
 			)
 		);
 	}

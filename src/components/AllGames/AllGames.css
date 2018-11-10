@@ -1,7 +1,11 @@
 .icon {
 	width: 30px;
 	filter: invert(100%);
+	/* fill: white; */
 	margin: 10px;
+}
+.selectedIcon {
+	filter: invert(0.1) sepia(1) saturate(34) hue-rotate(187deg);
 }
 
 .gameScreen {

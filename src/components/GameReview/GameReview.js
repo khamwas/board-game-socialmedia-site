@@ -26,7 +26,9 @@ class GameReview extends Component {
 	componentDidMount() {
 		this.cleanState();
 	}
-
+	zero(name) {
+		this.setState({ [name]: 0 });
+	}
 	cleanState() {
 		this.setState({
 			review: this.props.elem.review,
@@ -104,8 +106,9 @@ class GameReview extends Component {
 			let stars = this.props.user[0]['profile']
 				.slice(0, this.props.user[0]['lvl'] + 3)
 				.map((item, i) => (
-					<div key={item + i}>
-						{item}
+					<div className="starEdit" key={item + i}>
+						<div onClick={() => this.zero(item)}>{item}</div>
+
 						<StarRating
 							rating={this.state[item]}
 							starRatedColor="rgb(43,65,98)"

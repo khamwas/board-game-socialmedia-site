@@ -108,7 +108,15 @@ class AllGames extends Component {
 						: 'clicker'
 				}
 			>
-				<Icon elem={elem} />
+				<Icon
+					classname={
+						this.state.filterArray
+							.slice()
+							.join('')
+							.includes(elem) && 'selectedIcon'
+					}
+					elem={elem}
+				/>
 				<div className="subHeader">
 					{elem.charAt(0).toUpperCase() + elem.slice(1)}
 				</div>

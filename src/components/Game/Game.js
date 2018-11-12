@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import GameRating from '../GameRating/GameRating';
 import NewReview from '../NewReview/NewReview';
 import GameReview from '../GameReview/GameReview';
@@ -58,7 +59,10 @@ class Game extends Component {
 			.filter((elem) => elem.game_id === parseInt(this.props.match.params.id))
 			.map((elem) => (
 				<div className="gameInfo" key={elem.game_id}>
-					<h1>{elem.title.charAt(0).toUpperCase() + elem.title.slice(1).toUpperCase()}</h1>
+					<h1>
+						{elem.title.charAt(0).toUpperCase() +
+							elem.title.slice(1).toUpperCase()}
+					</h1>
 					<img className="gameImg" alt={elem.title} src={elem.img} />
 					<p className="description">{elem.description}</p>
 					<div className="littleInfo">
@@ -103,6 +107,13 @@ class Game extends Component {
 							<GameRating elem={elem} />
 						</div>
 					</div>
+					{elem.handle !== null && (
+						<div className="submitted">
+							<Link to={`/gamer/${elem.gamer_id}`}>
+								submitted by {elem.handle}
+							</Link>
+						</div>
+					)}
 				</div>
 			));
 

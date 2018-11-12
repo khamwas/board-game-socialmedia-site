@@ -26,7 +26,7 @@ module.exports = {
 				group by game_id) as scores
 				join board_games on scores.thegame=board_games.game_id) as super
 				left join favorite_game on super.game_id=favorite_game.game_id
-				where gamer_id=${req.session.user[0].gamer_id}`
+				where favorite_game.gamer_id=${req.session.user[0].gamer_id}`
 			)
 			.then((response) => res.status(200).json(response))
 			.catch((err) => res.status(500).send(err));
@@ -39,7 +39,7 @@ module.exports = {
 				group by game_id) as scores
 				join board_games on scores.thegame=board_games.game_id) as super
 				left join played_games on super.game_id=played_games.game_id
-				where gamer_id=${req.session.user[0].gamer_id}`
+				where played_games.gamer_id=${req.session.user[0].gamer_id}`
 			)
 			.then((response) => res.status(200).json(response))
 			.catch((err) => res.status(500).send(err));

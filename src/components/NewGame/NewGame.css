@@ -1,30 +1,56 @@
 .newGameCard {
+	display: flex;
 	padding: 25px;
 	justify-content: space-around;
 	align-items: flex-start;
-	display: flex;
 	flex-direction: column;
 	position: fixed;
 	left: 20vw;
 	right: 20vw;
-	top: 25vw;
+	bottom: 4vh;
+	top: 4vh;
+	height: 90vh;
 	z-index: 2;
-	max-width: 800px;
-	min-height: 400px;
+	/* max-width: 800px; */
+	/* min-height: 600px; */
 	background: #9999a1;
 	color: white;
 	flex-wrap: wrap;
 }
 
+@media (max-width: 750px) {
+	.newGameCard {
+		left: 5vw;
+		right: 5vw;
+		justify-content: flex-start;
+	}
+}
+/* @media (min-width: 1000px) {
+	.newGameCard {
+		height: 90vh;
+	}
+} */
+
+/* @media (min-width: 1000px) {
+	.newGameParagraph {
+		margin-left: 150px;
+		margin-right: 150px;
+	}
+} */
+
 input {
 	color: black;
+	margin: 0;
 }
 
 textarea {
+	margin: 0;
+	/* width: inherit; */
 	color: black;
 }
 
 .NewGameNumbers {
+	margin-top: 50px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
@@ -40,4 +66,33 @@ textarea {
 	flex-wrap: wrap;
 	/* width: 200px;
 	height: 200px; */
+}
+
+.pendingImage {
+	width: 200px;
+	height: 200px;
+}
+@media (max-width: 460px) {
+	.indiNumbers {
+		align-items: center;
+	}
+	.indiNumbersInput {
+		margin-left: 150px;
+		margin-right: 150px;
+	}
+	.pendingImage {
+		display: none;
+	}
+}
+
+.black {
+	color: black;
+}
+
+.newImg {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
 }

@@ -16,7 +16,8 @@ class NewGame extends Component {
 			age: null,
 			min_players: null,
 			max_players: null,
-			redirect: false
+			redirect: false,
+			file: null
 		};
 	}
 
@@ -30,26 +31,69 @@ class NewGame extends Component {
 			.then(() => this.setState({ redirect: true }));
 	}
 
+	submitFile = (event) => {
+		event.preventDefault();
+		const formData = new FormData();
+		formData.append('file', this.state.file[0]);
+		axios
+			.post(`/test-upload`, formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			})
+			.then((response) => {
+				console.log(response);
+				this.setState({ img: response.data.Location });
+				// handle your response;
+			})
+			.catch((error) => {
+				console.log(error); // handle your error
+			});
+	};
+
+	handleFileUpload = (event) => {
+		this.setState({ file: event.target.files });
+	};
+
 	render() {
 		return (
 			<div>
 				{this.state.redirect && <Redirect to="/dashboard" />}
 				<div className="confirmWhiteout" />
 				<div className="newGameCard">
-					<div>
-						Title:{' '}
+					<div className="newImg">
+						<img
+							alt="pendingImage"
+							src={this.state.img}
+							className="pendingImage"
+						/>
+						<form onSubmit={this.submitFile}>
+							<input
+								label="upload file"
+								type="file"
+								onChange={this.handleFileUpload}
+							/>
+							<button type="submit" className="black">
+								Send
+							</button>
+						</form>
+					</div>
+					<div className="input">
+						<div>Title: </div>
 						<input
 							value={this.state.title}
 							onChange={(e) => this.changeHandler(e, 'title')}
 						/>
 					</div>
-					Description:{' '}
-					<textarea
-						type="text"
-						className="input"
-						onChange={(e) => this.changeHandler(e, 'desc')}
-						value={this.state.desc}
-					/>
+					<div className="input">
+						<div>Description: </div>
+						<textarea
+							type="text"
+							className="input"
+							onChange={(e) => this.changeHandler(e, 'desc')}
+							value={this.state.desc}
+						/>
+					</div>
 					<div className="NewGameNumbers">
 						<div className="indiNumbers">
 							<div>
@@ -66,6 +110,7 @@ class NewGame extends Component {
 							<div>
 								Play Time:
 								<input
+									className="indiNumbersInput"
 									min="0"
 									type="number"
 									value={this.state.play_time}
@@ -75,6 +120,7 @@ class NewGame extends Component {
 							<div>
 								Set up:
 								<input
+									className="indiNumbersInput"
 									min="0"
 									type="number"
 									value={this.state.set_up}
@@ -86,6 +132,7 @@ class NewGame extends Component {
 							<div>
 								Age:
 								<input
+									className="indiNumbersInput"
 									min="0"
 									type="number"
 									value={this.state.age}
@@ -95,6 +142,7 @@ class NewGame extends Component {
 							<div>
 								Min Players:
 								<input
+									className="indiNumbersInput"
 									min="1"
 									type="number"
 									value={this.state.min_players}
@@ -104,6 +152,7 @@ class NewGame extends Component {
 							<div>
 								Max Players:
 								<input
+									className="indiNumbersInput"
 									min="1"
 									type="number"
 									value={this.state.max_players}
@@ -112,7 +161,7 @@ class NewGame extends Component {
 							</div>
 						</div>
 					</div>
-					<p>
+					<p className="newGameParagraph">
 						Play Time and Set Up are in hours. Please use decimals to indicate
 						time less than an hour
 					</p>

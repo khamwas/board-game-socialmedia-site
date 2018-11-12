@@ -3,6 +3,7 @@ import GameRating from '../GameRating/GameRating';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import StarRating from 'react-star-ratings';
+import Moment from 'react-moment';
 import './GameReview.css';
 import axios from 'axios';
 
@@ -178,8 +179,9 @@ class GameReview extends Component {
 		} else if (this.props.user.length === 1) {
 			return (
 				<div onClick={() => this.editChanger()} className="reviewCard link">
-				<div className="timestamp">{this.props.elem.time}</div>
-					{this.props.elem.handle ? (
+<div className="timestamp">
+								<Moment format="MMM-DD-YYYY">{this.props.elem.time}</Moment>
+								</div>					{this.props.elem.handle ? (
 						this.props.elem.handle === this.props.user[0]['handle'] ? (
 							<h3 className="super">{this.props.elem.handle}</h3>
 						) : (
@@ -200,8 +202,9 @@ class GameReview extends Component {
 		} else if (this.props.elem.title) {
 			return (
 				<div onClick={() => this.editChanger()} className="reviewCard link">
-								<div className="timestamp">{this.props.elem.time}</div>
-
+<div className="timestamp">
+								<Moment format="MMM-DD-YYYY">{this.props.elem.time}</Moment>
+								</div>
 					{
 						<h3 className="super">
 							<Link to={`/game/${this.props.elem.game_id}`}>
@@ -222,7 +225,9 @@ class GameReview extends Component {
 		} else {
 			return (
 				<div onClick={() => this.editChanger()} className="reviewCard link">
-								<div className="timestamp">{this.props.elem.time}</div>
+								<div className="timestamp">
+								<Moment format="MMM-DD-YYYY">{this.props.elem.time}</Moment>
+								</div>
 
 					{
 						<h3 className="super">

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './NewGame.css';
+import {connect} from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 class NewGame extends Component {
@@ -21,15 +22,45 @@ class NewGame extends Component {
 		};
 	}
 
+	componentDidMount() {
+		if (this.props.title) {
+			this.setState({
+				title: this.props.title,
+				desc: this.props.desc,
+				img: this.props.img,
+				rules: this.props.rules,
+				play_time: this.props.play_time,
+				set_up: this.props.set_up,
+				age: this.props.age,
+				min_players: this.props.min_players,
+				max_players: this.props.max_players
+			});
+		}
+	}
+
 	changeHandler(e, name) {
 		this.setState({ [name]: e.target.value });
 	}
 
 	submitReview() {
+		if(this.props.user[0]['role']==='gamer'){
 		axios
 			.post('/api/game/suggestion', this.state)
 			.then(() => this.setState({ redirect: true }));
+	}else{
+		axios.post('/api/game',Object.assign({},{title: this.state.title,
+			description: this.state.desc,
+			img: this.state.img,
+			rules: this.state.rules,
+			play_time: this.state.play_time,
+			set_up: this.state.set_up,
+			age: this.state.age,
+			min_players: this.state.min_players,
+			max_players: this.state.max_players,gamer_id: this.props.gamer_id})).then(()=>this.props.modalChanger())
+		axios.delete(`/api/game/suggestion/${this.props.pending_id}`)
 	}
+
+}
 
 	submitFile = (event) => {
 		event.preventDefault();
@@ -186,4 +217,13 @@ class NewGame extends Component {
 	}
 }
 
-export default NewGame;
+function mapStateToProps(state) {
+	const { user } = state;
+	return {
+		user
+	};
+}
+
+export default connect(
+	mapStateToProps
+)(NewGame);

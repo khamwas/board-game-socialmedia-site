@@ -16,6 +16,7 @@ import GamerSuggested from './components/Gamer/GamerSuggested';
 import GamerReviews from './components/Gamer/GamerReviews';
 import NewsFeed from './components/Dashboard/NewsFeed';
 import Search from './components/Search/Search';
+import PendingGames from './components/Dashboard/PendingGames';
 
 export default (
 	<Switch>
@@ -29,6 +30,7 @@ export default (
 		<Route path="/dashboard/played" component={Played} />
 		<Route path="/dashboard/reviews" component={UserReviews} />
 		<Route path="/dashboard/newsfeed" component={NewsFeed} />
+		<Route path="/dashboard/pending" component={PendingGames} />
 		<Route exact path="/dashboard" component={Dashboard} />
 		<Route path="/gamer/suggested/:id" component={GamerSuggested} />
 		<Route path="/gamer/played/:id" component={GamerPlayed} />

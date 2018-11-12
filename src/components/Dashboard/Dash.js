@@ -13,9 +13,16 @@ import {
 class Dash extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			gamer: true
+		};
 	}
 	componentDidMount() {
+		if (this.props.user.length === 1) {
+			if (this.props.user[0]['role'] !== 'gamer') {
+				this.setState({ gamer: false });
+			}
+		}
 		this.props.setUserReviews();
 		this.props.setUserPlayed();
 		this.props.setUserFavs();
@@ -71,6 +78,15 @@ class Dash extends Component {
 							News Feed
 						</div>
 					</Link>
+					{this.state.gamer ? null : (
+						<div
+							className={
+								this.props.match.includes('pending') ? 'selected' : 'fun'
+							}
+						>
+							<Link to="/dashboard/pending">Pending</Link>
+						</div>
+					)}
 				</div>
 			</div>
 			// 	</BrowserRouter>
@@ -79,7 +95,14 @@ class Dash extends Component {
 	}
 }
 
+function mapStateToProps(state) {
+	const { user } = state;
+	return {
+		user
+	};
+}
+
 export default connect(
-	null,
+	mapStateToProps,
 	{ setUserFavs, setUserPlayed, setUserReviews, setUserSuggested }
 )(Dash);

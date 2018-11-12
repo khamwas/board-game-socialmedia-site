@@ -2,7 +2,7 @@ module.exports = {
 	getAllGames: (req, res, next) => {
 		let text = `select * from (select count(*) as reviews,game_id,avg(sensory) as sensory,avg(fantasy) as fantasy,avg(narrative) as narrative,avg(challenge) as challenge,avg(fellowship) as fellowship,avg(discovery) as discovery,avg(expression) as expression,avg(abnegation) as abnegation from game_reviews
         group by game_id) as scores
-        join board_games on scores.game_id=board_games.game_id`;
+       right join board_games on scores.game_id=board_games.game_id`;
 		if (typeof req.query.x === 'string') {
 			text += ` order by ${req.query.x} desc`;
 			req.app
@@ -24,18 +24,12 @@ module.exports = {
 					text += `, ${req.query.x[i]} desc`;
 				}
 			}
-			// console.log(req.query.x);
 			req.app
 				.get('db')
 				.query(text)
 				.then((response) => res.status(200).json(response))
 				.catch((err) => res.status(500).send(err));
 		}
-		// req.app
-
-		// 	.get('db')
-		// 	.then((response) => res.status(200).json(response))
-		// 	.catch((err) => res.status(500).send(err));
 	},
 	getFavs: (req, res, next) => {
 		req.app
@@ -87,7 +81,6 @@ module.exports = {
 			.catch((err) => res.status(500).send(err));
 	},
 	suggestion: (req, res, next) => {
-		console.log(req.body);
 		let game = Object.assign(
 			{},
 			{ gamer_id: req.session.user[0].gamer_id },
@@ -96,6 +89,30 @@ module.exports = {
 		req.app
 			.get('db')
 			.pending_new_games.insert(game)
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
+	},
+	approved: (req, res, next) => {
+		req.app
+			.get('db')
+			.board_games.insert(req.body)
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
+	},
+	pending: (req, res, next) => {
+		req.app
+			.get('db')
+			.query('select * from pending_new_games')
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
+	},
+	deletePending: (req, res, next) => {
+		req.app
+			.get('db')
+			.query(
+				`delete from pending_new_games 
+                where pending_id=${req.params.id}`
+			)
 			.then((response) => res.status(200).json(response))
 			.catch((err) => res.status(500).send(err));
 	}

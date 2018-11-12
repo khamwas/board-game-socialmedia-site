@@ -111,9 +111,7 @@ app.get('/api/favorites/:id', gameController.getFavs);
 app.get('/api/played/:id', gameController.getPlayed);
 
 app.get('/api/test', authController.printReq);
-app.get('/api/test/daniel', (req, res) => {
-	res.status(200).json(req.session.passport.user.id);
-});
+
 app.get('/api/info', (req, res, next) => {
 	req.app
 		.get('db')
@@ -146,15 +144,12 @@ app.get('/api/both/favorites/:id', sharedController.getBothFavs);
 app.get('/api/both/reviews/:id', sharedController.getReviews);
 app.get('/api/both/suggestions/:id', sharedController.getBothSuggestions);
 
+app.get('/api/games/pending', gameController.pending);
 app.post('/api/game/suggestion', gameController.suggestion);
+app.post('/api/game', gameController.approved);
+app.delete('/api/game/suggestion/:id', gameController.deletePending);
 
-app.get('/api/twoquery', (req, res, next) => {
-	req.app
-		.get('db')
-		.query('select * from gamer;select * from board_games')
-		.then((response) => res.status(200).json(response))
-		.catch((err) => res.status(500).send(err));
-});
+
 
 AWS.config.update({
 	accessKeyId: process.env.AWS_ACCESS_KEY_ID,

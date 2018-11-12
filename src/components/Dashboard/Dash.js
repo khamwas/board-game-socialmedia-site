@@ -18,15 +18,15 @@ class Dash extends Component {
 		};
 	}
 	componentDidMount() {
+		this.props.setUserReviews();
+		this.props.setUserPlayed();
+		this.props.setUserFavs();
+		this.props.setUserSuggested(); // console.log(this.props);
 		if (this.props.user.length === 1) {
 			if (this.props.user[0]['role'] !== 'gamer') {
 				this.setState({ gamer: false });
 			}
 		}
-		this.props.setUserReviews();
-		this.props.setUserPlayed();
-		this.props.setUserFavs();
-		this.props.setUserSuggested(); // console.log(this.props);
 	}
 	render() {
 		return (

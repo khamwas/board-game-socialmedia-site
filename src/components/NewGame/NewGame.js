@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './NewGame.css';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 class NewGame extends Component {
@@ -29,6 +29,7 @@ class NewGame extends Component {
 				desc: this.props.desc,
 				img: this.props.img,
 				rules: this.props.rules,
+				gamer_id: this.props.gamer_id,
 				play_time: this.props.play_time,
 				set_up: this.props.set_up,
 				age: this.props.age,
@@ -43,24 +44,35 @@ class NewGame extends Component {
 	}
 
 	submitReview() {
-		if(this.props.user[0]['role']==='gamer'){
-		axios
-			.post('/api/game/suggestion', this.state)
-			.then(() => this.setState({ redirect: true }));
-	}else{
-		axios.post('/api/game',Object.assign({},{title: this.state.title,
-			description: this.state.desc,
-			img: this.state.img,
-			rules: this.state.rules,
-			play_time: this.state.play_time,
-			set_up: this.state.set_up,
-			age: this.state.age,
-			min_players: this.state.min_players,
-			max_players: this.state.max_players,gamer_id: this.props.gamer_id})).then(()=>this.props.modalChanger())
-		axios.delete(`/api/game/suggestion/${this.props.pending_id}`)
+		if (this.props.user[0]['role'] === 'gamer') {
+			axios
+				.post('/api/game/suggestion', this.state)
+				.then(() => this.setState({ redirect: true }));
+		} else {
+			axios.delete(`/api/game/suggestion/${this.props.pending_id}`).then(() =>
+				axios
+					.post(
+						'/api/game',
+						Object.assign(
+							{},
+							{
+								title: this.state.title,
+								description: this.state.desc,
+								img: this.state.img,
+								rules: this.state.rules,
+								play_time: this.state.play_time,
+								set_up: this.state.set_up,
+								age: this.state.age,
+								min_players: this.state.min_players,
+								max_players: this.state.max_players,
+								gamer_id: this.props.gamer_id
+							}
+						)
+					)
+					.then(() => this.props.modalChanger())
+			);
+		}
 	}
-
-}
 
 	submitFile = (event) => {
 		event.preventDefault();
@@ -224,6 +236,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(
-	mapStateToProps
-)(NewGame);
+export default connect(mapStateToProps)(NewGame);

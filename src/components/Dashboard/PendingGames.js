@@ -16,6 +16,7 @@ class PendingGames extends Component {
 			age: null,
 			min_players: null,
 			max_players: null,
+			pending_id:null,
 			redirect: false,
 			file: null,
 			pendingGames: [],
@@ -25,12 +26,16 @@ class PendingGames extends Component {
 	}
 
 	componentDidMount() {
+		this.setPending()
+	}
+	setPending(){
 		axios
 			.get('/api/games/pending')
 			.then((result) => this.setState({ pendingGames: result.data }));
-    }
+	}
   
 	modalChanger() {
+		this.setPending();
 		this.setState({ modal: !this.state.modal });
 	}
 	render() {
@@ -40,8 +45,10 @@ class PendingGames extends Component {
                     title: elem.title,
                     desc: elem.desc,
                     img: elem.img,
-                    rules: elem.rules,
-                    play_time: elem.play_time,
+					rules: elem.rules,
+					gamer_id: elem.gamer_id,
+					play_time: elem.play_time,
+					pending_id:elem.pending_id,
                     set_up: elem.set_up,
                     age: elem.age,
                     min_players: elem.min_players,
@@ -57,7 +64,7 @@ class PendingGames extends Component {
 		return (
 			<div>
 				<div>Pending Games</div>
-				{this.state.modal && <NewGame title={this.state.title} desc={this.state.desc} img={this.state.img} rules={this.state.rules} play_time={this.state.play_time} set_up={this.state.set_up} age={this.state.age} min_players={this.state.min_players} max_players={this.state.max_players} modalChanger={this.modalChanger} />}
+				{this.state.modal && <NewGame title={this.state.title} desc={this.state.desc} img={this.state.img} gamer_id={this.state.gamer_id} pending_id={this.state.pending_id} rules={this.state.rules} play_time={this.state.play_time} set_up={this.state.set_up} age={this.state.age} min_players={this.state.min_players} max_players={this.state.max_players} modalChanger={this.modalChanger} />}
 				<div className="gameScreen">{games}</div>
 			</div>
 		);

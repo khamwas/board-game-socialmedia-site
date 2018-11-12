@@ -87,6 +87,10 @@ class GameReview extends Component {
 		if (this.props.match) {
 			return (
 				<div onClick={() => this.editChanger()} className="reviewCard link">
+					<div className="timestamp">
+						<Moment format="MMM-DD-YYYY">{this.props.elem.time}</Moment>
+					</div>
+
 					<Link to={`/gamer/${this.props.elem.gamer_id}`}>
 						<h3 className="super">{this.props.elem.handle}</h3>
 					</Link>
@@ -179,9 +183,10 @@ class GameReview extends Component {
 		} else if (this.props.user.length === 1) {
 			return (
 				<div onClick={() => this.editChanger()} className="reviewCard link">
-<div className="timestamp">
-								<Moment format="MMM-DD-YYYY">{this.props.elem.time}</Moment>
-								</div>					{this.props.elem.handle ? (
+					<div className="timestamp">
+						<Moment format="MMM-DD-YYYY">{this.props.elem.time}</Moment>
+					</div>{' '}
+					{this.props.elem.handle ? (
 						this.props.elem.handle === this.props.user[0]['handle'] ? (
 							<h3 className="super">{this.props.elem.handle}</h3>
 						) : (
@@ -194,7 +199,6 @@ class GameReview extends Component {
 							<h3 className="super">{this.props.elem.title.toUpperCase()}</h3>
 						</Link>
 					)}
-
 					<p>{this.props.elem.review}</p>
 					<GameRating elem={this.props.elem} />
 				</div>
@@ -202,9 +206,9 @@ class GameReview extends Component {
 		} else if (this.props.elem.title) {
 			return (
 				<div onClick={() => this.editChanger()} className="reviewCard link">
-<div className="timestamp">
-								<Moment format="MMM-DD-YYYY">{this.props.elem.time}</Moment>
-								</div>
+					<div className="timestamp">
+						<Moment format="MMM-DD-YYYY">{this.props.elem.time}</Moment>
+					</div>
 					{
 						<h3 className="super">
 							<Link to={`/game/${this.props.elem.game_id}`}>
@@ -225,9 +229,9 @@ class GameReview extends Component {
 		} else {
 			return (
 				<div onClick={() => this.editChanger()} className="reviewCard link">
-								<div className="timestamp">
-								<Moment format="MMM-DD-YYYY">{this.props.elem.time}</Moment>
-								</div>
+					<div className="timestamp">
+						<Moment format="MMM-DD-YYYY">{this.props.elem.time}</Moment>
+					</div>
 
 					{
 						<h3 className="super">

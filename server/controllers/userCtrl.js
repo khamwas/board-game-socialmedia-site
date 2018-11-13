@@ -141,5 +141,38 @@ module.exports = {
 			.query('select * from gamer')
 			.then((response) => res.status(200).json(response))
 			.catch((err) => res.status(500).send(err));
-	}
+	},
+	isPlayed: (req, res, next) => {
+		req.app
+			.get('db')
+			.query(
+				`select * from played_games where gamer_id =${
+					req.session.user[0].gamer_id
+				} and game_id=${req.params.id}`
+			)
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
+	},
+	isPlayedPost: (req, res, next) => {
+		req.app
+			.get('db')
+			.query(
+				`insert into played_games(gamer_id,game_id) values(${
+					req.session.user[0].gamer_id
+				},${req.params.id})`
+			)
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
+	},
+	isPlayedDelete: (req, res, next) => {
+		req.app
+			.get('db')
+			.query(
+				`delete from played_games where gamer_id =${
+					req.session.user[0].gamer_id
+				} and game_id=${req.params.id}`
+			)
+			.then((response) => res.status(200).json(response))
+			.catch((err) => res.status(500).send(err));
+	},
 };

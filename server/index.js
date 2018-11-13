@@ -126,6 +126,10 @@ app.get('/api/user/isfavgame/:id', userController.isFav);
 app.post('/api/user/isfavgame/:id', userController.isFavPost);
 app.delete('/api/user/isfavgame/:id', userController.isFavDelete);
 
+app.get('/api/user/isplayed/:id', userController.isPlayed);
+app.post('/api/user/isplayed/:id', userController.isPlayedPost);
+app.delete('/api/user/isplayed/:id', userController.isPlayedDelete);
+
 app.get('/api/user', userController.getUser);
 app.post('/api/user', userController.addUser);
 app.get('/api/users', userController.getUsers);

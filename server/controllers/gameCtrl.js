@@ -2,7 +2,7 @@ module.exports = {
 	getAllGames: (req, res, next) => {
 		let text = `select scores.reviews,scores.sensory,scores.fantasy,scores.narrative,scores.challenge,scores.fellowship,scores.discovery,scores.expression,scores.abnegation,board_games.title,board_games.description,board_games.img,board_games.rules,board_games.play_time,board_games.set_up, board_games.age,board_games.min_players,board_games.max_players,board_games.gamer_id,gamer.handle,board_games.game_id from (select count(*) as reviews,game_id,avg(sensory) as sensory,avg(fantasy) as fantasy,avg(narrative) as narrative,avg(challenge) as challenge,avg(fellowship) as fellowship,avg(discovery) as discovery,avg(expression) as expression,avg(abnegation) as abnegation from game_reviews group by game_id) as scores right join board_games on scores.game_id=board_games.game_id left join gamer on gamer.gamer_id=board_games.gamer_id`;
 		if (typeof req.query.x === 'string') {
-			text += ` order by ${req.query.x} desc`;
+			text += ` order by ${req.query.x} desc nulls last`;
 			req.app
 				.get('db')
 				.query(text)
@@ -17,9 +17,9 @@ module.exports = {
 		} else {
 			for (let i = 0; i < req.query.x.length; i++) {
 				if (i === 0) {
-					text += ` order by ${req.query.x[i]} desc`;
+					text += ` order by ${req.query.x[i]} desc nulls last`;
 				} else {
-					text += `, ${req.query.x[i]} desc`;
+					text += `, ${req.query.x[i]} desc nulls last`;
 				}
 			}
 			req.app

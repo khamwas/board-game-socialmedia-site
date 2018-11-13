@@ -14,7 +14,8 @@ class GameCard extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			fav: false
+			fav: false,
+			played: false
 		};
 	}
 	componentDidMount() {
@@ -26,6 +27,11 @@ class GameCard extends Component {
 						this.setState({ fav: true });
 					}
 				});
+			axios.get(`/api/user/isplayed/${this.props.elem.game_id}`).then((response) => {
+				if (response.data.length > 0) {
+					this.setState({ played: true });
+				}
+			})
 		}
 	}
 	// componentWillReceiveProps() {
@@ -55,6 +61,18 @@ class GameCard extends Component {
 			axios
 				.delete(`/api/user/isfavgame/${this.props.elem.game_id}`)
 				.then(() => this.setState({ fav: false }, this.resetDash()));
+		}
+	}
+	
+	playedButton() {
+		if (this.state.played === false) {
+			axios
+				.post(`/api/user/isplayed/${this.props.elem.game_id}`)
+				.then(() => this.setState({ played: true }, this.resetDash()));
+		} else {
+			axios
+				.delete(`/api/user/isplayed/${this.props.elem.game_id}`)
+				.then(() => this.setState({ played: false }, this.resetDash()));
 		}
 	}
 
@@ -87,6 +105,10 @@ class GameCard extends Component {
 							</div>
 						</div>
 					)}
+					<div className="checkBox" onClick={() => this.playedButton()}></div>
+					{this.state.played &&
+					<img onClick={() => this.playedButton()} className="check" alt="check" src="https://s3.us-east-2.amazonaws.com/boardashell/checkmark.png"/>
+					}
 					<Link to={`/game/${this.props.elem.game_id}`}>
 						<div className="gameCardContainer">
 							<img

@@ -69,7 +69,7 @@ class Quiz extends Component {
 				this.props.history.push('/dashboard');
 			} else {
 				axios
-					.get('/api/games')
+					.get('/api/games/quiz')
 					.then((result) => this.setState({ games: result.data }));
 			}
 		});
@@ -115,35 +115,35 @@ class Quiz extends Component {
 			{
 				sensory:
 					parseFloat(this.state.sensory) +
-					parseFloat(this.state.games[this.state.index]['sensory']) *
+					parseFloat(this.state.games[this.state.index]['sensory'])||1 *
 						this.state.rating,
 				abnegation:
 					parseFloat(this.state.abnegation) +
-					parseFloat(this.state.games[this.state.index]['abnegation']) *
+					parseFloat(this.state.games[this.state.index]['abnegation'])||1 *
 						this.state.rating,
 				narrative:
 					parseFloat(this.state.narrative) +
-					parseFloat(this.state.games[this.state.index]['narrative']) *
+					parseFloat(this.state.games[this.state.index]['narrative'])||1 *
 						this.state.rating,
 				challenge:
 					parseFloat(this.state.challenge) +
-					parseFloat(this.state.games[this.state.index]['challenge']) *
+					parseFloat(this.state.games[this.state.index]['challenge'])||1 *
 						this.state.rating,
 				fellowship:
 					parseFloat(this.state.fellowship) +
-					parseFloat(this.state.games[this.state.index]['fellowship']) *
+					parseFloat(this.state.games[this.state.index]['fellowship'])||1 *
 						this.state.rating,
 				discovery:
 					parseFloat(this.state.discovery) +
-					parseFloat(this.state.games[this.state.index]['discovery']) *
+					parseFloat(this.state.games[this.state.index]['discovery'])||1 *
 						this.state.rating,
 				expression:
 					parseFloat(this.state.expression) +
-					parseFloat(this.state.games[this.state.index]['expression']) *
+					parseFloat(this.state.games[this.state.index]['expression'])||1 *
 						this.state.rating,
 				fantasy:
 					parseFloat(this.state.fantasy) +
-					parseFloat(this.state.games[this.state.index]['fantasy']) *
+					parseFloat(this.state.games[this.state.index]['fantasy'])||1 *
 						this.state.rating
 			},
 			() => this.complete()
@@ -201,7 +201,7 @@ class Quiz extends Component {
 						Rate each game on a scale of 0-5 stars. Hit the submit button to
 						rate the next game. If you don't know a game, skip it by selecting
 						"I don't know this game." When you are finished with your quiz, we
-						will create a gaming profile for you that will indicate
+						will create a gaming profile for you.
 					</p>
 					<div className="gameScreen">{game}</div>
 					<div className="quizRatings">

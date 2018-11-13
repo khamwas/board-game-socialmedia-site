@@ -117,5 +117,9 @@ module.exports = {
 			)
 			.then((response) => res.status(200).json(response))
 			.catch((err) => res.status(500).send(err));
+	},
+	getQuizGames: (req,res,next)=>{
+		req.app.get('db').query('select * from ((select count(*) as reviews,game_id,avg(sensory) as sensory,avg(fantasy) as fantasy,avg(narrative) as narrative,avg(challenge) as challenge,avg(fellowship) as fellowship,avg(discovery) as discovery,avg(expression) as expression,avg(abnegation) as abnegation from game_reviews group by game_id) as scores join board_games on scores.game_id=board_games.game_id) as super where fantasy is not null and sensory is not null and narrative is not null and challenge is not null and fellowship is not null and discovery is not null and expression is not null and abnegation is not null').then((response) => res.status(200).json(response))
+		.catch((err) => res.status(500).send(err));
 	}
 };

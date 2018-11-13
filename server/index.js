@@ -103,6 +103,7 @@ app.get('/api/logout', (req, res, next) => {
 });
 
 app.get('/api/games/', gameController.getAllGames);
+app.get('/api/games/quiz', gameController.getQuizGames);
 app.get('/api/gamer/reviews/:id', gamerController.getReviews);
 app.get('/api/gamer/:id', gamerController.getGamer);
 app.get('/api/suggestions', gameController.getSuggestions);

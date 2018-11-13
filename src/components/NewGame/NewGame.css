@@ -41,10 +41,13 @@
 input {
 	color: black;
 	margin: 0;
+	border: #2b4162 solid 1px;
 }
 
 textarea {
 	margin: 0;
+	border: #2b4162 solid 1px;
+
 	/* width: inherit; */
 	color: black;
 }
@@ -58,31 +61,40 @@ textarea {
 	flex-wrap: wrap;
 }
 
-.indiNumbers {
+.indiNumbersInput {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: flex-end;
 	flex-wrap: wrap;
-	/* width: 200px;
-	height: 200px; */
+	/* width: 100px; */
+	width: 200px; 
+	height: 30px;
+	margin: 5px;
+	border-radius: 5px;
 }
 
 .pendingImage {
+	border: solid 1px #2b4162;
+	/* position: absolute;
+	display:inline-block;
+	top: 10px;
+	right: 10px; */
 	width: 200px;
 	height: 200px;
+	margin: 1px;
 	overflow: auto;
 }
 @media (max-width: 460px) {
 	.indiNumbers {
 		align-items: center;
 	}
-	.indiNumbersInput {
+	/* .indiNumbersInput {
 		margin-left: 150px;
 		margin-right: 150px;
-	}
+	} */
 	.pendingImage {
-		display: none;
+		display:none
 	}
 }
 
@@ -91,9 +103,14 @@ textarea {
 }
 
 .newImg {
+	width: 100%;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
+	justify-content: space-around; 
 	align-items: center;
 	flex-wrap: wrap;
 }
+
+/* .input{
+	margin: 10px;
+} */

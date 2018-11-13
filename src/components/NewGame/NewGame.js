@@ -103,13 +103,13 @@ class NewGame extends Component {
 			<div>
 				{this.state.redirect && <Redirect to="/dashboard" />}
 				<div className="confirmWhiteout" />
-				<div className="newGameCard">
-					<div className="newImg">
-						<img
-							alt="pendingImage"
-							src={this.state.img}
-							className="pendingImage"
+				<div className="newGameCard">	<input
+				className="indiNumbersInput"
+							placeholder="Title"
+							value={this.state.title}
+							onChange={(e) => this.changeHandler(e, 'title')}
 						/>
+					<div className="newImg">
 						<form onSubmit={this.submitFile}>
 							<input
 								label="upload file"
@@ -117,20 +117,20 @@ class NewGame extends Component {
 								onChange={this.handleFileUpload}
 							/>
 							<button type="submit" className="black">
-								Send
+								Submit Image
 							</button>
 						</form>
-					</div>
-					<div className="input">
-						<div>Title: </div>
-						<input
-							value={this.state.title}
-							onChange={(e) => this.changeHandler(e, 'title')}
+						<img
+							alt="pendingImage"
+							src={this.state.img}
+							className="pendingImage"
 						/>
+					
 					</div>
 					<div className="input">
-						<div>Description: </div>
+						{/* <div>Description: </div> */}
 						<textarea
+							placeholder="Description"
 							type="text"
 							className="input"
 							onChange={(e) => this.changeHandler(e, 'desc')}
@@ -140,9 +140,11 @@ class NewGame extends Component {
 					<div className="NewGameNumbers">
 						<div className="indiNumbers">
 							<div>
-								Rules:
+								{/* Rules: */}
 								{'            '}
 								<input
+									placeholder="Rules"
+									className="indiNumbersInput"
 									min="0"
 									max="5"
 									type="number"
@@ -151,8 +153,9 @@ class NewGame extends Component {
 								/>
 							</div>
 							<div>
-								Play Time:
+								{/* Play Time: */}
 								<input
+								placeholder="Play Time"
 									className="indiNumbersInput"
 									min="0"
 									type="number"
@@ -161,8 +164,9 @@ class NewGame extends Component {
 								/>
 							</div>
 							<div>
-								Set up:
+								{/* Set up: */}
 								<input
+								placeholder="Set up"
 									className="indiNumbersInput"
 									min="0"
 									type="number"
@@ -173,8 +177,9 @@ class NewGame extends Component {
 						</div>
 						<div className="indiNumbers">
 							<div>
-								Age:
+								{/* Age: */}
 								<input
+								placeholder="Age"
 									className="indiNumbersInput"
 									min="0"
 									type="number"
@@ -183,8 +188,9 @@ class NewGame extends Component {
 								/>
 							</div>
 							<div>
-								Min Players:
+								{/* Min Players: */}
 								<input
+								placeholder="Min Players"
 									className="indiNumbersInput"
 									min="1"
 									type="number"
@@ -193,8 +199,9 @@ class NewGame extends Component {
 								/>
 							</div>
 							<div>
-								Max Players:
+								{/* Max Players: */}
 								<input
+								placeholder="Max Players"
 									className="indiNumbersInput"
 									min="1"
 									type="number"

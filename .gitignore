@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 .env
+.env.prod
 # testing
 /coverage
 

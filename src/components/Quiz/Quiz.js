@@ -4,6 +4,7 @@ import axios from 'axios';
 import GameCard from '../GameCard/GameCard';
 import './Quiz.css';
 import Icon from '../Icon/Icon';
+import DragDrop from '../DragDrop/DragDrop'
 import About from '../About/About';
 
 class Quiz extends Component {
@@ -37,7 +38,17 @@ class Quiz extends Component {
 			lvl: 0,
 			role: 'gamer',
 			email: '',
-			handle: ''
+			handle: '',
+			types: [
+				{ name: 'sensory', order: 'initial' },
+				{ name: 'fantasy', order: 'initial' },
+				{ name: 'fellowship', order: 'initial' },
+				{ name: 'narrative', order: 'initial' },
+				{ name: 'challenge', order: 'initial' },
+				{ name: 'discovery', order: 'initial' },
+				{ name: 'expression', order: 'initial' },
+				{ name: 'abnegation', order: 'initial' }
+			]
 		};
 	}
 
@@ -53,9 +64,10 @@ class Quiz extends Component {
 			}
 		);
 
-		this.state.filterArray.map((elem, i) =>
-			Object.assign(newUser, { [elem]: i + 1 })
+		this.state.types.map((elem) =>
+			Object.assign(newUser, { [elem.name]:parseInt(elem.order) })
 		);
+		console.log(newUser)
 		axios
 			.post('/api/user', newUser)
 			.then(() =>
@@ -157,6 +169,7 @@ class Quiz extends Component {
 	profiler() {
 		var selector2 = [];
 		var profile = [];
+		let count=1
 		for (let i = 0; i < this.state.index * 25; i++) {
 			var things = Object.assign(
 				{},
@@ -173,21 +186,70 @@ class Quiz extends Component {
 				if (parseInt(things[x]) === i) {
 					profile.push(
 						<h4 className="resultNames" key={x + things[x]}>
-							{x.toUpperCase()}
+							{`${count} .${x.toUpperCase()}`}
 						</h4>
 					);
-					selector2.push(x);
+					selector2.push(Object.assign({},{name:x,order:count}));
+					count++
 				}
 			}
 		}
 		this.setState({ profile: profile }, () =>
 			this.setState({ quizResult: selector2 }, () =>
-				this.setState({ filterArray: selector2 })
+				this.setState({ types: selector2 })
 			)
 		);
 	}
+	onDragStart(e, name) {
+		e.dataTransfer.setData('name', name);
+	}
+
+	onDragOver(e) {
+		e.preventDefault();
+	}
+
+	onDrop(e, number) {
+		let name = e.dataTransfer.getData('name');
+
+		let newTypes = this.state.types.map((type) => {
+			if (type.name === name) {
+				return Object.assign({}, { name: type.name, order: number });
+			} else if (type.order == number) {
+				return Object.assign({}, { name: type.name, order: 'initial' });
+			} else {
+				return type;
+			}
+		});
+
+		this.setState({ types: newTypes });
+	}
+
+
 
 	render() {
+		var orders = {
+			initial:[],
+			'1': [],
+			'2': [],
+			'3': [],
+			'4': [],
+			'5': [],
+			'6': [],
+			'7': [],
+			'8': [],
+			'9': []
+		};
+		this.state.types.forEach((elem) => {orders[`${elem.order}`].push(
+				<div
+					key={elem.name}
+					draggable
+					onDragStart={(e) => this.onDragStart(e, elem.name)}
+					className="draggable"
+				>
+					{elem.name}
+				</div>
+			);
+		});
 		let game = this.state.games
 			.slice(this.state.index, this.state.index + 1)
 			.map((elem, i) => (
@@ -226,33 +288,33 @@ class Quiz extends Component {
 				</div>
 			);
 		} else {
-			let selectorDisplay = this.state.selector.map((elem, i) => {
-				return (
-					<div
-						key={i}
-						onClick={() => this.updateFilter(elem)}
-						className={
-							this.state.filterArray
-								.slice()
-								.join('')
-								.includes(elem)
-								? 'selected clicker'
-								: 'clicker'
-						}
-					>
-						<Icon elem={elem} />
-						<div className="subHeader">
-							{elem.charAt(0).toUpperCase() + elem.slice(1)}
-						</div>
-					</div>
-				);
-			});
-			let selected = this.state.filterArray.map((elem, i) => (
-				<h4 className="onFilter" key={i}>
-					<Icon elem={elem} />
-					{i + 1}. {elem.toUpperCase()}
-				</h4>
-			));
+			// let selectorDisplay = this.state.selector.map((elem, i) => {
+			// 	return (
+			// 		<div
+			// 			key={i}
+			// 			onClick={() => this.updateFilter(elem)}
+			// 			className={
+			// 				this.state.filterArray
+			// 					.slice()
+			// 					.join('')
+			// 					.includes(elem)
+			// 					? 'selected clicker'
+			// 					: 'clicker'
+			// 			}
+			// 		>
+			// 			<Icon elem={elem} />
+			// 			<div className="subHeader">
+			// 				{elem.charAt(0).toUpperCase() + elem.slice(1)}
+			// 			</div>
+			// 		</div>
+			// 	);
+			// });
+			// let selected = this.state.filterArray.map((elem, i) => (
+			// 	<h4 className="onFilter" key={i}>
+			// 		<Icon elem={elem} />
+			// 		{i + 1}. {elem.toUpperCase()}
+			// 	</h4>
+			// ));
 			return (
 				<div className="quiz">
 					<h1>Results</h1>
@@ -266,9 +328,89 @@ class Quiz extends Component {
 						creating an account so you can find your next best game.
 					</p>
 
+					<div className="resultOuter">
+				{/* <h2 className="header">Drag & Drop</h2> */}
+				<div className="container-drag">
+					<div
+						className="order"
+						onDrop={(e) => this.onDrop(e, 'initial')}
+						onDragOver={(e) => this.onDragOver(e)}
+					>
+						{orders.initial}
+					</div>
+					{/* {wrappers} */}
+					<div>
+						<div
+							className="droppable"
+							onDrop={(e) => this.onDrop(e, '1')}
+							onDragOver={(e) => this.onDragOver(e)}
+						>
+							<span className="type-header">1</span>
+							{orders['1']}
+						</div>
+						<div
+							className="droppable"
+							onDrop={(e) => this.onDrop(e, '2')}
+							onDragOver={(e) => this.onDragOver(e)}
+						>
+							<span className="type-header">2</span>
+							{orders['2']}
+						</div>
+						<div
+							className="droppable"
+							onDrop={(e) => this.onDrop(e, '3')}
+							onDragOver={(e) => this.onDragOver(e)}
+						>
+							<span className="type-header">3</span>
+							{orders['3']}
+						</div>
+						<div
+							className="droppable"
+							onDrop={(e) => this.onDrop(e, '4')}
+							onDragOver={(e) => this.onDragOver(e)}
+						>
+							<span className="type-header">4</span>
+							{orders['4']}
+						</div>
+						<div
+							className="droppable"
+							onDrop={(e) => this.onDrop(e, '5')}
+							onDragOver={(e) => this.onDragOver(e)}
+						>
+							<span className="type-header">5</span>
+							{orders['5']}
+						</div>
+						<div
+							className="droppable"
+							onDrop={(e) => this.onDrop(e, '6')}
+							onDragOver={(e) => this.onDragOver(e)}
+						>
+							<span className="type-header">6</span>
+							{orders['6']}
+						</div>
+						<div
+							className="droppable"
+							onDrop={(e) => this.onDrop(e, '7')}
+							onDragOver={(e) => this.onDragOver(e)}
+						>
+							<span className="type-header">7</span>
+							{orders['7']}
+						</div>
+						<div
+							className="droppable"
+							onDrop={(e) => this.onDrop(e, '8')}
+							onDragOver={(e) => this.onDragOver(e)}
+						>
+							<span className="type-header">8</span>
+							{orders['8']}
+						</div>
+					</div>
+				</div>
+				
+			</div>
 					<About quiz={this.state.selector} />
-					<div className="selector">{selectorDisplay}</div>
-					<div className="searchBar">{selected}</div>
+					{/* <div className="selector">{selectorDisplay}</div>
+					<div className="searchBar">{selected}</div> */}
 					<h4>
 						If you feel like your profile should be different than what our quiz
 						suggested, please rearrange your profile here before creating an
@@ -278,15 +420,15 @@ class Quiz extends Component {
 					<div>
 						<input
 							className="quizInput"
-							placeholder="Register your email here"
+							placeholder="Register your username here"
 							value={this.state.handle}
-							onChange={(e) => this.changeHandler(e, 'email')}
+							onChange={(e) => this.changeHandler(e, 'handle')}
 						/>
 						<input
 							className="quizInput"
-							placeholder="Register your username here"
+							placeholder="Register your email here"
 							value={this.state.email}
-							onChange={(e) => this.changeHandler(e, 'handle')}
+							onChange={(e) => this.changeHandler(e, 'email')}
 						/>
 					</div>
 					<button className="bottomButton" onClick={() => this.createAccount()}>

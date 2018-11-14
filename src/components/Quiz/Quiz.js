@@ -53,7 +53,15 @@ class Quiz extends Component {
 	}
 
 	createAccount() {
-		// alert("You've created a gamer account!");
+		if(this.state.types.filter(elem=>elem.order==='initial').length>0){
+			alert("You need to finish setting up your profile!")
+		}else if(!this.state.email.includes('@gmail.com')){
+			alert("You must use a gmail for this site")
+		}
+		else{
+
+		
+		
 		let newUser = Object.assign(
 			{},
 			{
@@ -68,11 +76,12 @@ class Quiz extends Component {
 			Object.assign(newUser, { [elem.name]:parseInt(elem.order) })
 		);
 		console.log(newUser)
-		axios
-			.post('/api/user', newUser)
-			.then(() =>
-				window.open(`${process.env.REACT_APP_SERVER}/login`, '_self')
-			);
+		}
+		// axios
+		// 	.post('/api/user', newUser)
+		// 	.then(() =>
+		// 		window.open(`${process.env.REACT_APP_SERVER}/login`, '_self')
+		// 	);
 	}
 
 	componentDidMount() {

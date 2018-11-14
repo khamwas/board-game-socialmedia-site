@@ -79,13 +79,15 @@ class Dash extends Component {
 						</div>
 					</Link>
 					{this.state.gamer ? null : (
+						<Link to="/dashboard/pending">
 						<div
 							className={
 								this.props.match.includes('pending') ? 'selected' : 'fun'
 							}
 						>
-							<Link to="/dashboard/pending">Pending</Link>
+							Pending
 						</div>
+							</Link>
 					)}
 				</div>
 			</div>

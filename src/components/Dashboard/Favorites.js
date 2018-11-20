@@ -2,7 +2,6 @@ import React from 'react';
 import GameCard from '../GameCard/GameCard';
 import { connect } from 'react-redux';
 import Dash from './Dash';
-// import GameReview from '../GameReview/GameReview';
 import './Dashboard.css';
 import '../GameCard/GameCard.css';
 

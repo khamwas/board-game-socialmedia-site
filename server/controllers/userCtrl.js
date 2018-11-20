@@ -129,6 +129,7 @@ module.exports = {
 			.catch((err) => res.status(500).send(err));
 	},
 	addUser: (req, res, next) => {
+		console.log(req.body);
 		req.app
 			.get('db')
 			.gamer.insert(req.body)
@@ -174,5 +175,5 @@ module.exports = {
 			)
 			.then((response) => res.status(200).json(response))
 			.catch((err) => res.status(500).send(err));
-	},
+	}
 };

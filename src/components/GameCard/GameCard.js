@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import {connect} from
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -27,24 +26,15 @@ class GameCard extends Component {
 						this.setState({ fav: true });
 					}
 				});
-			axios.get(`/api/user/isplayed/${this.props.elem.game_id}`).then((response) => {
-				if (response.data.length > 0) {
-					this.setState({ played: true });
-				}
-			})
+			axios
+				.get(`/api/user/isplayed/${this.props.elem.game_id}`)
+				.then((response) => {
+					if (response.data.length > 0) {
+						this.setState({ played: true });
+					}
+				});
 		}
 	}
-	// componentWillReceiveProps() {
-	// 	if (this.props.user.length === 1) {
-	// 		axios
-	// 			.get(`/api/user/isfavgame/${this.props.elem.game_id}`)
-	// 			.then((result) => {
-	// 				if (result.data.length > 0) {
-	// 					this.setState({ fav: true });
-	// 				}
-	// 			});
-	// 	}
-	// }
 
 	resetDash() {
 		this.props.setUserFavs();
@@ -63,7 +53,7 @@ class GameCard extends Component {
 				.then(() => this.setState({ fav: false }, this.resetDash()));
 		}
 	}
-	
+
 	playedButton() {
 		if (this.state.played === false) {
 			axios
@@ -105,10 +95,15 @@ class GameCard extends Component {
 							</div>
 						</div>
 					)}
-					<div className="checkBox" onClick={() => this.playedButton()}></div>
-					{this.state.played &&
-					<img onClick={() => this.playedButton()} className="check" alt="check" src="https://s3.us-east-2.amazonaws.com/boardashell/checkmark.png"/>
-					}
+					<div className="checkBox" onClick={() => this.playedButton()} />
+					{this.state.played && (
+						<img
+							onClick={() => this.playedButton()}
+							className="check"
+							alt="check"
+							src="https://s3.us-east-2.amazonaws.com/boardashell/checkmark.png"
+						/>
+					)}
 					<Link to={`/game/${this.props.elem.game_id}`}>
 						<div className="gameCardContainer">
 							<img

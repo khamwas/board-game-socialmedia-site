@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-// import GameCard from '../GameCard/GameCard';
 import { connect } from 'react-redux';
 import NewsCard from './NewsCard';
 import Dash from './Dash';
-// import GameReview from '../GameReview/GameReview';
 import './Dashboard.css';
 import '../GameCard/GameCard.css';
 import axios from 'axios';

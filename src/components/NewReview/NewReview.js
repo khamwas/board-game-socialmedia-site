@@ -72,7 +72,7 @@ class NewReview extends Component {
 		return (
 			<div>
 				<div className="confirmWhiteout" />
-				<div className="reviewCard newReview">
+				<div className="newReview">
 					<h3>{this.props.user[0]['handle'].toUpperCase()}</h3>
 					<textarea
 						type="text"

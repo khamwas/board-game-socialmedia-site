@@ -1,6 +1,27 @@
 .newReview {
 	position: fixed;
-	top: 40%;
+	top: 20%;
 	left: 40%;
+	/* right: 40%; */
 	z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 25px;
+    padding-right: 25px;
+    background: white;
+    margin: 10px;
+    min-width: 200px;
+    /* max-width: 400px; */
+    border-radius: 25px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+@media(max-width:500px){
+	.newReview{
+		left: 10%
+	}
 }

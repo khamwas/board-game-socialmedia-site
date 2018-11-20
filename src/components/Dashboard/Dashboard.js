@@ -18,10 +18,9 @@ class Dashboard extends Component {
 		this.props.setUserReviews();
 		this.props.setUserPlayed();
 		this.props.setUserFavs();
-		this.props.setUserSuggested(); // console.log(this.props);
+		this.props.setUserSuggested();
 	}
 	render() {
-		// let dashHeader =
 		let favGames = this.props.userFavs.map((elem, i) => {
 			if (i < 5) {
 				return <GameCard key={elem.game_id} elem={elem} />;
@@ -55,12 +54,6 @@ class Dashboard extends Component {
 		return (
 			<div>
 				<Dash match={this.props.match.path} />
-				{/* <div className="selector">
-					<div>Suggested</div>
-					<div>Favorites</div>
-					<div>Played</div>
-					<div>Reviews</div>
-				</div> */}
 				<div className="dash">
 					<div className="module">
 						<Link to="/dashboard/suggested">

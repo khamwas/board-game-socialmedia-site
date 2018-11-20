@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-// import dashroutes from '../../routes2';
 import { Link } from 'react-router-dom';
-// import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
 	setUserFavs,
@@ -21,7 +19,7 @@ class Dash extends Component {
 		this.props.setUserReviews();
 		this.props.setUserPlayed();
 		this.props.setUserFavs();
-		this.props.setUserSuggested(); // console.log(this.props);
+		this.props.setUserSuggested();
 		if (this.props.user.length === 1) {
 			if (this.props.user[0]['role'] !== 'gamer') {
 				this.setState({ gamer: false });
@@ -30,11 +28,8 @@ class Dash extends Component {
 	}
 	render() {
 		return (
-			// <Provider store={store}>
-			// 	<BrowserRouter>
 			<div>
 				<div className="selector">
-					{/* <div>Dashboard</div> */}
 					<Link to="/dashboard/suggested">
 						<div
 							className={
@@ -80,19 +75,17 @@ class Dash extends Component {
 					</Link>
 					{this.state.gamer ? null : (
 						<Link to="/dashboard/pending">
-						<div
-							className={
-								this.props.match.includes('pending') ? 'selected' : 'fun'
-							}
-						>
-							Pending
-						</div>
-							</Link>
+							<div
+								className={
+									this.props.match.includes('pending') ? 'selected' : 'fun'
+								}
+							>
+								Pending
+							</div>
+						</Link>
 					)}
 				</div>
 			</div>
-			// 	</BrowserRouter>
-			// </Provider>
 		);
 	}
 }

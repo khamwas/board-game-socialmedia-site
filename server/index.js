@@ -154,8 +154,6 @@ app.post('/api/game/suggestion', gameController.suggestion);
 app.post('/api/game', gameController.approved);
 app.delete('/api/game/suggestion/:id', gameController.deletePending);
 
-
-
 AWS.config.update({
 	accessKeyId: process.env.AWS_ACCESS_KEY_ID,
 	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY

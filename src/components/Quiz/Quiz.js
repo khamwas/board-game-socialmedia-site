@@ -4,7 +4,7 @@ import axios from 'axios';
 import GameCard from '../GameCard/GameCard';
 import './Quiz.css';
 import Icon from '../Icon/Icon';
-import DragDrop from '../DragDrop/DragDrop'
+import DragDrop from '../DragDrop/DragDrop';
 import About from '../About/About';
 
 class Quiz extends Component {
@@ -53,35 +53,33 @@ class Quiz extends Component {
 	}
 
 	createAccount() {
-		if(this.state.types.filter(elem=>elem.order==='initial').length>0){
-			alert("You need to finish setting up your profile!")
-		}else if(!this.state.email.includes('@gmail.com')){
-			alert("You must use a gmail for this site")
-		}
-		else{
+		if (
+			this.state.types.filter((elem) => elem.order === 'initial').length > 0
+		) {
+			alert('You need to finish setting up your profile!');
+		} else if (!this.state.email.includes('@gmail.com')) {
+			alert('You must use a gmail for this site');
+		} else {
+			let newUser = Object.assign(
+				{},
+				{
+					handle: this.state.handle,
+					email: this.state.email,
+					role: this.state.role,
+					lvl: this.state.lvl
+				}
+			);
 
-		
-		
-		let newUser = Object.assign(
-			{},
-			{
-				handle: this.state.handle,
-				email: this.state.email,
-				role: this.state.role,
-				lvl: this.state.lvl
-			}
-		);
-
-		this.state.types.map((elem) =>
-			Object.assign(newUser, { [elem.name]:parseInt(elem.order) })
-		);
-		console.log(newUser)
+			this.state.types.map((elem) =>
+				Object.assign(newUser, { [elem.name]: parseInt(elem.order) })
+			);
+			// console.log(newUser)
+			axios
+				.post('/api/user', newUser)
+				.then(() =>
+					window.open(`${process.env.REACT_APP_SERVER}/login`, '_self')
+				);
 		}
-		// axios
-		// 	.post('/api/user', newUser)
-		// 	.then(() =>
-		// 		window.open(`${process.env.REACT_APP_SERVER}/login`, '_self')
-		// 	);
 	}
 
 	componentDidMount() {
@@ -136,36 +134,36 @@ class Quiz extends Component {
 			{
 				sensory:
 					parseFloat(this.state.sensory) +
-					parseFloat(this.state.games[this.state.index]['sensory'])||1 *
-						this.state.rating,
+						parseFloat(this.state.games[this.state.index]['sensory']) ||
+					1 * this.state.rating,
 				abnegation:
 					parseFloat(this.state.abnegation) +
-					parseFloat(this.state.games[this.state.index]['abnegation'])||1 *
-						this.state.rating,
+						parseFloat(this.state.games[this.state.index]['abnegation']) ||
+					1 * this.state.rating,
 				narrative:
 					parseFloat(this.state.narrative) +
-					parseFloat(this.state.games[this.state.index]['narrative'])||1 *
-						this.state.rating,
+						parseFloat(this.state.games[this.state.index]['narrative']) ||
+					1 * this.state.rating,
 				challenge:
 					parseFloat(this.state.challenge) +
-					parseFloat(this.state.games[this.state.index]['challenge'])||1 *
-						this.state.rating,
+						parseFloat(this.state.games[this.state.index]['challenge']) ||
+					1 * this.state.rating,
 				fellowship:
 					parseFloat(this.state.fellowship) +
-					parseFloat(this.state.games[this.state.index]['fellowship'])||1 *
-						this.state.rating,
+						parseFloat(this.state.games[this.state.index]['fellowship']) ||
+					1 * this.state.rating,
 				discovery:
 					parseFloat(this.state.discovery) +
-					parseFloat(this.state.games[this.state.index]['discovery'])||1 *
-						this.state.rating,
+						parseFloat(this.state.games[this.state.index]['discovery']) ||
+					1 * this.state.rating,
 				expression:
 					parseFloat(this.state.expression) +
-					parseFloat(this.state.games[this.state.index]['expression'])||1 *
-						this.state.rating,
+						parseFloat(this.state.games[this.state.index]['expression']) ||
+					1 * this.state.rating,
 				fantasy:
 					parseFloat(this.state.fantasy) +
-					parseFloat(this.state.games[this.state.index]['fantasy'])||1 *
-						this.state.rating
+						parseFloat(this.state.games[this.state.index]['fantasy']) ||
+					1 * this.state.rating
 			},
 			() => this.complete()
 		);
@@ -178,7 +176,7 @@ class Quiz extends Component {
 	profiler() {
 		var selector2 = [];
 		var profile = [];
-		let count=1
+		let count = 1;
 		for (let i = 0; i < this.state.index * 25; i++) {
 			var things = Object.assign(
 				{},
@@ -198,8 +196,8 @@ class Quiz extends Component {
 							{`${count} .${x.toUpperCase()}`}
 						</h4>
 					);
-					selector2.push(Object.assign({},{name:x,order:count}));
-					count++
+					selector2.push(Object.assign({}, { name: x, order: count }));
+					count++;
 				}
 			}
 		}
@@ -233,11 +231,9 @@ class Quiz extends Component {
 		this.setState({ types: newTypes });
 	}
 
-
-
 	render() {
 		var orders = {
-			initial:[],
+			initial: [],
 			'1': [],
 			'2': [],
 			'3': [],
@@ -248,7 +244,8 @@ class Quiz extends Component {
 			'8': [],
 			'9': []
 		};
-		this.state.types.forEach((elem) => {orders[`${elem.order}`].push(
+		this.state.types.forEach((elem) => {
+			orders[`${elem.order}`].push(
 				<div
 					key={elem.name}
 					draggable
@@ -338,85 +335,84 @@ class Quiz extends Component {
 					</p>
 
 					<div className="resultOuter">
-				{/* <h2 className="header">Drag & Drop</h2> */}
-				<div className="container-drag">
-					<div
-						className="order"
-						onDrop={(e) => this.onDrop(e, 'initial')}
-						onDragOver={(e) => this.onDragOver(e)}
-					>
-						{orders.initial}
+						{/* <h2 className="header">Drag & Drop</h2> */}
+						<div className="container-drag">
+							<div
+								className="order"
+								onDrop={(e) => this.onDrop(e, 'initial')}
+								onDragOver={(e) => this.onDragOver(e)}
+							>
+								{orders.initial}
+							</div>
+							{/* {wrappers} */}
+							<div>
+								<div
+									className="droppable"
+									onDrop={(e) => this.onDrop(e, '1')}
+									onDragOver={(e) => this.onDragOver(e)}
+								>
+									<span className="type-header">1</span>
+									{orders['1']}
+								</div>
+								<div
+									className="droppable"
+									onDrop={(e) => this.onDrop(e, '2')}
+									onDragOver={(e) => this.onDragOver(e)}
+								>
+									<span className="type-header">2</span>
+									{orders['2']}
+								</div>
+								<div
+									className="droppable"
+									onDrop={(e) => this.onDrop(e, '3')}
+									onDragOver={(e) => this.onDragOver(e)}
+								>
+									<span className="type-header">3</span>
+									{orders['3']}
+								</div>
+								<div
+									className="droppable"
+									onDrop={(e) => this.onDrop(e, '4')}
+									onDragOver={(e) => this.onDragOver(e)}
+								>
+									<span className="type-header">4</span>
+									{orders['4']}
+								</div>
+								<div
+									className="droppable"
+									onDrop={(e) => this.onDrop(e, '5')}
+									onDragOver={(e) => this.onDragOver(e)}
+								>
+									<span className="type-header">5</span>
+									{orders['5']}
+								</div>
+								<div
+									className="droppable"
+									onDrop={(e) => this.onDrop(e, '6')}
+									onDragOver={(e) => this.onDragOver(e)}
+								>
+									<span className="type-header">6</span>
+									{orders['6']}
+								</div>
+								<div
+									className="droppable"
+									onDrop={(e) => this.onDrop(e, '7')}
+									onDragOver={(e) => this.onDragOver(e)}
+								>
+									<span className="type-header">7</span>
+									{orders['7']}
+								</div>
+								<div
+									className="droppable"
+									onDrop={(e) => this.onDrop(e, '8')}
+									onDragOver={(e) => this.onDragOver(e)}
+								>
+									<span className="type-header">8</span>
+									{orders['8']}
+								</div>
+							</div>
+						</div>
 					</div>
-					{/* {wrappers} */}
-					<div>
-						<div
-							className="droppable"
-							onDrop={(e) => this.onDrop(e, '1')}
-							onDragOver={(e) => this.onDragOver(e)}
-						>
-							<span className="type-header">1</span>
-							{orders['1']}
-						</div>
-						<div
-							className="droppable"
-							onDrop={(e) => this.onDrop(e, '2')}
-							onDragOver={(e) => this.onDragOver(e)}
-						>
-							<span className="type-header">2</span>
-							{orders['2']}
-						</div>
-						<div
-							className="droppable"
-							onDrop={(e) => this.onDrop(e, '3')}
-							onDragOver={(e) => this.onDragOver(e)}
-						>
-							<span className="type-header">3</span>
-							{orders['3']}
-						</div>
-						<div
-							className="droppable"
-							onDrop={(e) => this.onDrop(e, '4')}
-							onDragOver={(e) => this.onDragOver(e)}
-						>
-							<span className="type-header">4</span>
-							{orders['4']}
-						</div>
-						<div
-							className="droppable"
-							onDrop={(e) => this.onDrop(e, '5')}
-							onDragOver={(e) => this.onDragOver(e)}
-						>
-							<span className="type-header">5</span>
-							{orders['5']}
-						</div>
-						<div
-							className="droppable"
-							onDrop={(e) => this.onDrop(e, '6')}
-							onDragOver={(e) => this.onDragOver(e)}
-						>
-							<span className="type-header">6</span>
-							{orders['6']}
-						</div>
-						<div
-							className="droppable"
-							onDrop={(e) => this.onDrop(e, '7')}
-							onDragOver={(e) => this.onDragOver(e)}
-						>
-							<span className="type-header">7</span>
-							{orders['7']}
-						</div>
-						<div
-							className="droppable"
-							onDrop={(e) => this.onDrop(e, '8')}
-							onDragOver={(e) => this.onDragOver(e)}
-						>
-							<span className="type-header">8</span>
-							{orders['8']}
-						</div>
-					</div>
-				</div>
-				
-			</div>
 					<About quiz={this.state.selector} />
 					{/* <div className="selector">{selectorDisplay}</div>
 					<div className="searchBar">{selected}</div> */}

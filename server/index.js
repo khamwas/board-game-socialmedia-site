@@ -11,6 +11,7 @@ const fs = require('fs');
 const fileType = require('file-type');
 const bluebird = require('bluebird');
 const multiparty = require('multiparty');
+const path = require('path');
 // const checkForSession = require('./middlewares/checkForSession');
 // const authController = require('./controllers/authCtrl');
 const gameController = require('./controllers/gameCtrl');
@@ -36,6 +37,8 @@ app.use(
 		}
 	})
 );
+
+app.use(express.static(`${__dirname}/../build`));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -194,6 +197,10 @@ app.post('/test-upload', (request, response) => {
 			return response.status(400).send(error);
 		}
 	});
+});
+
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
 app.listen(port, () => {

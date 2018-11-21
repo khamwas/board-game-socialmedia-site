@@ -5,10 +5,10 @@
 	align-items: flex-start;
 	flex-direction: column;
 	position: fixed;
-	left: auto;
-	right: auto;
+	left: 10vw;
+	right: 10vw;
 	bottom: auto;
-	top: auto;
+	top: 2vh;
 	/* height: 90vh; */
 	overflow: scroll;
 	z-index: 2;
@@ -86,7 +86,7 @@ textarea {
 	margin: 1px;
 	overflow: auto;
 }
-@media (max-width: 460px) {
+@media (max-width: 600px) {
 	.indiNumbers {
 		align-items: center;
 	}

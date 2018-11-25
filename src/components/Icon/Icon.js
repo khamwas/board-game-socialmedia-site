@@ -36,11 +36,34 @@ class Icon extends Component {
 			narrative: {
 				alt: 'narrative',
 				src: 'https://s3.us-east-2.amazonaws.com/boardashell/narrative.svg'
+			},
+			favorite: {
+				alt: 'favorite',
+				src: 'https://s3.us-east-2.amazonaws.com/boardashell/heart.svg'
+			},
+			review: {
+				alt: 'review',
+				src: 'https://s3.us-east-2.amazonaws.com/boardashell/reviews.svg'
+			},
+			played: {
+				alt: 'played',
+				src: 'https://s3.us-east-2.amazonaws.com/boardashell/checkmark.svg'
+			},
+			suggested: {
+				alt: 'suggested',
+				src: 'https://s3.us-east-2.amazonaws.com/boardashell/suggested.svg'
+			},
+			playtogether: {
+				alt: 'playtogether',
+				src: 'https://s3.us-east-2.amazonaws.com/boardashell/play-together.svg'
+			},
+			news: {
+				alt: 'news',
+				src: 'https://s3.us-east-2.amazonaws.com/boardashell/news.png'
 			}
 		};
 	}
 	render() {
-		let className = this.state[this.props.elem]['className'];
 		let alt = this.state[this.props.elem]['alt'];
 		let src = this.state[this.props.elem]['src'];
 		return (

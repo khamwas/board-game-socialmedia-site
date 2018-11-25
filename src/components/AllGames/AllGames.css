@@ -21,7 +21,7 @@
 	background: white;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 	border: black 1px solid;
 	width: 300px;

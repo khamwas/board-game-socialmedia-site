@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Icon from '../Icon/Icon';
 import {
 	setUserFavs,
 	setUserPlayed,
@@ -36,7 +37,11 @@ class Dash extends Component {
 								this.props.match.includes('suggested') ? 'selected' : 'fun'
 							}
 						>
-							Suggested
+							<Icon
+								elem="suggested"
+								clicked={this.props.match.includes('suggested')}
+							/>
+							<div className="subHeader">Suggested</div>
 						</div>
 					</Link>
 					<Link to="/dashboard/favorites">
@@ -45,7 +50,11 @@ class Dash extends Component {
 								this.props.match.includes('favorites') ? 'selected' : 'fun'
 							}
 						>
-							Favorites
+							<Icon
+								elem="favorite"
+								clicked={this.props.match.includes('favorite')}
+							/>
+							<div className="subHeader">Favorites</div>
 						</div>
 					</Link>
 					<Link to="/dashboard/played">
@@ -54,7 +63,11 @@ class Dash extends Component {
 								this.props.match.includes('played') ? 'selected' : 'fun'
 							}
 						>
-							Played
+							<Icon
+								elem="played"
+								clicked={this.props.match.includes('played')}
+							/>
+							<div className="subHeader">Played</div>
 						</div>
 					</Link>
 					<Link to="/dashboard/reviews">
@@ -63,14 +76,19 @@ class Dash extends Component {
 								this.props.match.includes('review') ? 'selected' : 'fun'
 							}
 						>
-							Reviews
+							<Icon
+								elem="review"
+								clicked={this.props.match.includes('review')}
+							/>
+							<div className="subHeader">Reviews</div>
 						</div>
 					</Link>
 					<Link to="/dashboard/newsfeed">
 						<div
 							className={this.props.match.includes('news') ? 'selected' : 'fun'}
 						>
-							News Feed
+							<Icon elem="news" clicked={this.props.match.includes('news')} />
+							<div className="subHeader">News Feed</div>
 						</div>
 					</Link>
 					{this.state.gamer ? null : (
@@ -80,7 +98,7 @@ class Dash extends Component {
 									this.props.match.includes('pending') ? 'selected' : 'fun'
 								}
 							>
-								Pending
+								<div className="subHeader">Pending</div>
 							</div>
 						</Link>
 					)}

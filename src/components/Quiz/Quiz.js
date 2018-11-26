@@ -3,8 +3,6 @@ import StarRating from 'react-star-ratings';
 import axios from 'axios';
 import GameCard from '../GameCard/GameCard';
 import './Quiz.css';
-import Icon from '../Icon/Icon';
-import DragDrop from '../DragDrop/DragDrop';
 import About from '../About/About';
 
 class Quiz extends Component {

@@ -49,7 +49,7 @@ class Header extends Component {
 		);
 		let fun = (
 			<Link to="/about">
-				<div className="navLink types">8 Type of Fun</div>
+				<div className="navLink types">8 Types of Fun</div>
 
 				{/* <Link to="/about"> */}
 				<div className="navLink about">About</div>

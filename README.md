@@ -49,17 +49,17 @@ This app averages to total of each metric for each game to create a distribution
 
 ## Main Challenges
 
-### 1. Game Metric Averages Join Table
+### Game Metric Averages Join Table
 
 I was able to keep the schema for this app fairly simple, but the need to always track an average of all metrics in all reviews for each game required the use of a join table. This was the first challenge that was necessary for me to overcome in creating this app.
 [Schema and Join Table](#schema)
 
-### 2. Averaged Profile Algorithm
+### Averaged Profile Algorithm
 
 Determining what games that multiple users should play together to maximize shared fun was another difficult problem.
 [Shared Profile Algorithm](#shared-profiles)
 
-### 3. Profile Assignment Quiz Algorithm
+### Profile Assignment Quiz Algorithm
 
 I was able to utilize a similar method to my Shared Profile Algorithm to design a preliminary assessment for new users to assign a profile that will become more accurate as more data is added to the database.
 [Profile Generation Algorithm](#quiz-result)
@@ -122,7 +122,7 @@ I was able to utilize a similar method to my Shared Profile Algorithm to design 
 
 ## Dynamic SQL Query
 
-Having the need to generate an SQL Join Table ordered by up to 9 metrics
+Having the need to generate an SQL Join Table ordered by up to 9 metrics posed the problem of either creating an incredible amount of SQL statements, or one statement that can be built depending on the data coming in. This was the solution to my problem to be able to keep one get endpoint to deal with all profile based queries.
 
 ```js
 getAllGames: (req, res, next) => {
@@ -169,6 +169,104 @@ on scores.game_id=board_games.game_id left join gamer on gamer.gamer_id=board_ga
 
 ### Nulls
 
+I did need to put nulls last as not all reviews have ratings for every metric. The PostgreSQL default is to place nulls at the top, so I had to adjust for this in my statements.
+
 ## Shared Profiles
 
+One set-piece of my application is the ability to determine which games two users should play together to optimize the amount of fun for BOTH players. This was a difficult problem and my solution is found below.
+
+```jsx
+function intersect(profile1, profile2) {
+	one = {};
+	two = {};
+
+	profile1.map((elem, i) => Object.assign(one, { [elem]: i + 1 }));
+
+	profile2.map((elem, i) => Object.assign(two, { [elem]: i + 1 }));
+
+	let combined = {};
+	profile1.map((elem) =>
+		Object.assign(combined, { [elem]: (one[elem] + two[elem]) / 2 })
+	);
+
+	bothProfile = [];
+	for (i = 0; i < 8; i += 1 / 2) {
+		for (var x in combined) {
+			if (combined[x] === i) {
+				bothProfile.push(x);
+			}
+		}
+	}
+	return bothProfile;
+}
+```
+
 ## Quiz Result
+
+The entirety of account creation depends on the accuracy of an assessment that can be administered to determine a users profile. But I also had the need for this test to be simple so that a new user does not need to be familiar with the system to be profiled.
+
+The solution utilizes the averaged reviews for each metric for each game and weights those metrics based on the user's overall rating for a game. By keeping a rolling weighted average for these ratings we are able to determine a user's profile based on a single variable rating system and translating it into our multivariable rating system.
+
+Since this quiz is based on the averages of all reviews, it becomes more accurate at predicting a new user's profile the more data we accumulate in the database.
+
+```jsx
+class  Quiz  extends  Component {
+	constructor() {
+		super();
+		this.state  = {
+		rating:  0,
+		sensory:  0,
+		fantasy:  0,
+		narrative:  0,
+		challenge:  0,
+		fellowship:  0,
+		discovery:  0,
+		expression:  0,
+		abnegation:  0,
+		games: [],
+		index:  0,
+		profile: [],
+		incomplete:  true}
+```
+
+We show each game as it has been pulled from our database and allow the user to rate it, adding to our rolling total. Once complete, the user is displayed their results page.
+
+```jsx
+let game =  this.state.games
+.slice(this.state.index, this.state.index  +  1)
+.map((elem, i) => (
+<GameCard  key={elem + i} match={this.props.match} elem={elem} />
+));
+if (this.state.incomplete) {
+return (
+<div  className="quiz">
+<h1>Quiz</h1>
+<p>
+Rate each game on a scale of 0-5 stars. Hit the submit button to
+rate the next game. If you don't know a game, skip it by selecting
+"I don't know this game." When you are finished with your quiz, we
+will create a gaming profile for you.
+</p>
+<div  className="gameScreen">{game}</div>
+<div  className="quizRatings">
+<button  className="quizButton"  onClick={() =>  this.submit()}>
+No Stars
+</button>
+<StarRating
+rating={this.state.rating}
+starRatedColor="rgb(43,65,98)"
+numberOfStars={5}
+name="rating"
+starDimension="50px"
+changeRating={(newRating) =>
+this.changeRating(newRating, 'rating')
+}
+/>
+<button  className="quizButton"  onClick={() =>  this.stepIndex()}>
+I don't know this game
+</button>
+</div>
+<div>{this.state.profile}</div>
+</div>
+);
+```

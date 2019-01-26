@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-See the live site [boardashell.com](https://www.boardashell.com).
+See the live site [boardashell.com](http://www.boardashell.com).
 
 ![overview](https://media.giphy.com/media/1BeEwlhWioFoURkpAw/giphy.gif)
 
@@ -23,7 +23,7 @@ This app attempts to illustrate that a multivariable review system is conceptual
 
 ### Single Variable Systems
 
-Single variable systems utilize only one scale for rating a class of objects. In the following two examples, boardgamegeek and rottentomatoes, they increase the sophistication by differentiating approved 'critic' ratings and regular user ratings. But this is only utilizing a Signle Variable System twice.
+Single variable systems utilize only one scale for rating a class of objects. In the following two examples, boardgamegeek and rottentomatoes, they increase the sophistication by differentiating approved 'critic' ratings and regular user ratings. But this is only utilizing a Single Variable System twice.
 ![boardgamegeek](https://s3.us-east-2.amazonaws.com/khamwas-readme/boardgamegeek.png)
 
 ![rottentomatoes](https://s3.us-east-2.amazonaws.com/khamwas-readme/rottentomatoes.png)
